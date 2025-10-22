@@ -16,7 +16,7 @@
 
 %>
 <form  action="${pageContext.request.contextPath}/employe" method="post">
-<input type="submit">
+<input value="Employé" type="submit">
 <label>${sessionScope.employeFound.id_employe}</label>
 <label>${sessionScope.employeFound.nom}</label>
 <label>${sessionScope.employeFound.prenom}</label>
@@ -26,7 +26,7 @@
 <label>${sessionScope.employeFound.email}</label>
 <label>${sessionScope.employeFound.sexe}</label>
 <label>${sessionScope.employeFound.grade}</label>
-<label>${sessionScope.employeFound.id_role}</label>
+<label>${sessionScope.employeFound.role}</label>
 </form>
 
 <%
@@ -34,11 +34,23 @@
 
 %>
 <form  action="${pageContext.request.contextPath}/departement" method="post">
-    <input type="submit">
+    <input value ="Departement" type="submit">
     <label>${sessionScope.departementFound.id_departement}</label>
     <label>${sessionScope.departementFound.nom}</label>
     <label>${sessionScope.departementFound.description}</label>
     <label>${sessionScope.departementFound.directeur}</label>
+
+</form>
+
+<%
+    session.getAttribute("roleFound");
+
+%>
+<form  action="${pageContext.request.contextPath}/search-role" method="post">
+    <input value ="Role" type="submit">
+    <label>${sessionScope.roleFound.id_role}</label>
+    <label>${sessionScope.roleFound.nom}</label>
+    <label>${sessionScope.roleFound.description}</label>
 
 </form>
 
