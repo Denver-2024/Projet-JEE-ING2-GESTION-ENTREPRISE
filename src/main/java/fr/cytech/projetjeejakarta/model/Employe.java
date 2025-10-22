@@ -6,7 +6,7 @@ import fr.cytech.projetmodel.enumeration.Sexe;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="employe")
+@Table(name="Employe")
 public class Employe {
 
     @Id
@@ -22,13 +22,16 @@ public class Employe {
     private Sexe sexe;
     @Enumerated(EnumType.STRING)
     private Grade grade;
-    private int id_role;
+
+    @ManyToOne
+    @JoinColumn(name = "id_role")
+    private Role role;
 
     public Employe() {
 
     }
 
-    public Employe(String nom, String prenom,String adresse, int id_departement, String numero, String email, Sexe sexe, Grade grade, int id_role ) {
+    public Employe(String nom, String prenom,String adresse, int id_departement, String numero, String email, Sexe sexe, Grade grade, Role role ) {
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
@@ -37,7 +40,7 @@ public class Employe {
         this.email = email;
         this.sexe = sexe;
         this.grade = grade;
-        this.id_role = id_role;
+        this.role = role;
 
     }
 
@@ -112,13 +115,13 @@ public class Employe {
     public void setGrade(Grade grade) {
         this.grade = grade;
     }
-
-    public int getId_role() {
-        return id_role;
+    @OneToOne
+    public Role getRole() {
+        return role;
     }
 
-    public void setId_role(int id_role) {
-        this.id_role = id_role;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
@@ -133,7 +136,7 @@ public class Employe {
                 ", email='" + email + '\'' +
                 ", sexe=" + sexe +
                 ", grade=" + grade +
-                ", id_role=" + id_role +
+                ", role=" + role +
                 '}';
     }
 }
