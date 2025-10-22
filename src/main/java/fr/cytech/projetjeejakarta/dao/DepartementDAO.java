@@ -1,4 +1,4 @@
-package fr.cytech.projetmodel.dao;
+package fr.cytech.projetjeejakarta.dao;
 
 import fr.cytech.projetmodel.model.Departement;
 import fr.cytech.projetmodel.model.Employe;

@@ -1,4 +1,4 @@
-package fr.cytech.projetmodel.util;
+package fr.cytech.projetjeejakarta.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

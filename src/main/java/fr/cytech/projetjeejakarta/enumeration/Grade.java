@@ -1,4 +1,4 @@
-package fr.cytech.projetmodel.enumeration;
+package fr.cytech.projetjeejakarta.enumeration;
 
 public enum Grade {
     junior,

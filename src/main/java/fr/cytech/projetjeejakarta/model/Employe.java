@@ -1,4 +1,4 @@
-package fr.cytech.projetmodel.model;
+package fr.cytech.projetjeejakarta.model;
 
 
 import fr.cytech.projetmodel.enumeration.Grade;

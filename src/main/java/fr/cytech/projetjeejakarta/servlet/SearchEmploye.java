@@ -1,4 +1,4 @@
-package fr.cytech.projetmodel.servlet;
+package fr.cytech.projetjeejakarta.servlet;
 
 import fr.cytech.projetmodel.dao.EmployeDAO;
 import fr.cytech.projetmodel.enumeration.Grade;
