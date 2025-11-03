@@ -1,5 +1,6 @@
 package fr.cytech.projetjeejakarta.model;
 
+import fr.cytech.projetjeejakarta.enumeration.EtatProjet;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
 public class Projet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id_projet;
 
     private String nom;
     private String description;
@@ -20,14 +21,19 @@ public class Projet {
     private String departement;
 
 
-    public Projet() {}
 
-    public Projet(String nom, String description, EtatProjet etat) {
-        this.nom = nom;
-        this.description = description;
-        this.etat = etat;
-    }
+    public int  getId_projet() {return id_projet;}
+    public void setId_projet(int id_projet) {this.id_projet = id_projet;}
 
-    // Getters et Setters
-    // ...
+    public String getNom() {return nom;}
+    public void setNom(String nom) {this.nom = nom;}
+
+    public String getDescription() {return description;}
+    public void setDescription(String description) {this.description = description;}
+
+    public EtatProjet getEtat() {return etat;}
+    public void setEtat(EtatProjet etat) {this.etat = etat;}
+
+    public String getChefDeProjet() {return chefDeProjet;}
+    public void setChefDeProjet(String chefDeProjet) {this.chefDeProjet = chefDeProjet;}
 }

@@ -1,7 +1,6 @@
 package fr.cytech.projetjeejakarta.dao;
 
-import fr.cytech.projetmodel.model.Departement;
-import fr.cytech.projetmodel.model.Employe;
+import fr.cytech.projetjeejakarta.model.Departement;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
