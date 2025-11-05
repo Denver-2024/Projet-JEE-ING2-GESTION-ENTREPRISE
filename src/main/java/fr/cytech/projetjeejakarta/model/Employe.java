@@ -6,7 +6,7 @@ import fr.cytech.projetjeejakarta.enumeration.Sexe;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="employe")
+@Table(name="Employe")
 public class Employe {
 
     @Id
