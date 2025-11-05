@@ -7,8 +7,6 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Persistence;
 
-
-
 public class DepartementDAO {
     private EntityManagerFactory sessionFactory;
 

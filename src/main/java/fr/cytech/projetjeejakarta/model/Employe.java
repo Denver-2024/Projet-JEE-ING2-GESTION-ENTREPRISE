@@ -5,7 +5,7 @@ import fr.cytech.projetjeejakarta.enumeration.*;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="Employe")
+@Table(name="employe")
 public class Employe {
 
     @Id
@@ -39,7 +39,7 @@ public class Employe {
         this.email = email;
         this.sexe = sexe;
         this.grade = grade;
-        this.role = role;
+        this.id_role = id_role;
 
     }
 
