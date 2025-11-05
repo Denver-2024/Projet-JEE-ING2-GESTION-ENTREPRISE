@@ -1,6 +1,13 @@
 package fr.cytech.projetjeejakarta.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "Autorisation")
 public class Autorisation {
+    @Id
     private int id_autorisation;
     private String nom;
     private String description;

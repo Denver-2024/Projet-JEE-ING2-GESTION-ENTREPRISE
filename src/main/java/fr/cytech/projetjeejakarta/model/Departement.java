@@ -3,7 +3,7 @@ package fr.cytech.projetjeejakarta.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="departement")
+@Table(name="Departement")
 public class Departement {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -16,6 +16,15 @@ public class Departement {
     @OneToOne
     @JoinColumn(name = "id_employe")
     private Employe directeur;
+
+    public Departement() {
+
+    }
+    public Departement(int id_departement, String nom, String description) {
+        this.id_departement = id_departement;
+        this.nom = nom;
+        this.description = description;
+    }
 
 
     public int getId_departement() {
