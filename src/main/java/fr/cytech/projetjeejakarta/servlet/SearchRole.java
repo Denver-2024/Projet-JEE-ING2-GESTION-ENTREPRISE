@@ -1,9 +1,8 @@
-package fr.cytech.projetmodel.servlet;
+package fr.cytech.projetjeejakarta.servlet;
 
-import fr.cytech.projetmodel.dao.EmployeDAO;
-import fr.cytech.projetmodel.dao.RoleDAO;
-import fr.cytech.projetmodel.model.Employe;
-import fr.cytech.projetmodel.model.Role;
+import fr.cytech.projetjeejakarta.dao.*;
+
+import fr.cytech.projetjeejakarta.model.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,7 +18,7 @@ public class SearchRole extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String jdbcURL = "jdbc:mysql://localhost:3306/entreprise";
         String dbUser = "root";
-        String dbPassword = "root";
+        String dbPassword = "cytech0001";
 
 
 

@@ -1,9 +1,9 @@
-package fr.cytech.projetmodel.servlet;
+package fr.cytech.projetjeejakarta.servlet;
 
-import fr.cytech.projetmodel.dao.EmployeDAO;
-import fr.cytech.projetmodel.enumeration.Grade;
-import fr.cytech.projetmodel.enumeration.Sexe;
-import fr.cytech.projetmodel.model.Employe;
+import fr.cytech.projetjeejakarta.dao.*;
+import fr.cytech.projetjeejakarta.enumeration.*;
+
+import fr.cytech.projetjeejakarta.model.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,7 +19,7 @@ public class SearchEmploye extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String jdbcURL = "jdbc:mysql://localhost:3306/entreprise";
         String dbUser = "root";
-        String dbPassword = "root";
+        String dbPassword = "cytech0001";
 
 
 

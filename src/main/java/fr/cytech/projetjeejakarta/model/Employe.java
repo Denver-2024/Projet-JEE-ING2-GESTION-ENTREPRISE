@@ -1,8 +1,7 @@
-package fr.cytech.projetmodel.model;
+package fr.cytech.projetjeejakarta.model;
 
 
-import fr.cytech.projetmodel.enumeration.Grade;
-import fr.cytech.projetmodel.enumeration.Sexe;
+import fr.cytech.projetjeejakarta.enumeration.*;
 import jakarta.persistence.*;
 
 @Entity

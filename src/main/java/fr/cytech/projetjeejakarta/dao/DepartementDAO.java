@@ -1,11 +1,13 @@
-package fr.cytech.projetmodel.dao;
+package fr.cytech.projetjeejakarta.dao;
 
-import fr.cytech.projetmodel.model.Departement;
-import fr.cytech.projetmodel.model.Employe;
+import fr.cytech.projetjeejakarta.model.Departement;
+import fr.cytech.projetjeejakarta.model.Employe;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Persistence;
+
+
 
 public class DepartementDAO {
     private EntityManagerFactory sessionFactory;

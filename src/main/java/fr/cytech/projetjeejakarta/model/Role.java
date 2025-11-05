@@ -1,4 +1,4 @@
-package fr.cytech.projetmodel.model;
+package fr.cytech.projetjeejakarta.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
