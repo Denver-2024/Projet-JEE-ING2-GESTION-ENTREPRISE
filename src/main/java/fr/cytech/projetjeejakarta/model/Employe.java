@@ -24,6 +24,7 @@ public class Employe {
     private Grade grade;
     private int id_role;
     private int salaire;
+    private String password;
 
     public Employe() {
 
@@ -124,6 +125,9 @@ public class Employe {
 
     public int getSalaire() {return salaire;}
     public void setSalaire(int salaire) {this.salaire = salaire;}
+
+    public String getPassword() {return password;}
+    public void setPassword(String password) {}
 
     @Override
     public String toString() {
