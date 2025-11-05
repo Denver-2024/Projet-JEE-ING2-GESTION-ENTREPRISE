@@ -1,6 +1,5 @@
 package fr.cytech.projetjeejakarta.dao;
 
-import fr.cytech.projetjeejakarta.model.Employe;
 import fr.cytech.projetjeejakarta.model.Role;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -11,10 +10,10 @@ public class RoleDAO {
     private EntityManagerFactory sessionFactory;
 
     public RoleDAO() {
-        sessionFactory = Persistence.createEntityManagerFactory("Projet");
+        sessionFactory = Persistence.createEntityManagerFactory("Role");
     }
 
-    public Role fetchRole(int id_role){
+    public Role fetchDepartement(int id_role){
         EntityManager em = sessionFactory.createEntityManager();
         em.getTransaction().begin();
         try {

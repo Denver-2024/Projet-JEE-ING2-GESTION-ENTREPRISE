@@ -11,7 +11,7 @@ public class FicheDePaie {
     private int id_ficheDePaie;
 
     @ManyToOne
-    @JoinColumn(name = "employe_id")
+    @JoinColumn(name = "id_employe")
     private Employe employe;
 
     private LocalDate date;

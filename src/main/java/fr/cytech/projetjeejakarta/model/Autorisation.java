@@ -1,25 +1,12 @@
 package fr.cytech.projetjeejakarta.model;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "role_autorisation")
-public class RoleAutorisation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_role;
+public class Autorisation {
     private int id_autorisation;
-    @ManyToOne
-    @JoinColumn(name = "id_ficheDePaie")
-
     private String nom;
     private String description;
 
     public int getId_autorisation() {return id_autorisation;}
     public void setId_autorisation(int id_autorisation) {this.id_autorisation = id_autorisation;}
-
-    public int getId_role() {return id_role;}
-    public void setId_role(int id_role) {this.id_role = id_role;}
 
     public String getNom() {return nom;}
     public void setNom(String nom) {this.nom = nom;}
