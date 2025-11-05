@@ -23,6 +23,7 @@ public class Employe {
     @Enumerated(EnumType.STRING)
     private Grade grade;
     private int id_role;
+    private int salaire;
 
     public Employe() {
 
@@ -120,6 +121,9 @@ public class Employe {
     public void setId_role(int id_role) {
         this.id_role = id_role;
     }
+
+    public int getSalaire() {return salaire;}
+    public void setSalaire(int salaire) {this.salaire = salaire;}
 
     @Override
     public String toString() {

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "role")
 public class Role {
+    @Id
     private int id_role;
     private String nom;
     private String description;
