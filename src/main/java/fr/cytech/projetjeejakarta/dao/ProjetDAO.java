@@ -1,7 +1,6 @@
-package fr.cytech.projetjeejakarta.dao.;
+package fr.cytech.projetjeejakarta.dao;
 
 import fr.cytech.projetjeejakarta.model.Projet;
-
 
 import fr.cytech.projetjeejakarta.util.HibernateUtil;
 import org.hibernate.Session;
