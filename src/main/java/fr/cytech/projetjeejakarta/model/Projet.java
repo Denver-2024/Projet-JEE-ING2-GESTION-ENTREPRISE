@@ -9,7 +9,7 @@ import java.util.List;
 public class Projet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_projet;
+    private int idProjet;
 
     private String nom;
     private String description;
@@ -35,8 +35,8 @@ public class Projet {
     public Projet() {}
 
 
-    public int  getId_projet() {return id_projet;}
-    public void setId_projet(int id_projet) {this.id_projet = id_projet;}
+    public int  getIdProjet() {return idProjet;}
+    public void setIdProjet(int idProjet) {this.idProjet = idProjet;}
 
     public String getNom() {return nom;}
     public void setNom(String nom) {this.nom = nom;}
