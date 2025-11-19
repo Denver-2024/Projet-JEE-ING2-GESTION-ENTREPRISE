@@ -1,9 +1,9 @@
-/*package fr.cytech.projetmodel.servlet;
+/*package fr.cytech.projetjeejakarta.servlet;
 
-import fr.cytech.projetmodel.dao.EmployeDAO;
-import fr.cytech.projetmodel.dao.RoleDAO;
-import fr.cytech.projetmodel.model.Employe;
-import fr.cytech.projetmodel.model.Role;
+import fr.cytech.projetjeejakarta.dao.EmployeDAO;
+import fr.cytech.projetjeejakarta.dao.RoleDAO;
+import fr.cytech.projetjeejakarta.model.Employe;
+import fr.cytech.projetjeejakarta.model.Role;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
