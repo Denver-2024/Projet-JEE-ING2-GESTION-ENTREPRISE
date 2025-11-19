@@ -1,4 +1,4 @@
-/*package fr.cytech.projetjeejakarta.dao;
+package fr.cytech.projetjeejakarta.dao;
 
 import fr.cytech.projetjeejakarta.model.Employe;
 import fr.cytech.projetjeejakarta.util.HibernateUtil;
@@ -12,7 +12,7 @@ public class EmployeDAO {
     private EntityManagerFactory sessionFactory;
 
     public EmployeDAO() {
-        sessionFactory = Persistence.createEntityManagerFactory("Projet");
+        sessionFactory = Persistence.createEntityManagerFactory("jeejakartaUtil");
     }
 
     public Employe fetchEmploye(int id_employe) {
@@ -41,4 +41,3 @@ public class EmployeDAO {
     }
 
 }
-*/

@@ -1,6 +1,6 @@
 package fr.cytech.projetjeejakarta.model;
 
-/*import jakarta.persistence.*;
+import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,4 +37,3 @@ public class Role {
     public HashSet<Autorisation> getAutorisations() {return autorisations;}
     public void setAutorisations(HashSet<Autorisation> autorisations) {this.autorisations = autorisations;}
 }
-*/

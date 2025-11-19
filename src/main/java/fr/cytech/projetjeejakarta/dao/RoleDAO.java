@@ -1,8 +1,9 @@
-/*package fr.cytech.projetjeejakarta.dao;
+package fr.cytech.projetjeejakarta.dao;
 
 import fr.cytech.projetjeejakarta.model.Employe;
 import fr.cytech.projetjeejakarta.model.Role;
 import fr.cytech.projetjeejakarta.util.HibernateUtil;
+import fr.cytech.projetjeejakarta.util.JpaUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
@@ -13,7 +14,7 @@ public class RoleDAO {
     private EntityManagerFactory sessionFactory;
 
     public RoleDAO() {
-        sessionFactory = Persistence.createEntityManagerFactory("Role");
+        sessionFactory = Persistence.createEntityManagerFactory("jeejakartaUtil");
     }
 
     public Role fetchDepartement(int id_role) {
@@ -32,17 +33,23 @@ public class RoleDAO {
         }
     }
 
-    public Role findById(int id){
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(Role.class, id);
+    public Role findById(int id) {
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        Role role = null;
+
+        try {
+            role = em.find(Role.class, id);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+        } finally {
+            em.close();
         }
+
+        return role;
     }
 
 
 
 
+
 }
-*/

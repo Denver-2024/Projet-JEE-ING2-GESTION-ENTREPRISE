@@ -7,10 +7,17 @@ import fr.cytech.projetjeejakarta.model.Projet;
 import fr.cytech.projetjeejakarta.util.JpaUtil;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
+
 import java.util.List;
 
 public class ProjetDAO {
+    private EntityManagerFactory sessionFactory;
+    public ProjetDAO() {
+        sessionFactory = Persistence.createEntityManagerFactory("jeejakartaUtil");
+    }
 
     public void creerOuModifierProjet(Projet p) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();

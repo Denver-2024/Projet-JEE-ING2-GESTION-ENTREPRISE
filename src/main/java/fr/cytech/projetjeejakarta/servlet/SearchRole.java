@@ -1,4 +1,4 @@
-/*package fr.cytech.projetjeejakarta.servlet;
+package fr.cytech.projetjeejakarta.servlet;
 
 import fr.cytech.projetjeejakarta.dao.EmployeDAO;
 import fr.cytech.projetjeejakarta.dao.RoleDAO;
@@ -25,7 +25,7 @@ public class SearchRole extends HttpServlet {
 
         Role role;
         RoleDAO dao = new RoleDAO();
-        role = dao.fetchRole(2);
+        role = dao.findById(2);
 
         HttpSession session = req.getSession();
         session.setAttribute("roleFound",role);
@@ -40,4 +40,3 @@ public class SearchRole extends HttpServlet {
 
 
 }
-*/
