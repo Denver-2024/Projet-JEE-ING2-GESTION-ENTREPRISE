@@ -9,6 +9,7 @@ import java.util.List;
 public class Projet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id_projet")
     private int idProjet;
 
     private String nom;
@@ -20,6 +21,7 @@ public class Projet {
     @ManyToOne
     @JoinColumn(name = "id_chef_projet")
     private Employe chefDeProjet;
+
     @ManyToOne
     @JoinColumn(name = "id_departement")
     private Departement departement;

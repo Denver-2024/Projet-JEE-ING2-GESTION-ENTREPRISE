@@ -1,4 +1,4 @@
-package fr.cytech.projetjeejakarta.servlet;
+/*package fr.cytech.projetjeejakarta.servlet;
 
 
 
@@ -39,3 +39,4 @@ public class SearchDepartement extends HttpServlet {
     }
 
 }
+*/

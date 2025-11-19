@@ -1,4 +1,4 @@
-package fr.cytech.projetjeejakarta.dao;
+/*package fr.cytech.projetjeejakarta.dao;
 
 import fr.cytech.projetjeejakarta.model.Role;
 import jakarta.persistence.EntityManager;
@@ -33,3 +33,4 @@ public class RoleDAO {
 
     }
 }
+*/

@@ -27,12 +27,12 @@ INSERT INTO Employe (nom, prenom, adresse, id_departement, numero, email, sexe, 
         ('Nguyen','Minh','11 Rue de l_hotel de ville, Paris',3,'0600000011','minh.nguyen@entreprise.com','M','intermediaire',4),
         ('Diallo','Awa','12 Rue de Lyon, Paris',4,'0600000012','awa.diallo@entreprise.com','F','intermediaire',4),
 
-        ('Morel','Thomas','13 Rue de Paris, Juvisy',1,'0600000013','thomas.morel@entreprise.com','M','junior',5),
+        ('Morel','Thomas','13 Rue de Paris, Juvisy',1,'0600000013','thomas.morel@entreprise.com','X','junior',5),
         ('Fabre','Chloé','14 Rue du Général de Gaulle, Paris',2,'0600000014','chloe.fabre@entreprise.com','F','junior',5),
         ('Meyer','Louis','40 Rue du Général de Gaulle , Osny',3,'0600000015','louis.meyer@entreprise.com','M','junior',5),
         ('Perez','Sara','6 Rue de la Fayette, Eragny',4,'0600000016','sara.perez@entreprise.com','F','junior',5),
         ('Khan','Imran','17 Rue de Cergy, Neuville',5,'0600000017','imran.khan@entreprise.com','M','junior',5),
-        ('Fischer','Anna','18 Rue de Lyon, Ermont',6,'0600000018','anna.fischer@entreprise.com','F','junior',5),
+        ('Fischer','Anna','18 Rue de Lyon, Ermont',6,'0600000018','anna.fischer@entreprise.com','X','junior',5),
         ('Hussein','Youssef','9 Rue de Rouen, Saint-Denis',1,'0600000019','youssef.hussein@entreprise.com','M','junior',5),
         ('Barbier','Lucie','2 Rue de Rouen, Ermont',3,'0600000020','lucie.barbier@entreprise.com','F','junior',5);
 
@@ -48,18 +48,18 @@ UPDATE Departement SET id_chef_departement = 8 WHERE id_departement = 6;
 
 -- Projet
 INSERT INTO Projet (nom, description, etat, id_chef_projet, id_departement) VALUES
-    ('ERP Migration', 'Migration du système ERP', 'en_cours', 9, 1),
-    ('Refonte Site Web', 'Nouvelle version du site corporate', 'en_cours', 9, 1),
-    ('Campagne Pub TV', 'Nouvelle publicité nationale', 'termine', 11, 3),
-    ('Étude Marché 2025', 'Analyse des tendances', 'en_cours', 11, 3),
-    ('Optimisation Stock', 'Automatisation stock', 'annule', 12, 4),
-    ('Transport Durable', 'Projet éco-logistique', 'en_cours', 12, 4),
-    ('Paie+ 2025', 'Refonte du logiciel paie', 'en_cours', 10, 2),
-    ('Onboarding RH', 'Digitalisation onboarding', 'termine', 10, 2),
-    ('Audit Financier', 'Audit externe annuel', 'en_cours', 13, 5),
-    ('Prévisions Budgétaires', 'Budget prévisionnel 2026', 'termine', 13, 5),
-    ('Assistance Premium', 'Nouveau service support', 'en_cours', 14, 6),
-    ('Support Multilingue', 'Extension langues support', 'en_cours', 14, 6);
+    ('ERP Migration', 'Migration du système ERP', 'EN_COURS', 9, 1),
+    ('Refonte Site Web', 'Nouvelle version du site corporate', 'EN_COURS', 9, 1),
+    ('Campagne Pub TV', 'Nouvelle publicité nationale', 'TERMINE', 11, 3),
+    ('Étude Marché 2025', 'Analyse des tendances', 'EN_COURS', 11, 3),
+    ('Optimisation Stock', 'Automatisation stock', 'ANNULE', 12, 4),
+    ('Transport Durable', 'Projet éco-logistique', 'EN_COURS', 12, 4),
+    ('Paie+ 2025', 'Refonte du logiciel paie', 'EN_COURS', 10, 2),
+    ('Onboarding RH', 'Digitalisation onboarding', 'TERMINE', 10, 2),
+    ('Audit Financier', 'Audit externe annuel', 'EN_COURS', 13, 5),
+    ('Prévisions Budgétaires', 'Budget prévisionnel 2026', 'TERMINE', 13, 5),
+    ('Assistance Premium', 'Nouveau service support', 'EN_COURS', 14, 6),
+    ('Support Multilingue', 'Extension langues support', 'EN_COURS', 14, 6);
 
 
 -- Employes affectés à des projets

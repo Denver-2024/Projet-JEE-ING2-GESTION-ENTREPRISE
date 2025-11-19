@@ -1,4 +1,4 @@
-package fr.cytech.projetjeejakarta.dao;
+/*package fr.cytech.projetjeejakarta.dao;
 
 import fr.cytech.projetjeejakarta.model.Departement;
 import fr.cytech.projetjeejakarta.model.Employe;
@@ -34,3 +34,4 @@ public class DepartementDAO {
 
     }
 }
+*/

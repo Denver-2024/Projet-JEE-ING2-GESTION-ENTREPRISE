@@ -1,4 +1,4 @@
-package fr.cytech.projetjeejakarta.model;
+/*package fr.cytech.projetjeejakarta.model;
 
 public class Autorisation {
     private int id_autorisation;
@@ -14,3 +14,4 @@ public class Autorisation {
     public String getDescription() {return description;}
     public void setDescription(String description) {this.description = description;}
 }
+*/

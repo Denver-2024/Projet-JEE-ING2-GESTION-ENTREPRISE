@@ -5,8 +5,8 @@ START TRANSACTION;
 
 DROP TABLE IF EXISTS Role_Autorisation;
 DROP TABLE IF EXISTS Autorisation;
-DROP TABLE IF EXISTS Projet;
 DROP TABLE IF EXISTS Employe_Projet;
+DROP TABLE IF EXISTS Projet;
 DROP TABLE IF EXISTS Fiche_de_paie;
 DROP TABLE IF EXISTS Employe;
 DROP TABLE IF EXISTS Departement;
@@ -88,7 +88,7 @@ CREATE TABLE Projet (
     id_projet INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(255) NOT NULL,
     description TEXT,
-    etat ENUM('en_cours', 'termine', 'annule') NOT NULL DEFAULT 'en_cours',
+    etat ENUM('EN_COURS', 'TERMINE', 'ANNULE') NOT NULL DEFAULT 'EN_COURS',
 
     id_chef_projet INT NOT NULL,
     id_departement INT NOT NULL,

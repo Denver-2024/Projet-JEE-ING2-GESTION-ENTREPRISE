@@ -2,6 +2,7 @@ package fr.cytech.projetjeejakarta.servlet;
 
 import fr.cytech.projetjeejakarta.dao.ProjetDAO;
 import fr.cytech.projetjeejakarta.enumeration.EtatProjet;
+import fr.cytech.projetjeejakarta.model.Departement;
 import fr.cytech.projetjeejakarta.model.Projet;
 
 import jakarta.servlet.ServletException;
@@ -21,6 +22,7 @@ public class ProjetController extends HttpServlet {
     @Override
     public void init() throws ServletException {
         projetDAO = new ProjetDAO();
+
     }
 
     @Override
@@ -58,13 +60,15 @@ public class ProjetController extends HttpServlet {
         String nom = request.getParameter("nom");
         String description = request.getParameter("description");
         String etatStr = request.getParameter("etat");
+        //String departementStr=request.getParameter("departement");
 
         EtatProjet etat = EtatProjet.valueOf(etatStr);
-
+        //Departement departement= Departement;
         Projet p = new Projet();
         p.setNom(nom);
         p.setDescription(description);
         p.setEtat(etat);
+        //p.setDepartement(departement);
 
         projetDAO.creerOuModifierProjet(p);
 

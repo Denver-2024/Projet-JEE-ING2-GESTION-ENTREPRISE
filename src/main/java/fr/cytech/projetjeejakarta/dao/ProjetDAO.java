@@ -1,6 +1,7 @@
 package fr.cytech.projetjeejakarta.dao;
 
 import fr.cytech.projetjeejakarta.enumeration.EtatProjet;
+import fr.cytech.projetjeejakarta.model.Departement;
 import fr.cytech.projetjeejakarta.model.Employe;
 import fr.cytech.projetjeejakarta.model.Projet;
 import fr.cytech.projetjeejakarta.util.JpaUtil;
@@ -88,6 +89,11 @@ public class ProjetDAO {
     public String descriptionProjet(String nom){
         Projet p=rechercherProjets(nom).getFirst();
         return (p!=null)? p.getDescription():null;
+    }
+
+    public Departement departementProjet(String nom){
+        Projet p=rechercherProjets(nom).getFirst();
+        return (p!=null)? p.getDepartement():null;
     }
 
 }
