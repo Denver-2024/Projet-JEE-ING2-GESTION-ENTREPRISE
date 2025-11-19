@@ -25,6 +25,7 @@ public class ProjetDAO {
         try {
             trans.begin();
             em.merge(p); // equivalent de saveOrUptade de hibernate
+            System.out.println("je suis dans ProjetDAO");
             trans.commit();
         } catch (Exception except) {
             if (trans.isActive()) trans.rollback();
