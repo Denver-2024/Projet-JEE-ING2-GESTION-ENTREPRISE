@@ -1,6 +1,7 @@
-package fr.cytech.projetjeejakarta.dao;
+/*package fr.cytech.projetjeejakarta.dao;
 
 import fr.cytech.projetjeejakarta.model.Departement;
+import fr.cytech.projetjeejakarta.model.Employe;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
@@ -33,3 +34,4 @@ public class DepartementDAO {
 
     }
 }
+*/

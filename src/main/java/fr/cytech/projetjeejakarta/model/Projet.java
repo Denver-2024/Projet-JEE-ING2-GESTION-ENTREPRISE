@@ -9,7 +9,8 @@ import java.util.List;
 public class Projet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_projet;
+    @Column(name="id_projet")
+    private int idProjet;
 
     private String nom;
     private String description;
@@ -17,13 +18,27 @@ public class Projet {
     @Enumerated(EnumType.STRING)
     private EtatProjet etat; // EN_COURS, TERMINE, ANNULE
 
-    private String chefDeProjet;
-    private String departement;
+    @ManyToOne
+    @JoinColumn(name = "id_chef_projet")
+    private Employe chefDeProjet;
+
+    @ManyToOne
+    @JoinColumn(name = "id_departement")
+    private Departement departement;
+
+    public Departement getDepartement() {
+        return departement;
+    }
+
+    public void setDepartement(Departement departement) {
+        this.departement = departement;
+    }
+
+    public Projet() {}
 
 
-
-    public int  getId_projet() {return id_projet;}
-    public void setId_projet(int id_projet) {this.id_projet = id_projet;}
+    public int  getIdProjet() {return idProjet;}
+    public void setIdProjet(int idProjet) {this.idProjet = idProjet;}
 
     public String getNom() {return nom;}
     public void setNom(String nom) {this.nom = nom;}
@@ -34,6 +49,6 @@ public class Projet {
     public EtatProjet getEtat() {return etat;}
     public void setEtat(EtatProjet etat) {this.etat = etat;}
 
-    public String getChefDeProjet() {return chefDeProjet;}
-    public void setChefDeProjet(String chefDeProjet) {this.chefDeProjet = chefDeProjet;}
+    public Employe getChefDeProjet() {return chefDeProjet;}
+    public void setChefDeProjet(Employe chefDeProjet) {this.chefDeProjet = chefDeProjet;}
 }

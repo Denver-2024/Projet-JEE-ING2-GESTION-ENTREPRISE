@@ -1,9 +1,9 @@
-package fr.cytech.projetjeejakarta.servlet;
+/*package fr.cytech.projetmodel.servlet;
 
-import fr.cytech.projetjeejakarta.dao.EmployeDAO;
-import fr.cytech.projetjeejakarta.dao.RoleDAO;
-import fr.cytech.projetjeejakarta.model.Employe;
-import fr.cytech.projetjeejakarta.model.Role;
+import fr.cytech.projetmodel.dao.EmployeDAO;
+import fr.cytech.projetmodel.dao.RoleDAO;
+import fr.cytech.projetmodel.model.Employe;
+import fr.cytech.projetmodel.model.Role;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -25,7 +25,7 @@ public class SearchRole extends HttpServlet {
 
         Role role;
         RoleDAO dao = new RoleDAO();
-        role = dao.findById(2);
+        role = dao.fetchRole(2);
 
         HttpSession session = req.getSession();
         session.setAttribute("roleFound",role);
@@ -40,3 +40,4 @@ public class SearchRole extends HttpServlet {
 
 
 }
+*/

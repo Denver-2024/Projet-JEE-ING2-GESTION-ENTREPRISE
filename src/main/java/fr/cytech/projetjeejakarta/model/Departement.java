@@ -1,5 +1,6 @@
 package fr.cytech.projetjeejakarta.model;
 
+import fr.cytech.projetjeejakarta.model.Employe;
 import jakarta.persistence.*;
 
 @Entity
