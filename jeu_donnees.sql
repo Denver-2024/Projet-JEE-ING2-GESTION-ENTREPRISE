@@ -12,29 +12,29 @@ INSERT INTO Departement (nom, description) VALUES
 
 -- Employe
 INSERT INTO Employe (nom, prenom, adresse, id_departement, numero, email, sexe, grade, id_role) VALUES
-        ('Dupont','Jean','1 Rue de la bretonnière, Paris',1,'0600000001','jean.dupont@entreprise.com','M','senior',1),
-        ('Martin','Sophie','15 Rue de l_hotel de ville, Pontoise',2,'0600000002','sophie.martin@entreprise.com','F','senior',2),
+        ('Dupont','Jean','1 Rue de la bretonnière, Paris',1,'0600000001','jean.dupont@entreprise.com','M','SENIOR',1),
+        ('Martin','Sophie','15 Rue de l_hotel de ville, Pontoise',2,'0600000002','sophie.martin@entreprise.com','F','SENIOR',2),
 
-        ('Bernard','Lucas','33 boulevard du port, Cergy',1,'0600000003','lucas.bernard@entreprise.com','M','senior',3),
-        ('Moreau','Julie','4 Rue de Londres, Paris',2,'0600000004','julie.moreau@entreprise.com','F','senior',3),
-        ('Lemoine','Hugo','15 Rue de la Fayette, Paris',3,'0600000005','hugo.lemoine@entreprise.com','M','senior',3),
-        ('Petit','Emma','6 Rue de Bruxelles, Cergy',4,'0600000006','emma.petit@entreprise.com','F','senior',3),
-        ('Schneider','Paul','17 Rue de Bruxelles, Massy',5,'0600000007','paul.schneider@entreprise.com','M','senior',3),
-        ('Rossi','Carla','8 Rue de Rouen, Creil',6,'0600000008','carla.rossi@entreprise.com','F','senior',3),
+        ('Bernard','Lucas','33 boulevard du port, Cergy',1,'0600000003','lucas.bernard@entreprise.com','M','SENIOR',3),
+        ('Moreau','Julie','4 Rue de Londres, Paris',2,'0600000004','julie.moreau@entreprise.com','F','SENIOR',3),
+        ('Lemoine','Hugo','15 Rue de la Fayette, Paris',3,'0600000005','hugo.lemoine@entreprise.com','M','SENIOR',3),
+        ('Petit','Emma','6 Rue de Bruxelles, Cergy',4,'0600000006','emma.petit@entreprise.com','F','SENIOR',3),
+        ('Schneider','Paul','17 Rue de Bruxelles, Massy',5,'0600000007','paul.schneider@entreprise.com','M','SENIOR',3),
+        ('Rossi','Carla','8 Rue de Rouen, Creil',6,'0600000008','carla.rossi@entreprise.com','F','SENIOR',3),
 
-        ('Leroy','Paul','9 Place de la République, Juvisy',1,'0600000009','paul.leroy@entreprise.com','M','intermediaire',4),
-        ('Garcia','Maria','40 Rue du Général de Gaulle , Osny',2,'0600000010','maria.garcia@entreprise.com','F','intermediaire',4),
-        ('Nguyen','Minh','11 Rue de l_hotel de ville, Paris',3,'0600000011','minh.nguyen@entreprise.com','M','intermediaire',4),
-        ('Diallo','Awa','12 Rue de Lyon, Paris',4,'0600000012','awa.diallo@entreprise.com','F','intermediaire',4),
+        ('Leroy','Paul','9 Place de la République, Juvisy',1,'0600000009','paul.leroy@entreprise.com','M','INTERMEDIAIRE',4),
+        ('Garcia','Maria','40 Rue du Général de Gaulle , Osny',2,'0600000010','maria.garcia@entreprise.com','F','INTERMEDIAIRE',4),
+        ('Nguyen','Minh','11 Rue de l_hotel de ville, Paris',3,'0600000011','minh.nguyen@entreprise.com','M','INTERMEDIAIRE',4),
+        ('Diallo','Awa','12 Rue de Lyon, Paris',4,'0600000012','awa.diallo@entreprise.com','F','INTERMEDIAIRE',4),
 
-        ('Morel','Thomas','13 Rue de Paris, Juvisy',1,'0600000013','thomas.morel@entreprise.com','X','junior',5),
-        ('Fabre','Chloé','14 Rue du Général de Gaulle, Paris',2,'0600000014','chloe.fabre@entreprise.com','F','junior',5),
-        ('Meyer','Louis','40 Rue du Général de Gaulle , Osny',3,'0600000015','louis.meyer@entreprise.com','M','junior',5),
-        ('Perez','Sara','6 Rue de la Fayette, Eragny',4,'0600000016','sara.perez@entreprise.com','F','junior',5),
-        ('Khan','Imran','17 Rue de Cergy, Neuville',5,'0600000017','imran.khan@entreprise.com','M','junior',5),
-        ('Fischer','Anna','18 Rue de Lyon, Ermont',6,'0600000018','anna.fischer@entreprise.com','X','junior',5),
-        ('Hussein','Youssef','9 Rue de Rouen, Saint-Denis',1,'0600000019','youssef.hussein@entreprise.com','M','junior',5),
-        ('Barbier','Lucie','2 Rue de Rouen, Ermont',3,'0600000020','lucie.barbier@entreprise.com','F','junior',5);
+        ('Morel','Thomas','13 Rue de Paris, Juvisy',1,'0600000013','thomas.morel@entreprise.com','X','JUNIOR',5),
+        ('Fabre','Chloé','14 Rue du Général de Gaulle, Paris',2,'0600000014','chloe.fabre@entreprise.com','F','JUNIOR',5),
+        ('Meyer','Louis','40 Rue du Général de Gaulle , Osny',3,'0600000015','louis.meyer@entreprise.com','M','JUNIOR',5),
+        ('Perez','Sara','6 Rue de la Fayette, Eragny',4,'0600000016','sara.perez@entreprise.com','F','JUNIOR',5),
+        ('Khan','Imran','17 Rue de Cergy, Neuville',5,'0600000017','imran.khan@entreprise.com','M','JUNIOR',5),
+        ('Fischer','Anna','18 Rue de Lyon, Ermont',6,'0600000018','anna.fischer@entreprise.com','X','JUNIOR',5),
+        ('Hussein','Youssef','9 Rue de Rouen, Saint-Denis',1,'0600000019','youssef.hussein@entreprise.com','M','JUNIOR',5),
+        ('Barbier','Lucie','2 Rue de Rouen, Ermont',3,'0600000020','lucie.barbier@entreprise.com','F','JUNIOR',5);
 
 
 -- Définition chef de département

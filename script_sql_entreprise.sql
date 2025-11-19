@@ -65,7 +65,7 @@ CREATE TABLE Employe (
      email VARCHAR(255) NOT NULL UNIQUE,
 
      sexe ENUM('M','F','X') NOT NULL DEFAULT 'X',
-     grade ENUM('junior', 'intermediaire', 'senior') NOT NULL DEFAULT 'junior',
+     grade ENUM('JUNIOR', 'INTERMEDIAIRE', 'SENIOR') NOT NULL DEFAULT 'JUNIOR',
 
      id_role INT NOT NULL,
 
