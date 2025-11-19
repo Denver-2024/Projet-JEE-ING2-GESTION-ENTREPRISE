@@ -1,35 +1,99 @@
 package fr.cytech.projetjeejakarta.dao;
 
+import fr.cytech.projetjeejakarta.enumeration.EtatProjet;
+import fr.cytech.projetjeejakarta.model.Departement;
+import fr.cytech.projetjeejakarta.model.Employe;
 import fr.cytech.projetjeejakarta.model.Projet;
+import fr.cytech.projetjeejakarta.util.JpaUtil;
+
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.Persistence;
+import jakarta.persistence.EntityTransaction;
+import java.util.List;
 
 public class ProjetDAO {
-    private EntityManagerFactory sessionFactory;
 
-    public ProjetDAO() {
-        sessionFactory = Persistence.createEntityManagerFactory("Projet");
-    }
-
-    public Projet fetchDepartement(int id_projet){
-        EntityManager em = sessionFactory.createEntityManager();
-        em.getTransaction().begin();
+    public void creerOuModifierProjet(Projet p) {
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
         try {
-            Projet projet =(Projet) em.createQuery("select e from Projet e where e.id = :id_projet")
-                    .setParameter("id_projet",id_projet)
-                    .getSingleResult();
-
-            return projet;
-
-        }catch (NoResultException ex){
-            System.out.println("No projet found with id = " + id_projet);
-            return null;
+            trans.begin();
+            em.merge(p); // equivalent de saveOrUptade de hibernate
+            trans.commit();
+        } catch (Exception except) {
+            if (trans.isActive()) trans.rollback();
+            except.printStackTrace();
+        } finally {
+            em.close();
         }
-
-
-
-
     }
+
+    public void supprimerProjet(int id) {
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        try {
+            trans.begin();
+            Projet p=em.find(Projet.class,id);
+            if (p != null) {
+                em.remove(p);
+            }
+            trans.commit();
+        } catch (Exception except) {
+            if (trans.isActive()) trans.rollback();
+            except.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+
+    public List<Projet> afficherTous() {
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        List<Projet> projets = null;
+        try {
+            projets = em.createQuery("SELECT p FROM Projet p", Projet.class)
+                    .getResultList();
+        } catch (Exception except) {
+            except.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return projets;
+    }
+    public List<Projet> rechercherProjets(String nom) {
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        List<Projet> projets = null;
+        try{
+            projets=em.createQuery("SELECT p FROM Projet p WHERE p.nom=:nom", Projet.class)
+                    .setParameter("nom", nom)
+                    .getResultList();
+        }
+        catch(Exception except){
+            except.printStackTrace();
+        }
+        finally {
+            em.close();
+        }
+        return projets;
+    }
+
+    public EtatProjet etatProjet(String nom) {
+        Projet p= rechercherProjets(nom).getFirst();
+        return (p!=null)? p.getEtat():null;
+    }
+
+    public Employe chefProjet(String nom){
+        Projet p=rechercherProjets(nom).getFirst();
+        return (p!=null)? p.getChefDeProjet():null;
+    }
+
+    public String descriptionProjet(String nom){
+        Projet p=rechercherProjets(nom).getFirst();
+        return (p!=null)? p.getDescription():null;
+    }
+
+    public Departement departementProjet(String nom){
+        Projet p=rechercherProjets(nom).getFirst();
+        return (p!=null)? p.getDepartement():null;
+    }
+
 }
