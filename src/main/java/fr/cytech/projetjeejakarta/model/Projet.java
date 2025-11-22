@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Projet")
-public class Projet {
+public class Projet{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_projet")
@@ -26,13 +26,6 @@ public class Projet {
     @JoinColumn(name = "id_departement")
     private Departement departement;
 
-    public Departement getDepartement() {
-        return departement;
-    }
-
-    public void setDepartement(Departement departement) {
-        this.departement = departement;
-    }
 
     public Projet() {}
 
@@ -51,4 +44,16 @@ public class Projet {
 
     public Employe getChefDeProjet() {return chefDeProjet;}
     public void setChefDeProjet(Employe chefDeProjet) {this.chefDeProjet = chefDeProjet;}
+
+    public Departement getDepartement() {
+        return departement;
+    }
+    public void setDepartement(Departement departement) {
+        this.departement = departement;
+    }
+
 }
+
+
+
+

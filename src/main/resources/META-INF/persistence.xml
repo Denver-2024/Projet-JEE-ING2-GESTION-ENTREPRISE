@@ -7,9 +7,14 @@
 
     <persistence-unit name="jeejakartaUtil" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>fr.cytech.projetjeejakarta.model.Employe</class>
+
+        <class>fr.cytech.projetjeejakarta.model.Autorisation</class>
         <class>fr.cytech.projetjeejakarta.model.Departement</class>
+        <class>fr.cytech.projetjeejakarta.model.Employe</class>
+        <!--<class>fr.cytech.projetjeejakarta.model.FicheDePaie</class>-->
+        <class>fr.cytech.projetjeejakarta.model.Projet</class>
         <class>fr.cytech.projetjeejakarta.model.Role</class>
+
 
         <!-- Connexion à la base -->
         <properties>
@@ -34,10 +39,6 @@
             <!-- Disable second-level cache -->
             <property name="hibernate.cache.use_second_level_cache" value="false"/>
             <property name="hibernate.cache.use_query_cache" value="false"/>
-
-
-
-
         </properties>
     </persistence-unit>
 </persistence>

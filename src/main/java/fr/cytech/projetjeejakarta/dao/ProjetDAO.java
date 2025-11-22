@@ -14,9 +14,10 @@ import jakarta.persistence.Persistence;
 import java.util.List;
 
 public class ProjetDAO {
-    private EntityManagerFactory sessionFactory;
+
     public ProjetDAO() {
-        sessionFactory = Persistence.createEntityManagerFactory("jeejakartaUtil");
+
+       EntityManagerFactory  sessionFactory = Persistence.createEntityManagerFactory("jeejakartaUtil");
     }
 
     public void creerOuModifierProjet(Projet p) {
@@ -84,9 +85,11 @@ public class ProjetDAO {
         return projets;
     }
 
+
     public EtatProjet etatProjet(String nom) {
-        Projet p= rechercherProjets(nom).getFirst();
+        Projet p=rechercherProjets(nom).getFirst();
         return (p!=null)? p.getEtat():null;
+
     }
 
     public Employe chefProjet(String nom){

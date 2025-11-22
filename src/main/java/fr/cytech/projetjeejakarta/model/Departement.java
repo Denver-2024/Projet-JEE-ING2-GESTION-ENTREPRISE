@@ -1,13 +1,15 @@
 package fr.cytech.projetjeejakarta.model;
 
-import fr.cytech.projetjeejakarta.model.Employe;
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="Departement")
 public class Departement {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_departement")
     private int id_departement;
 
     private String nom;
@@ -15,14 +17,19 @@ public class Departement {
 
 
     @OneToOne
-    @JoinColumn(name = "id_employe")
-    private Employe directeur;
+    @JoinColumn(name = "id_chef_departement")
+    private Employe chefDepartement;
 
-    public Departement() {
+    //Relation inverse: liste tous les employés dans un département donné
+    @OneToMany(mappedBy = "departement")
+    private List<Employe> employes;
 
-    }
-    public Departement(int id_departement, String nom, String description) {
-        this.id_departement = id_departement;
+    @OneToMany(mappedBy = "departement")
+    private List<Projet> projets;
+
+    public Departement() {}
+
+    public Departement(String nom, String description) {
         this.nom = nom;
         this.description = description;
     }
@@ -52,11 +59,28 @@ public class Departement {
         this.description = description;
     }
 
-    public Employe getDirecteur() {
-        return directeur;
+    public Employe getChefDepartement() {
+        return chefDepartement;
     }
 
-    public void setDirecteur(Employe directeur) {
-        this.directeur = directeur;
+    public void setChefDepartement(Employe chefDepartement) {
+        this.chefDepartement = chefDepartement;
     }
+
+    public List<Employe> getEmployes() {
+        return employes;
+    }
+
+    public void setEmployes(List<Employe> employes) {
+        this.employes = employes;
+    }
+
+    public List<Projet> getProjets() {
+        return projets;
+    }
+
+    public void setProjets(List<Projet> projets) {
+        this.projets = projets;
+    }
+
 }

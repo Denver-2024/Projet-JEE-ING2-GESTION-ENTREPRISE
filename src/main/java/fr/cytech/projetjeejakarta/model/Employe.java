@@ -9,36 +9,43 @@ import jakarta.persistence.*;
 public class Employe {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id_employe;
 
     private String nom;
     private String prenom;
     private String adresse;
-    private int id_departement;
+    @ManyToOne
+    @JoinColumn(name = "id_departement")
+    private Departement departement;
     private String numero;
     private String email;
     @Enumerated(EnumType.STRING)
     private Sexe sexe;
     @Enumerated(EnumType.STRING)
     private Grade grade;
-    private int id_role;
-    private int salaire;
+    @ManyToOne
+    @JoinColumn(name = "id_role")
+    private Role role;
+    private float salaire;
+
+    @Column(name="mot_de_passe_hashe")
     private String password;
 
     public Employe() {
 
     }
 
-    public Employe(String nom, String prenom,String adresse, int id_departement, String numero, String email, Sexe sexe, Grade grade, int id_role ) {
+    public Employe(String nom, String prenom,String adresse, Departement departement, String numero, String email, Sexe sexe, Grade grade, Role role ) {
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
-        this.id_departement = id_departement;
+        this.departement = departement;
         this.numero = numero;
         this.email = email;
         this.sexe = sexe;
         this.grade = grade;
-        this.id_role = id_role;
+        this.role = role;
 
     }
 
@@ -74,12 +81,12 @@ public class Employe {
         this.adresse = adresse;
     }
 
-    public int getId_departement() {
-        return id_departement;
+    public Departement getDepartement() {
+        return departement;
     }
 
-    public void setId_departement(int id_departement) {
-        this.id_departement = id_departement;
+    public void setDepartement(Departement departement) {
+        this.departement = departement;
     }
 
     public String getNumero() {
@@ -114,33 +121,19 @@ public class Employe {
         this.grade = grade;
     }
 
-    public int getId_role() {
-        return id_role;
+    public Role getRole() {
+        return role;
     }
 
-    public void setId_role(int id_role) {
-        this.id_role = id_role;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    public int getSalaire() {return salaire;}
-    public void setSalaire(int salaire) {this.salaire = salaire;}
+    public float getSalaire() {return salaire;}
+    public void setSalaire(float salaire) {this.salaire = salaire;}
 
     public String getPassword() {return password;}
-    public void setPassword(String password) {}
+    public void setPassword(String password) {this.password=password;}
 
-    @Override
-    public String toString() {
-        return "Employe{" +
-                "id_employe=" + id_employe +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", adresse='" + adresse + '\'' +
-                ", id_departement=" + id_departement +
-                ", numero='" + numero + '\'' +
-                ", email='" + email + '\'' +
-                ", sexe=" + sexe +
-                ", grade=" + grade +
-                ", id_role=" + id_role +
-                '}';
-    }
+
 }
