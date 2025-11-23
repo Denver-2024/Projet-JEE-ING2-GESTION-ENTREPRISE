@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Résultat de la recherche</title>
-    <link rel="stylesheet" type="text/css" href="CSS/style.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/style.css">
 </head>
 <body>
 <div class="container">

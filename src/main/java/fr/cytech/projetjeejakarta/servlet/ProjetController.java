@@ -1,8 +1,11 @@
 package fr.cytech.projetjeejakarta.servlet;
 
+import fr.cytech.projetjeejakarta.dao.DepartementDAO;
+import fr.cytech.projetjeejakarta.dao.EmployeDAO;
 import fr.cytech.projetjeejakarta.dao.ProjetDAO;
 import fr.cytech.projetjeejakarta.enumeration.EtatProjet;
 import fr.cytech.projetjeejakarta.model.Departement;
+import fr.cytech.projetjeejakarta.model.Employe;
 import fr.cytech.projetjeejakarta.model.Projet;
 
 import jakarta.servlet.ServletException;
@@ -35,21 +38,37 @@ public class ProjetController extends HttpServlet {
             // Afficher tous les projets
             List<Projet> projets = projetDAO.afficherTous();
             request.setAttribute("projets", projets);
-            request.getRequestDispatcher("listeProjets.jsp").forward(request, response);
+            request.getRequestDispatcher("Projet/listeProjets.jsp").forward(request, response);
 
         } else if (action.equals("rechercher")) {
             // Rechercher par nom
             String nom = request.getParameter("nom");
             List<Projet> projets = projetDAO.rechercherProjets(nom);
             request.setAttribute("projets", projets);
-            request.getRequestDispatcher("resultatRecherche.jsp").forward(request, response);
+            request.getRequestDispatcher("Projet/resultatRecherche.jsp").forward(request, response);
 
-        } else if (action.equals("supprimer")) {
+        }
+
+        else if (action.equals("modifier")) {
+            //Modifier projet par ID
+            int id = Integer.parseInt(request.getParameter("id"));
+            Projet projet=projetDAO.rechercherProjetParID(id);
+            response.sendRedirect("Projet/projetFormulaire.jsp?id="+id
+                    +"&name="+projet.getNom()
+                    +"&description="+projet.getDescription()
+                    +"&etat="+projet.getEtat()
+                    +"&chefProjet="+projet.getChefDeProjet().getNom()
+                    +"&departement="+projet.getDepartement().getNom());
+        }
+
+        else if (action.equals("supprimer")) {
             // Supprimer par ID
             int id = Integer.parseInt(request.getParameter("id"));
             projetDAO.supprimerProjet(id);
             response.sendRedirect("ProjetController?action=liste");
         }
+
+
     }
 
     @Override
@@ -60,15 +79,21 @@ public class ProjetController extends HttpServlet {
         String nom = request.getParameter("nom");
         String description = request.getParameter("description");
         String etatStr = request.getParameter("etat");
-        //String departementStr=request.getParameter("departement");
+        String chefProjetStr=request.getParameter("chefProjet");
+        String departementStr=request.getParameter("departement");
 
         EtatProjet etat = EtatProjet.valueOf(etatStr);
-        //Departement departement= Departement;
+
+        EmployeDAO employeDAO=new EmployeDAO();
+        Employe chefProjet=employeDAO.rechercherParNom(chefProjetStr).getFirst();
+        DepartementDAO departementDAO=new DepartementDAO();
+        Departement departement= departementDAO.rechercherParNom(departementStr).getFirst();
         Projet p = new Projet();
         p.setNom(nom);
         p.setDescription(description);
         p.setEtat(etat);
-        //p.setDepartement(departement);
+        p.setDepartement(departement);
+        p.setChefDeProjet(chefProjet);
 
         projetDAO.creerOuModifierProjet(p);
 

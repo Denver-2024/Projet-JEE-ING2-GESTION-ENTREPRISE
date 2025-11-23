@@ -26,7 +26,6 @@ public class ProjetDAO {
         try {
             trans.begin();
             em.merge(p); // equivalent de saveOrUptade de hibernate
-            System.out.println("je suis dans ProjetDAO");
             trans.commit();
         } catch (Exception except) {
             if (trans.isActive()) trans.rollback();
@@ -55,6 +54,8 @@ public class ProjetDAO {
     }
 
 
+
+
     public List<Projet> afficherTous() {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
         List<Projet> projets = null;
@@ -68,6 +69,22 @@ public class ProjetDAO {
         }
         return projets;
     }
+
+    public Projet rechercherProjetParID(int id) {
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        Projet projet = null;
+        try {
+            projet=em.find(Projet.class,id);
+
+        } catch (Exception except) {
+            except.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return projet;
+    }
+
+
     public List<Projet> rechercherProjets(String nom) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
         List<Projet> projets = null;
@@ -84,6 +101,7 @@ public class ProjetDAO {
         }
         return projets;
     }
+
 
 
     public EtatProjet etatProjet(String nom) {

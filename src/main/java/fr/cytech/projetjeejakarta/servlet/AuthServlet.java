@@ -1,4 +1,4 @@
-package fr.cytech.projetjeejakarta.servlet;
+/*package fr.cytech.projetjeejakarta.servlet;
 
 import fr.cytech.projetjeejakarta.model.Employe;
 import fr.cytech.projetjeejakarta.model.Role;
@@ -64,4 +64,4 @@ public class AuthServlet extends HttpServlet {
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
     }
-}
+}*/

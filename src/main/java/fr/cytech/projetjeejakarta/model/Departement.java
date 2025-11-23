@@ -9,7 +9,6 @@ public class Departement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_departement")
     private int id_departement;
 
     private String nom;
@@ -28,12 +27,6 @@ public class Departement {
     private List<Projet> projets;
 
     public Departement() {}
-
-    public Departement(String nom, String description) {
-        this.nom = nom;
-        this.description = description;
-    }
-
 
     public int getId_departement() {
         return id_departement;
