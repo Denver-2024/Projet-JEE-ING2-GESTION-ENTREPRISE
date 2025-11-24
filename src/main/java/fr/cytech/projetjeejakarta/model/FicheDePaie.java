@@ -55,6 +55,8 @@ public class FicheDePaie {
     public double getCotisationPatronale() {return cotisation_patronale;}
     public void setCotisationPatronale(double cotisation_patronale) {this.cotisation_patronale = cotisation_patronale;}
 
+
+    //A retravailler
     public double getDeductions() {return deductions;}
     public void setDeductions(double deductions) {this.deductions = deductions;}
 }
