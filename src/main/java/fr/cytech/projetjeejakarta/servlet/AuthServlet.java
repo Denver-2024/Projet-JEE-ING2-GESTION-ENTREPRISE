@@ -24,7 +24,6 @@ public class AuthServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Afficher la page de connexion
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 
@@ -38,28 +37,32 @@ public class AuthServlet extends HttpServlet {
             int idEmploye = Integer.parseInt(idEmployeStr);
             Employe employe = employeDAO.findById(idEmploye);
 
+            if (employe != null) {
+                boolean passwordMatch = employe.getPassword() != null && employe.getPassword().equals(password);
+            }
+
             if (employe != null && employe.getPassword() != null &&
                     employe.getPassword().equals(password)) {
-
-                // Récupérer le rôle de l'employé
                 Role role = roleDAO.findById(employe.getId_role());
 
-                // Créer la session
                 HttpSession session = request.getSession();
                 session.setAttribute("employe", employe);
-                session.setAttribute("role", role.getNom());
-                session.setMaxInactiveInterval(30 * 60); // 30 minutes
 
-                // Rediriger vers la page d'accueil
+                if (role != null) {
+                    session.setAttribute("role", role.getNom());
+                } else {
+                    session.setAttribute("role", "Non défini");
+                }
+
+                session.setMaxInactiveInterval(30 * 60);
+
                 response.sendRedirect(request.getContextPath() + "/dashboard");
             } else {
                 request.setAttribute("error", "Identifiants incorrects");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             }
-        } catch (NumberFormatException e) {
-            request.setAttribute("error", "Format d'identifiant incorrect");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
         } catch (Exception e) {
+            e.printStackTrace();
             request.setAttribute("error", "Erreur lors de l'authentification");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }

@@ -2,6 +2,7 @@ package fr.cytech.projetjeejakarta.dao;
 
 import fr.cytech.projetjeejakarta.model.Employe;
 import fr.cytech.projetjeejakarta.util.HibernateUtil;
+import fr.cytech.projetjeejakarta.util.JpaUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
@@ -31,13 +32,19 @@ public class EmployeDAO {
         }
     }
 
-    public Employe findById(int id){
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(Employe.class, id);
+    public Employe findById(int id) {
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        Employe employe = null;
+
+        try {
+            employe = em.find(Employe.class, id);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+        } finally {
+            em.close();
         }
+
+        return employe;
     }
 
 }

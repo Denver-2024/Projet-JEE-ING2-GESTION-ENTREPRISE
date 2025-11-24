@@ -11,29 +11,47 @@ import fr.cytech.projetjeejakarta.model.Autorisation;
 public class Role {
     @Id
     private int id_role;
+
     private String nom;
     private String description;
 
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = { CascadeType.PERSIST, CascadeType.MERGE }
-    )
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "Role_Autorisation",
+            name = "role_autorisation",
             joinColumns = @JoinColumn(name = "id_role"),
             inverseJoinColumns = @JoinColumn(name = "id_autorisation")
     )
-    private HashSet<Autorisation> autorisations = new HashSet<>();
+    private Set<Autorisation> autorisations;
 
-    public int getId_role() {return id_role;}
-    public void setId_role(int id_role) {this.id_role = id_role;}
+    public int getId_role() {
+        return id_role;
+    }
 
-    public String getNom() {return nom;}
-    public void setNom(String nom) {this.nom = nom;}
+    public void setId_role(int id_role) {
+        this.id_role = id_role;
+    }
 
-    public String getDescription() {return description;}
-    public void setDescription(String description) {this.description = description;}
+    public String getNom() {
+        return nom;
+    }
 
-    public HashSet<Autorisation> getAutorisations() {return autorisations;}
-    public void setAutorisations(HashSet<Autorisation> autorisations) {this.autorisations = autorisations;}
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Set<Autorisation> getAutorisations() {
+        return autorisations;
+    }
+
+    public void setAutorisations(Set<Autorisation> autorisations) {
+        this.autorisations = autorisations;
+    }
 }
