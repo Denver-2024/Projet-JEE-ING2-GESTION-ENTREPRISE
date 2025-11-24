@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Employés du département</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/style.css">
 </head>
 <body>
 <div class="container">
@@ -36,7 +36,7 @@
     <%
         }
     %>
-    <a href="DepartementController?action=liste">Retour aux départements</a>
+    <a href="../DepartementController?action=liste">Retour aux départements</a>
 </div>
 </body>
 </html>

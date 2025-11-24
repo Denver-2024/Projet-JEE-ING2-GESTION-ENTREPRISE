@@ -7,25 +7,19 @@ import fr.cytech.projetjeejakarta.model.Projet;
 import fr.cytech.projetjeejakarta.util.JpaUtil;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
-
+import java.util.Collections;
 import java.util.List;
 
 public class ProjetDAO {
 
-    public ProjetDAO() {
-
-       EntityManagerFactory  sessionFactory = Persistence.createEntityManagerFactory("jeejakartaUtil");
-    }
-
+    //Créer ou modifier un projet
     public void creerOuModifierProjet(Projet p) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
         try {
             trans.begin();
-            em.merge(p); // equivalent de saveOrUptade de hibernate
+            em.merge(p); // équivalent de saveOrUpdate
             trans.commit();
         } catch (Exception except) {
             if (trans.isActive()) trans.rollback();
@@ -35,12 +29,13 @@ public class ProjetDAO {
         }
     }
 
+    //Supprimer un projet
     public void supprimerProjet(int id) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
         try {
             trans.begin();
-            Projet p=em.find(Projet.class,id);
+            Projet p = em.find(Projet.class, id);
             if (p != null) {
                 em.remove(p);
             }
@@ -53,76 +48,77 @@ public class ProjetDAO {
         }
     }
 
-
-
-
+    //Afficher tous les projets (avec relations chargées)
     public List<Projet> afficherTous() {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        List<Projet> projets = null;
         try {
-            projets = em.createQuery("SELECT p FROM Projet p", Projet.class)
-                    .getResultList();
+            return em.createQuery(
+                    "SELECT p FROM Projet p LEFT JOIN FETCH p.chefDeProjet LEFT JOIN FETCH p.departement",
+                    Projet.class
+            ).getResultList();
         } catch (Exception except) {
             except.printStackTrace();
+            return Collections.emptyList();
         } finally {
             em.close();
         }
-        return projets;
     }
 
+    //Rechercher projet par ID (avec relations)
     public Projet rechercherProjetParID(int id) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        Projet projet = null;
         try {
-            projet=em.find(Projet.class,id);
+            List<Projet> projets = em.createQuery(
+                    "SELECT p FROM Projet p LEFT JOIN FETCH p.chefDeProjet LEFT JOIN FETCH p.departement WHERE p.idProjet = :id",
+                    Projet.class
+            ).setParameter("id", id).getResultList();
 
+            return projets.isEmpty() ? null : projets.get(0);
         } catch (Exception except) {
             except.printStackTrace();
+            return null;
         } finally {
             em.close();
         }
-        return projet;
     }
 
-
+    //Rechercher projets par nom (avec relations)
     public List<Projet> rechercherProjets(String nom) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        List<Projet> projets = null;
-        try{
-            projets=em.createQuery("SELECT p FROM Projet p WHERE p.nom=:nom", Projet.class)
-                    .setParameter("nom", nom)
-                    .getResultList();
-        }
-        catch(Exception except){
+        try {
+            return em.createQuery(
+                    "SELECT p FROM Projet p LEFT JOIN FETCH p.chefDeProjet LEFT JOIN FETCH p.departement WHERE p.nom = :nom",
+                    Projet.class
+            ).setParameter("nom", nom).getResultList();
+        } catch (Exception except) {
             except.printStackTrace();
-        }
-        finally {
+            return Collections.emptyList();
+        } finally {
             em.close();
         }
-        return projets;
     }
 
-
-
+    //Obtenir l'état d'un projet
     public EtatProjet etatProjet(String nom) {
-        Projet p=rechercherProjets(nom).getFirst();
-        return (p!=null)? p.getEtat():null;
-
+        List<Projet> projets = rechercherProjets(nom);
+        return !projets.isEmpty() ? projets.get(0).getEtat() : null;
     }
 
-    public Employe chefProjet(String nom){
-        Projet p=rechercherProjets(nom).getFirst();
-        return (p!=null)? p.getChefDeProjet():null;
+    //Obtenir le chef de projet
+    public Employe chefProjet(String nom) {
+        List<Projet> projets = rechercherProjets(nom);
+        return !projets.isEmpty() ? projets.get(0).getChefDeProjet() : null;
     }
 
-    public String descriptionProjet(String nom){
-        Projet p=rechercherProjets(nom).getFirst();
-        return (p!=null)? p.getDescription():null;
+    //Obtenir la description
+    public String descriptionProjet(String nom) {
+        List<Projet> projets = rechercherProjets(nom);
+        return !projets.isEmpty() ? projets.get(0).getDescription() : null;
     }
 
-    public Departement departementProjet(String nom){
-        Projet p=rechercherProjets(nom).getFirst();
-        return (p!=null)? p.getDepartement():null;
+    //Obtenir le département
+    public Departement departementProjet(String nom) {
+        List<Projet> projets = rechercherProjets(nom);
+        return !projets.isEmpty() ? projets.get(0).getDepartement() : null;
     }
-
 }

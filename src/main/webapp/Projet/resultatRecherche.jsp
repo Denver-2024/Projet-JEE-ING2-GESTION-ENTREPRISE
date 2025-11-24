@@ -29,7 +29,7 @@
     <%
         }
     %>
-    <a href="projetFormulaire.jsp">Retour au formulaire</a>
+    <a href="Projet/projetFormulaire.jsp">Retour au formulaire</a>
 </div>
 </body>
 </html>

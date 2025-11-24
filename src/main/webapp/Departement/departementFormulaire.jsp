@@ -2,12 +2,12 @@
 <html>
 <head>
     <title>Gestion des départements</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/style.css">
 </head>
 <body>
 <div class="container">
     <h2>Créer ou Modifier un Département</h2>
-    <form action="DepartementController" method="post">
+    <form action="../DepartementController" method="post">
         <input type="hidden" name="id" value="<%= request.getParameter("id") != null ? request.getParameter("id") : "" %>">
 
         <label for="nom">Nom :</label>
@@ -16,13 +16,16 @@
         <label for="description">Description :</label>
         <input type="text" name="description" id="description" value="<%= request.getParameter("description") != null ? request.getParameter("description") : "" %>" required>
 
+        <label for="chefDepartement">Nom du chef de département :</label>
+        <input type="text" name="chefDepartement" id="chefDepartement" value="<%= request.getParameter("chefDepartement") != null ? request.getParameter("chefDepartement") : "" %>">
+
         <input type="submit" value="Enregistrer">
     </form>
 
     <hr>
 
     <h2>Rechercher un Département</h2>
-    <form action="DepartementController" method="get">
+    <form action="../DepartementController" method="get">
         <input type="hidden" name="action" value="rechercher">
         <label for="nomRecherche">Nom :</label>
         <input type="text" name="nom" id="nomRecherche" required>
@@ -31,7 +34,7 @@
 
     <hr>
 
-    <a href="DepartementController?action=liste">Afficher tous les départements</a>
+    <a href="../DepartementController?action=liste">Afficher tous les départements</a>
 </div>
 </body>
 </html>

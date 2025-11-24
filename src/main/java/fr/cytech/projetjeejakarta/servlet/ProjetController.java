@@ -65,7 +65,7 @@ public class ProjetController extends HttpServlet {
             // Supprimer par ID
             int id = Integer.parseInt(request.getParameter("id"));
             projetDAO.supprimerProjet(id);
-            response.sendRedirect("ProjetController?action=liste");
+            response.sendRedirect("../ProjetController?action=liste");
         }
 
 
@@ -85,9 +85,9 @@ public class ProjetController extends HttpServlet {
         EtatProjet etat = EtatProjet.valueOf(etatStr);
 
         EmployeDAO employeDAO=new EmployeDAO();
-        Employe chefProjet=employeDAO.rechercherParNom(chefProjetStr).getFirst();
+        Employe chefProjet=employeDAO.rechercherParNom(chefProjetStr).get(0);
         DepartementDAO departementDAO=new DepartementDAO();
-        Departement departement= departementDAO.rechercherParNom(departementStr).getFirst();
+        Departement departement= departementDAO.rechercherParNom(departementStr).get(0);
         Projet p = new Projet();
         p.setNom(nom);
         p.setDescription(description);
@@ -98,6 +98,6 @@ public class ProjetController extends HttpServlet {
         projetDAO.creerOuModifierProjet(p);
 
         // Après création/modification → retour à la liste
-        response.sendRedirect("ProjetController?action=liste");
+        response.sendRedirect("../ProjetController?action=liste");
     }
 }

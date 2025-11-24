@@ -33,8 +33,8 @@
             <td><%= p.getEtat() %></td>
             <td><%= (p.getChefDeProjet() != null ? p.getChefDeProjet().getNom() : "Non défini") %></td>
             <td>
-                <a href="ProjetController?action=modifier&id=<%= p.getIdProjet() %>">Modifier</a>
-                <a href="ProjetController?action=supprimer&id=<%= p.getIdProjet() %>">Supprimer</a>
+                <a href="../ProjetController?action=modifier&id=<%= p.getIdProjet() %>">Modifier</a>
+                <a href="../ProjetController?action=supprimer&id=<%= p.getIdProjet() %>">Supprimer</a>
             </td>
         </tr>
         <%
@@ -48,7 +48,7 @@
     <%
         }
     %>
-    <a href="projetFormulaire.jsp">Retour au formulaire</a>
+    <a href="Projet/projetFormulaire.jsp">Retour au formulaire</a>
 </div>
 </body>
 </html>

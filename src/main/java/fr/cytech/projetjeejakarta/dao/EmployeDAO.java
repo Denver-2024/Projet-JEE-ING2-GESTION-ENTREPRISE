@@ -4,20 +4,13 @@ import fr.cytech.projetjeejakarta.model.Employe;
 import fr.cytech.projetjeejakarta.util.JpaUtil;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
-
+import java.util.Collections;
 import java.util.List;
 
 public class EmployeDAO {
 
-    public EmployeDAO(){
-        EntityManagerFactory sessionFactory = Persistence.createEntityManagerFactory("jeejakartaUtil");
-    }
-
-    //Création ou modification d'employé
-
+    //Créer ou modifier un employé
     public void creerOuModifierEmploye(Employe e) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction trans = em.getTransaction();
@@ -52,67 +45,68 @@ public class EmployeDAO {
         }
     }
 
-    // Afficher tous les employés
+    // Afficher tous les employés (avec leur département chargé)
     public List<Employe> afficherTous() {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        List<Employe> employes = null;
         try {
-            employes = em.createQuery("SELECT e FROM Employe e", Employe.class)
-                    .getResultList();
+            return em.createQuery(
+                    "SELECT e FROM Employe e LEFT JOIN FETCH e.departement", Employe.class
+            ).getResultList();
         } catch (Exception except) {
             except.printStackTrace();
+            return Collections.emptyList();
         } finally {
             em.close();
         }
-        return employes;
     }
 
-    // Rechercher un employé par son Id
+    // Rechercher un employé par son Id (avec son département)
     public Employe rechercherParId(int id) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        Employe employe = null;
         try {
-            employe = em.find(Employe.class, id);
+            List<Employe> employes = em.createQuery(
+                    "SELECT e FROM Employe e LEFT JOIN FETCH e.departement WHERE e.id_employe = :id",
+                    Employe.class
+            ).setParameter("id", id).getResultList();
+
+            return employes.isEmpty() ? null : employes.get(0);
         } catch (Exception except) {
-            System.out.println("Aucun employé trouvé avec l'id: "+id);
+            except.printStackTrace();
+            return null;
         } finally {
             em.close();
         }
-        return employe;
     }
-
 
     // Rechercher un employé par nom
     public List<Employe> rechercherParNom(String nom) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        List<Employe> employes = null;
         try {
-            employes = em.createQuery("SELECT e FROM Employe e WHERE e.nom = :nom", Employe.class)
-                    .setParameter("nom", nom)
-                    .getResultList();
+            return em.createQuery(
+                    "SELECT e FROM Employe e LEFT JOIN FETCH e.departement WHERE e.nom = :nom",
+                    Employe.class
+            ).setParameter("nom", nom).getResultList();
         } catch (Exception except) {
             except.printStackTrace();
+            return Collections.emptyList();
         } finally {
             em.close();
         }
-        return employes;
     }
-
 
     // Rechercher des employés par département
     public List<Employe> rechercherParDepartement(int idDepartement) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        List<Employe> employes = null;
         try {
-            employes = em.createQuery("SELECT e FROM Employe e WHERE e.departement.id_departement = :idDep", Employe.class)
-                    .setParameter("idDep", idDepartement)
-                    .getResultList();
+            return em.createQuery(
+                    "SELECT e FROM Employe e LEFT JOIN FETCH e.departement WHERE e.departement.id_departement = :idDep",
+                    Employe.class
+            ).setParameter("idDep", idDepartement).getResultList();
         } catch (Exception except) {
             except.printStackTrace();
+            return Collections.emptyList();
         } finally {
             em.close();
         }
-        return employes;
     }
-
 }

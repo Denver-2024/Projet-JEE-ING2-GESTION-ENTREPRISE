@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Liste des départements</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/style.css">
 </head>
 <body>
 <div class="container">
@@ -30,10 +30,10 @@
             <td><%= d.getDescription() %></td>
             <td><%= (d.getChefDepartement() != null ? d.getChefDepartement().getNom() : "Non défini") %></td>
             <td>
-                <a href="DepartementController?action=modifier&id=<%= d.getId_departement() %>">Modifier</a>
-                <a href="DepartementController?action=supprimer&id=<%= d.getId_departement() %>">Supprimer</a>
-                <a href="DepartementController?action=employes&nom=<%= d.getNom() %>">Voir employés</a>
-                <a href="DepartementController?action=projets&nom=<%= d.getNom() %>">Voir projets</a>
+                <a href="../DepartementController?action=modifier&id=<%= d.getId_departement() %>">Modifier</a>
+                <a href="../DepartementController?action=supprimer&id=<%= d.getId_departement() %>">Supprimer</a>
+                <a href="../DepartementController?action=employes&nom=<%= d.getNom() %>">Voir employés</a>
+                <a href="../DepartementController?action=projets&nom=<%= d.getNom() %>">Voir projets</a>
             </td>
         </tr>
         <%
@@ -47,7 +47,7 @@
     <%
         }
     %>
-    <a href="departementFormulaire.jsp">Créer un département</a>
+    <a href="Departement/departementFormulaire.jsp">Créer un département</a>
 </div>
 </body>
 </html>

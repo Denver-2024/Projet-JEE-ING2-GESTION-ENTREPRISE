@@ -6,17 +6,11 @@ import fr.cytech.projetjeejakarta.model.Projet;
 import fr.cytech.projetjeejakarta.util.JpaUtil;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
-
+import java.util.Collections;
 import java.util.List;
 
 public class DepartementDAO {
-
-    public DepartementDAO() {
-        EntityManagerFactory sessionFactory = Persistence.createEntityManagerFactory("jeejakartaUtil");
-    }
 
     //Créer ou modifier un département
     public void creerOuModifierDepartement(Departement d) {
@@ -37,46 +31,43 @@ public class DepartementDAO {
     //Afficher tous les départements
     public List<Departement> afficherTous() {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        List<Departement> departements = null;
         try {
-            departements = em.createQuery("SELECT d FROM Departement d", Departement.class)
+            return em.createQuery("SELECT d FROM Departement d", Departement.class)
                     .getResultList();
         } catch (Exception except) {
             except.printStackTrace();
+            return Collections.emptyList();
         } finally {
             em.close();
         }
-        return departements;
     }
 
     //Rechercher un département par nom
     public List<Departement> rechercherParNom(String nom) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        List<Departement> departements = null;
         try {
-            departements = em.createQuery("SELECT d FROM Departement d WHERE d.nom = :nom", Departement.class)
+            return em.createQuery("SELECT d FROM Departement d WHERE d.nom = :nom", Departement.class)
                     .setParameter("nom", nom)
                     .getResultList();
         } catch (Exception except) {
             except.printStackTrace();
+            return Collections.emptyList();
         } finally {
             em.close();
         }
-        return departements;
     }
 
     //Rechercher un département par ID
     public Departement rechercherParId(int id) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        Departement departement = null;
         try {
-            departement = em.find(Departement.class, id);
+            return em.find(Departement.class, id);
         } catch (Exception except) {
             except.printStackTrace();
+            return null;
         } finally {
             em.close();
         }
-        return departement;
     }
 
     // Supprimer un département par ID
@@ -98,35 +89,43 @@ public class DepartementDAO {
         }
     }
 
-
-    //Liste tous les employés d'un département
+    //Liste tous les employés d'un département (avec JOIN FETCH)
     public List<Employe> listeEmployesDepartement(String nom){
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        List<Employe> employes = null;
-        try{
-            employes=rechercherParNom(nom).getFirst().getEmployes();
-        }
-        catch(Exception except){
+        try {
+            List<Departement> deps = em.createQuery(
+                            "SELECT d FROM Departement d LEFT JOIN FETCH d.employes WHERE d.nom = :nom", Departement.class)
+                    .setParameter("nom", nom)
+                    .getResultList();
+
+            if (!deps.isEmpty()) {
+                return deps.get(0).getEmployes(); // collection déjà chargée
+            }
+        } catch(Exception except){
             except.printStackTrace();
-        }
-        finally {
+        } finally {
             em.close();
         }
-        return employes;
+        return Collections.emptyList();
     }
 
+    //Liste tous les projets d'un département (avec JOIN FETCH)
     public List<Projet> listeProjetsDepartement(String nom){
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        List<Projet> projets = null;
-        try{
-            projets=rechercherParNom(nom).getFirst().getProjets();
-        }
-        catch(Exception except){
+        try {
+            List<Departement> deps = em.createQuery(
+                            "SELECT d FROM Departement d LEFT JOIN FETCH d.projets WHERE d.nom = :nom", Departement.class)
+                    .setParameter("nom", nom)
+                    .getResultList();
+
+            if (!deps.isEmpty()) {
+                return deps.get(0).getProjets(); // collection déjà chargée
+            }
+        } catch(Exception except){
             except.printStackTrace();
-        }
-        finally {
+        } finally {
             em.close();
         }
-        return projets;
+        return Collections.emptyList();
     }
 }

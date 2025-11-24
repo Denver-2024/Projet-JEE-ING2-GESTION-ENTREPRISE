@@ -7,7 +7,7 @@
 <body>
 <div class="container">
     <h2>Créer ou Modifier un Projet</h2>
-    <form action="ProjetController" method="post">
+    <form action="../ProjetController" method="post">
         <input type="hidden" name="id" value="<%= request.getParameter("id") != null ? request.getParameter("id") : "" %>">
         <label for="nom">Nom :</label>
         <input type="text" name="nom" id="nom" value="<%= request.getParameter("name") != null ? request.getParameter("name") : "" %>" required>
@@ -35,7 +35,7 @@
     <hr>
 
     <h2>Rechercher un Projet</h2>
-    <form action="ProjetController" method="get">
+    <form action="../ProjetController" method="get">
         <input type="hidden" name="action" value="rechercher">
         <label for="nomRecherche">Nom :</label>
         <input type="text" name="nom" id="nomRecherche" required>
@@ -44,7 +44,7 @@
 
     <hr>
 
-    <a href="ProjetController?action=liste">Afficher tous les projets</a>
+    <a href="../ProjetController?action=liste">Afficher tous les projets</a>
 </div>
 </body>
 </html>

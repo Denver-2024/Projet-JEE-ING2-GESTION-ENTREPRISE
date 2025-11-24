@@ -1,6 +1,7 @@
 package fr.cytech.projetjeejakarta.servlet;
 
 import fr.cytech.projetjeejakarta.dao.DepartementDAO;
+import fr.cytech.projetjeejakarta.dao.EmployeDAO;
 import fr.cytech.projetjeejakarta.model.Departement;
 import fr.cytech.projetjeejakarta.model.Employe;
 import fr.cytech.projetjeejakarta.model.Projet;
@@ -51,14 +52,15 @@ public class DepartementController extends HttpServlet {
             Departement departement = departementDAO.rechercherParId(id);
             response.sendRedirect("Departement/departementFormulaire.jsp?id=" + id
                     + "&name=" + departement.getNom()
-                    + "&description=" + departement.getDescription());
+                    + "&description=" + departement.getDescription()
+                    + "&chefDepartement=" + departement.getChefDepartement().getNom());
         }
 
         else if (action.equals("supprimer")) {
             // Supprimer par ID
             int id = Integer.parseInt(request.getParameter("id"));
             departementDAO.supprimerDepartement(id);
-            response.sendRedirect("DepartementController?action=liste");
+            response.sendRedirect("../DepartementController?action=liste");
 
         } else if (action.equals("employes")) {
             // Liste des employés d’un département
@@ -83,14 +85,21 @@ public class DepartementController extends HttpServlet {
         // Création ou modification d’un département
         String nom = request.getParameter("nom");
         String description = request.getParameter("description");
+        String chefDepartementStr = request.getParameter("chefDepartement");
 
         Departement d = new Departement();
         d.setNom(nom);
         d.setDescription(description);
 
+        if (!chefDepartementStr.isEmpty()) {
+            EmployeDAO employeDAO = new EmployeDAO();
+            Employe chefDepartement=employeDAO.rechercherParNom(chefDepartementStr).get(0);
+            d.setChefDepartement(chefDepartement);
+        }
+
         departementDAO.creerOuModifierDepartement(d);
 
         // Après création/modification → retour à la liste
-        response.sendRedirect("DepartementController?action=liste");
+        response.sendRedirect("../DepartementController?action=liste");
     }
 }

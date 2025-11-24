@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Résultat recherche département</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/style.css">
 </head>
 <body>
 <div class="container">
@@ -27,7 +27,7 @@
     <%
         }
     %>
-    <a href="departementFormulaire.jsp">Retour au formulaire</a>
+    <a href="Departement/departementFormulaire.jsp">Retour au formulaire</a>
 </div>
 </body>
 </html>
