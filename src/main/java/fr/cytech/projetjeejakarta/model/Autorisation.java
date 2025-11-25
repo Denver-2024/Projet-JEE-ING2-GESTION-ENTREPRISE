@@ -20,6 +20,7 @@ public class Autorisation {
     @ManyToMany(mappedBy = "autorisations") // relation inverse vers Role
     private Set<Role> roles;
 
+
     // --- Getters / Setters ---
     public Integer getId_autorisation() { return id_autorisation; }
     public void setId_autorisation(Integer id_autorisation) { this.id_autorisation = id_autorisation; }

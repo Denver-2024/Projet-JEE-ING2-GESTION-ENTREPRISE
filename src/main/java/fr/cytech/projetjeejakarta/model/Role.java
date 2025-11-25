@@ -1,6 +1,7 @@
 package fr.cytech.projetjeejakarta.model;
 
 import jakarta.persistence.*;
+
 import java.util.Set;
 import fr.cytech.projetjeejakarta.model.Autorisation;
 
@@ -9,15 +10,14 @@ import fr.cytech.projetjeejakarta.model.Autorisation;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // cohérent avec AUTO_INCREMENT
-    @Column(name = "id_role")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_role;
 
     @Column(nullable = false)
     private String nom;
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "role_autorisation",
             joinColumns = @JoinColumn(name = "id_role"),

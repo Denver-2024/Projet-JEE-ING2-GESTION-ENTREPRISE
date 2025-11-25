@@ -25,7 +25,7 @@ public class SearchRole extends HttpServlet {
 
         Role role;
         RoleDAO dao = new RoleDAO();
-        role = dao.findById(2);
+        role = dao.rechercherRole(2);
 
         HttpSession session = req.getSession();
         session.setAttribute("roleFound",role);

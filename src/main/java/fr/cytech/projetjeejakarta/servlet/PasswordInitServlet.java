@@ -19,7 +19,7 @@ public class PasswordInitServlet extends HttpServlet {
 
         // Vérifie si au moins un employé n'a pas de hash BCrypt
         for (int i = 1; i <= 20; i++) {
-            Employe employe = employeDAO.findById(i);
+            Employe employe = employeDAO.rechercherParId(i);
             if (employe != null && (employe.getPassword() == null ||
                     !employe.getPassword().startsWith("$2a$"))) {
                 needsUpdate = true;
@@ -44,7 +44,7 @@ public class PasswordInitServlet extends HttpServlet {
 
             // Met à jour tous les employés
             for (int i = 1; i <= 20; i++) {
-                Employe employe = employeDAO.findById(i);
+                Employe employe = employeDAO.rechercherParId(i);
                 if (employe != null) {
                     // Utilise EntityManager directement pour la mise à jour
                     jakarta.persistence.EntityManager em = fr.cytech.projetjeejakarta.util.JpaUtil.getEntityManagerFactory().createEntityManager();

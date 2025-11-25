@@ -36,7 +36,7 @@ public class AuthServlet extends HttpServlet {
 
         try {
             int idEmploye = Integer.parseInt(idEmployeStr);
-            Employe employe = employeDAO.findById(idEmploye);
+            Employe employe = employeDAO.rechercherParId(idEmploye);
             System.out.println("Password saisi: " + password);
             System.out.println("Hash en base: " + employe.getPassword());
             System.out.println("Check BCrypt: " + PasswordUtil.checkPassword(password, employe.getPassword()));
