@@ -1,4 +1,4 @@
-package fr.cytech.projetjeejakarta.model;
+/*package fr.cytech.projetjeejakarta.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -60,3 +60,4 @@ public class FicheDePaie {
     public double getDeductions() {return deductions;}
     public void setDeductions(double deductions) {this.deductions = deductions;}
 }
+*/

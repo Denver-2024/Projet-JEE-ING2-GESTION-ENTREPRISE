@@ -57,7 +57,7 @@ CREATE TABLE Employe (
      id_employe INT AUTO_INCREMENT PRIMARY KEY,
      nom VARCHAR(255) NOT NULL,
      prenom VARCHAR(255) NOT NULL,
-     mot_de_passe_hashe VARCHAR(255) NOT NULL DEFAULT 'JEE_Killers',
+     password VARCHAR(255) NOT NULL DEFAULT 'JEE_Killers',
      adresse TEXT NOT NULL,
 
      id_departement INT NOT NULL,
