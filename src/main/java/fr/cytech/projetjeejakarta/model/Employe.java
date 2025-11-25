@@ -133,7 +133,7 @@ public class Employe {
     public void setSalaire(float salaire) {this.salaire = salaire;}
 
     public String getPassword() {return password;}
-    public void setPassword(String password) {}
+    public void setPassword(String password) {this.password=password;}
 
     @Override
     public String toString() {

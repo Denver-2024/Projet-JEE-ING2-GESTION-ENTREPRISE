@@ -45,16 +45,18 @@ public class DepartementDAO {
     //Rechercher un département par nom
     public List<Departement> rechercherParNom(String nom) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        List<Departement> departements=null;
         try {
-            return em.createQuery("SELECT d FROM Departement d WHERE d.nom = :nom", Departement.class)
+            departements= em.createQuery("SELECT d FROM Departement d WHERE d.nom = :nom", Departement.class)
                     .setParameter("nom", nom)
                     .getResultList();
         } catch (Exception except) {
             except.printStackTrace();
-            return Collections.emptyList();
+
         } finally {
             em.close();
         }
+        return departements;
     }
 
     //Rechercher un département par ID
@@ -99,7 +101,7 @@ public class DepartementDAO {
                     .getResultList();
 
             if (!deps.isEmpty()) {
-                return deps.get(0).getEmployes(); // collection déjà chargée
+                return deps.get(0).getEmployes();
             }
         } catch(Exception except){
             except.printStackTrace();
@@ -119,7 +121,7 @@ public class DepartementDAO {
                     .getResultList();
 
             if (!deps.isEmpty()) {
-                return deps.get(0).getProjets(); // collection déjà chargée
+                return deps.get(0).getProjets();
             }
         } catch(Exception except){
             except.printStackTrace();

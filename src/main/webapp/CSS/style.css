@@ -34,10 +34,17 @@ th, td {
 th {
     background-color: #eaeaea;
 }
-.message {
+.messageErreur {
     text-align: center;
     font-style: italic;
     color: red;
+    margin-bottom: 15px;
+}
+
+.messageSucces {
+    text-align: center;
+    font-style: italic;
+    color: green;
     margin-bottom: 15px;
 }
 a {

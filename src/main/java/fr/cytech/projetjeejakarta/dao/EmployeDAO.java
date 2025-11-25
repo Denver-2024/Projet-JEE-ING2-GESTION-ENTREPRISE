@@ -12,11 +12,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class EmployeDAO {
-    private EntityManagerFactory sessionFactory;
-
-    public EmployeDAO() {
-        sessionFactory = Persistence.createEntityManagerFactory("jeejakartaUtil");
-    }
 
     //Créer ou modifier un employé
     public void creerOuModifierEmploye(Employe e) {
@@ -53,99 +48,71 @@ public class EmployeDAO {
         }
     }
 
-    // Afficher tous les employés (avec leur département chargé)
+
+
     public List<Employe> afficherTous() {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        List<Employe> employes=null;
         try {
-            return em.createQuery(
+            employes=em.createQuery(
                     "SELECT e FROM Employe e LEFT JOIN FETCH e.departement", Employe.class
             ).getResultList();
         } catch (Exception except) {
             except.printStackTrace();
-            return Collections.emptyList();
+
         } finally {
             em.close();
         }
+        return employes;
     }
 
-    public Employe findById(int id) {
-        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        Employe employe = null;
-
-        try {
-            employe = em.find(Employe.class, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
-
-        return employe;
-    }
-
-    public void update(Employe employe) {
-        EntityManager em = sessionFactory.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.merge(employe); // Utilise merge() pour la mise à jour
-            em.getTransaction().commit();
-            System.out.println("Employé mis à jour: " + employe.getId_employe());
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
-    }
-
+    // Rechercher un employé par son Id
     public Employe rechercherParId(int id) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        Employe e=null;
         try {
-            List<Employe> employes = em.createQuery(
-                    "SELECT e FROM Employe e LEFT JOIN FETCH e.departement WHERE e.id_employe = :id",
-                    Employe.class
-            ).setParameter("id", id).getResultList();
-
-            return employes.isEmpty() ? null : employes.get(0);
+            e = em.find(Employe.class, id);
         } catch (Exception except) {
             except.printStackTrace();
-            return null;
         } finally {
             em.close();
         }
+        return e;
     }
 
     // Rechercher un employé par nom
     public List<Employe> rechercherParNom(String nom) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        List<Employe> e=null;
         try {
-            return em.createQuery(
+            e= em.createQuery(
                     "SELECT e FROM Employe e LEFT JOIN FETCH e.departement WHERE e.nom = :nom",
                     Employe.class
             ).setParameter("nom", nom).getResultList();
         } catch (Exception except) {
             except.printStackTrace();
-            return Collections.emptyList();
+
         } finally {
             em.close();
         }
+        return e;
     }
 
     // Rechercher des employés par département
     public List<Employe> rechercherParDepartement(int idDepartement) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        List<Employe> e=null;
         try {
-            return em.createQuery(
+            e= em.createQuery(
                     "SELECT e FROM Employe e LEFT JOIN FETCH e.departement WHERE e.departement.id_departement = :idDep",
                     Employe.class
             ).setParameter("idDep", idDepartement).getResultList();
         } catch (Exception except) {
             except.printStackTrace();
-            return Collections.emptyList();
+
         } finally {
             em.close();
         }
+        return e;
     }
 }
