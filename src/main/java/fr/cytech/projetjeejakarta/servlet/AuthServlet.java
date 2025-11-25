@@ -1,4 +1,4 @@
-/*package fr.cytech.projetjeejakarta.servlet;
+package fr.cytech.projetjeejakarta.servlet;
 
 import fr.cytech.projetjeejakarta.util.PasswordUtil;
 import fr.cytech.projetjeejakarta.model.Employe;
@@ -47,7 +47,7 @@ public class AuthServlet extends HttpServlet {
 
             if (employe != null && employe.getPassword() != null &&
                     PasswordUtil.checkPassword(password, employe.getPassword())) {
-                Role role = roleDAO.findById(employe.getId_role());
+                Role role = employe.getRole();
 
                 HttpSession session = request.getSession();
                 session.setAttribute("employe", employe);
@@ -71,4 +71,4 @@ public class AuthServlet extends HttpServlet {
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
     }
-}*/
+}
