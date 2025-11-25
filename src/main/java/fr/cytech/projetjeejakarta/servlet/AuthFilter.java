@@ -1,4 +1,4 @@
-package fr.cytech.projetjeejakarta.servlet;
+/*package fr.cytech.projetjeejakarta.servlet;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
@@ -35,3 +35,4 @@ public class AuthFilter implements Filter {
     }
 }
 
+*/

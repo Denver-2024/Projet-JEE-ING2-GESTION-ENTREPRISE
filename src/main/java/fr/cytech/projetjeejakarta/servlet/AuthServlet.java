@@ -1,5 +1,6 @@
 package fr.cytech.projetjeejakarta.servlet;
 
+import fr.cytech.projetjeejakarta.util.PasswordUtil;
 import fr.cytech.projetjeejakarta.model.Employe;
 import fr.cytech.projetjeejakarta.model.Role;
 import fr.cytech.projetjeejakarta.dao.EmployeDAO;
@@ -36,13 +37,16 @@ public class AuthServlet extends HttpServlet {
         try {
             int idEmploye = Integer.parseInt(idEmployeStr);
             Employe employe = employeDAO.findById(idEmploye);
+            System.out.println("Password saisi: " + password);
+            System.out.println("Hash en base: " + employe.getPassword());
+            System.out.println("Check BCrypt: " + PasswordUtil.checkPassword(password, employe.getPassword()));
 
             if (employe != null) {
-                boolean passwordMatch = employe.getPassword() != null && employe.getPassword().equals(password);
+                boolean passwordMatch = employe.getPassword() != null && PasswordUtil.checkPassword(password, employe.getPassword());
             }
 
             if (employe != null && employe.getPassword() != null &&
-                    employe.getPassword().equals(password)) {
+                    PasswordUtil.checkPassword(password, employe.getPassword())) {
                 Role role = roleDAO.findById(employe.getId_role());
 
                 HttpSession session = request.getSession();

@@ -47,4 +47,21 @@ public class EmployeDAO {
         return employe;
     }
 
+    public void update(Employe employe) {
+        EntityManager em = sessionFactory.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(employe); // Utilise merge() pour la mise à jour
+            em.getTransaction().commit();
+            System.out.println("Employé mis à jour: " + employe.getId_employe());
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
 }
