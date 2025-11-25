@@ -6,7 +6,17 @@
 </head>
 <body>
 <div class="container">
-    <h2>Créer ou Modifier un Projet</h2>
+    <h2>Modifier un Projet</h2>
+    <% String messageErreur =(String) request.getAttribute("messageErreur");
+        String messageSucces =(String) request.getAttribute("messageSucces");
+        if (messageErreur!=null){%>
+    <p class="messageErreur"><%=messageErreur%></p>
+    <%}
+    else if (messageSucces!=null){%>
+    <p class="messageSucces"><%=messageSucces%></p>
+    <%
+        }
+    %>
     <form action="../ProjetController" method="post">
         <input type="hidden" name="id" value="<%= request.getParameter("id") != null ? request.getParameter("id") : "" %>">
         <label for="nom">Nom :</label>
@@ -31,17 +41,6 @@
 
         <input type="submit" value="Enregistrer">
     </form>
-
-    <hr>
-
-    <h2>Rechercher un Projet</h2>
-    <form action="../ProjetController" method="get">
-        <input type="hidden" name="action" value="rechercher">
-        <label for="nomRecherche">Nom :</label>
-        <input type="text" name="nom" id="nomRecherche" required>
-        <input type="submit" value="Rechercher">
-    </form>
-
     <hr>
 
     <a href="../ProjetController?action=liste">Afficher tous les projets</a>

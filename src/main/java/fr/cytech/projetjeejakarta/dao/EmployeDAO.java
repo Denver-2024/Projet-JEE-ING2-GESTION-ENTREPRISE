@@ -45,68 +45,71 @@ public class EmployeDAO {
         }
     }
 
-    // Afficher tous les employés (avec leur département chargé)
+
+
     public List<Employe> afficherTous() {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        List<Employe> employes=null;
         try {
-            return em.createQuery(
+            employes=em.createQuery(
                     "SELECT e FROM Employe e LEFT JOIN FETCH e.departement", Employe.class
             ).getResultList();
         } catch (Exception except) {
             except.printStackTrace();
-            return Collections.emptyList();
+
         } finally {
             em.close();
         }
+        return employes;
     }
 
-    // Rechercher un employé par son Id (avec son département)
+    // Rechercher un employé par son Id
     public Employe rechercherParId(int id) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        Employe e=null;
         try {
-            List<Employe> employes = em.createQuery(
-                    "SELECT e FROM Employe e LEFT JOIN FETCH e.departement WHERE e.id_employe = :id",
-                    Employe.class
-            ).setParameter("id", id).getResultList();
-
-            return employes.isEmpty() ? null : employes.get(0);
+            e = em.find(Employe.class, id);
         } catch (Exception except) {
             except.printStackTrace();
-            return null;
         } finally {
             em.close();
         }
+        return e;
     }
 
     // Rechercher un employé par nom
     public List<Employe> rechercherParNom(String nom) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        List<Employe> e=null;
         try {
-            return em.createQuery(
+            e= em.createQuery(
                     "SELECT e FROM Employe e LEFT JOIN FETCH e.departement WHERE e.nom = :nom",
                     Employe.class
             ).setParameter("nom", nom).getResultList();
         } catch (Exception except) {
             except.printStackTrace();
-            return Collections.emptyList();
+
         } finally {
             em.close();
         }
+        return e;
     }
 
     // Rechercher des employés par département
     public List<Employe> rechercherParDepartement(int idDepartement) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        List<Employe> e=null;
         try {
-            return em.createQuery(
+            e= em.createQuery(
                     "SELECT e FROM Employe e LEFT JOIN FETCH e.departement WHERE e.departement.id_departement = :idDep",
                     Employe.class
             ).setParameter("idDep", idDepartement).getResultList();
         } catch (Exception except) {
             except.printStackTrace();
-            return Collections.emptyList();
+
         } finally {
             em.close();
         }
+        return e;
     }
 }
