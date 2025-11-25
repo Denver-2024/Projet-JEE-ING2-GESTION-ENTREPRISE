@@ -33,7 +33,7 @@ public class RoleDAO {
         }
     }
 
-    public Role findById(int id) {
+    public Role findById(Integer id) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
         Role role = null;
 

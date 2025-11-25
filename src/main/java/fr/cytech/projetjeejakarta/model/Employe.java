@@ -29,7 +29,7 @@ public class Employe {
     private Role role;
     private float salaire;
 
-    @Column(name="mot_de_passe_hashe")
+    @Column(name="password")
     private String password;
 
     public Employe() {
