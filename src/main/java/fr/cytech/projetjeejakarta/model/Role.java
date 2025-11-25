@@ -2,6 +2,7 @@ package fr.cytech.projetjeejakarta.model;
 
 import jakarta.persistence.*;
 import java.util.Set;
+import fr.cytech.projetjeejakarta.model.Autorisation;
 
 @Entity
 @Table(name = "Role")
@@ -14,15 +15,11 @@ public class Role {
 
     @Column(nullable = false)
     private String nom;
-
     private String description;
 
-    @ManyToMany(
-            fetch = FetchType.LAZY,
-            cascade = { CascadeType.PERSIST, CascadeType.MERGE }
-    )
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "Role_Autorisation",
+            name = "role_autorisation",
             joinColumns = @JoinColumn(name = "id_role"),
             inverseJoinColumns = @JoinColumn(name = "id_autorisation")
     )
@@ -32,11 +29,11 @@ public class Role {
     public Integer getId_role() { return id_role; }
     public void setId_role(Integer id_role) { this.id_role = id_role; }
 
-    public String getNom() { return nom; }
-    public void setNom(String nom) { this.nom = nom; }
+    public String getNom() {return nom;}
+    public void setNom(String nom) {this.nom = nom;}
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getDescription() {return description;}
+    public void setDescription(String description) {this.description = description;}
 
     public Set<Autorisation> getAutorisations() { return autorisations; }
     public void setAutorisations(Set<Autorisation> autorisations) { this.autorisations = autorisations; }

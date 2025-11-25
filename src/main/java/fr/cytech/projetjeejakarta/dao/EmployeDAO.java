@@ -4,11 +4,19 @@ import fr.cytech.projetjeejakarta.model.Employe;
 import fr.cytech.projetjeejakarta.util.JpaUtil;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.Persistence;
 import jakarta.persistence.EntityTransaction;
 import java.util.Collections;
 import java.util.List;
 
 public class EmployeDAO {
+    private EntityManagerFactory sessionFactory;
+
+    public EmployeDAO() {
+        sessionFactory = Persistence.createEntityManagerFactory("jeejakartaUtil");
+    }
 
     //Créer ou modifier un employé
     public void creerOuModifierEmploye(Employe e) {
@@ -60,7 +68,38 @@ public class EmployeDAO {
         }
     }
 
-    // Rechercher un employé par son Id (avec son département)
+    public Employe findById(int id) {
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        Employe employe = null;
+
+        try {
+            employe = em.find(Employe.class, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+
+        return employe;
+    }
+
+    public void update(Employe employe) {
+        EntityManager em = sessionFactory.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(employe); // Utilise merge() pour la mise à jour
+            em.getTransaction().commit();
+            System.out.println("Employé mis à jour: " + employe.getId_employe());
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
     public Employe rechercherParId(int id) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
         try {

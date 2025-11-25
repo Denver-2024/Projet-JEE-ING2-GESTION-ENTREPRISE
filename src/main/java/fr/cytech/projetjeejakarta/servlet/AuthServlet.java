@@ -1,5 +1,6 @@
 /*package fr.cytech.projetjeejakarta.servlet;
 
+import fr.cytech.projetjeejakarta.util.PasswordUtil;
 import fr.cytech.projetjeejakarta.model.Employe;
 import fr.cytech.projetjeejakarta.model.Role;
 import fr.cytech.projetjeejakarta.dao.EmployeDAO;
@@ -24,7 +25,6 @@ public class AuthServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Afficher la page de connexion
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 
@@ -37,29 +37,36 @@ public class AuthServlet extends HttpServlet {
         try {
             int idEmploye = Integer.parseInt(idEmployeStr);
             Employe employe = employeDAO.findById(idEmploye);
+            System.out.println("Password saisi: " + password);
+            System.out.println("Hash en base: " + employe.getPassword());
+            System.out.println("Check BCrypt: " + PasswordUtil.checkPassword(password, employe.getPassword()));
+
+            if (employe != null) {
+                boolean passwordMatch = employe.getPassword() != null && PasswordUtil.checkPassword(password, employe.getPassword());
+            }
 
             if (employe != null && employe.getPassword() != null &&
-                    employe.getPassword().equals(password)) {
-
-                // Récupérer le rôle de l'employé
+                    PasswordUtil.checkPassword(password, employe.getPassword())) {
                 Role role = roleDAO.findById(employe.getId_role());
 
-                // Créer la session
                 HttpSession session = request.getSession();
                 session.setAttribute("employe", employe);
-                session.setAttribute("role", role.getNom());
-                session.setMaxInactiveInterval(30 * 60); // 30 minutes
 
-                // Rediriger vers la page d'accueil
+                if (role != null) {
+                    session.setAttribute("role", role.getNom());
+                } else {
+                    session.setAttribute("role", "Non défini");
+                }
+
+                session.setMaxInactiveInterval(30 * 60);
+
                 response.sendRedirect(request.getContextPath() + "/dashboard");
             } else {
                 request.setAttribute("error", "Identifiants incorrects");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
             }
-        } catch (NumberFormatException e) {
-            request.setAttribute("error", "Format d'identifiant incorrect");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
         } catch (Exception e) {
+            e.printStackTrace();
             request.setAttribute("error", "Erreur lors de l'authentification");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         }

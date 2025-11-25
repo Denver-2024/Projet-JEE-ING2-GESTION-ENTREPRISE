@@ -133,7 +133,21 @@ public class Employe {
     public void setSalaire(float salaire) {this.salaire = salaire;}
 
     public String getPassword() {return password;}
-    public void setPassword(String password) {this.password=password;}
+    public void setPassword(String password) {}
 
-
+    @Override
+    public String toString() {
+        return "Employe{" +
+                "id_employe=" + id_employe +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", adresse='" + adresse + '\'' +
+                ", id_departement=" + departement +
+                ", numero='" + numero + '\'' +
+                ", email='" + email + '\'' +
+                ", sexe=" + sexe +
+                ", grade=" + grade +
+                ", id_role=" + role +
+                '}';
+    }
 }

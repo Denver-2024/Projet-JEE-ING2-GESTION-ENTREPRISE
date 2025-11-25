@@ -52,21 +52,21 @@
 
     <!-- Boutons selon le rôle -->
     <c:choose>
-        <c:when test="${sessionScope.role == 'Administrateur'}">
+        <c:when test="${sessionScope.role == 'administrateur'}">
             <button class="admin-btn" onclick="showSection('employes')">Gestion Employés</button>
             <button class="admin-btn" onclick="showSection('departements')">Gestion Départements</button>
             <button class="admin-btn" onclick="showSection('projets')">Gestion Projets</button>
             <button class="admin-btn" onclick="showSection('fiches-paie')">Fiches de Paie</button>
         </c:when>
-        <c:when test="${sessionScope.role == 'Responsable RH'}">
+        <c:when test="${sessionScope.role == 'administrateur_rh'}">
             <button class="rh-btn" onclick="showSection('employes')">Gestion Employés</button>
             <button class="rh-btn" onclick="showSection('fiches-paie')">Fiches de Paie</button>
         </c:when>
-        <c:when test="${sessionScope.role == 'Chef de Département'}">
+        <c:when test="${sessionScope.role == 'chef_de_departement'}">
             <button class="chef-btn" onclick="showSection('mon-departement')">Mon Département</button>
             <button class="chef-btn" onclick="showSection('projets')">Projets</button>
         </c:when>
-        <c:when test="${sessionScope.role == 'Chef de Projet'}">
+        <c:when test="${sessionScope.role == 'chef_de_projet'}">
             <button class="chef-btn" onclick="showSection('mon-projet')">Mon Projet</button>
         </c:when>
     </c:choose>
