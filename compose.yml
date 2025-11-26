@@ -1,0 +1,11 @@
+services:
+  db:
+    container_name: mysql
+    image: mysql
+    restart: no
+    environment:
+      MYSQL_ROOT_PASSWORD: "cytech0001"
+      MYSQL_DATABASE: "entreprise"
+    ports:
+      - "3306:3306"
+
