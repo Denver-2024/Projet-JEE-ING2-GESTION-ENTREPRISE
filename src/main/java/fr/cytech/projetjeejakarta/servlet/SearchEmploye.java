@@ -42,7 +42,12 @@ public class SearchEmploye extends HttpServlet {
         resultats = employeDAO.afficherTous();
 
         if (id != null) {
-            List<Employe> resultatsRecherche = new ArrayList<>(Collections.singleton(employeDAO.rechercherParId(id)));
+            Employe e = employeDAO.rechercherParId(id);
+            List<Employe> resultatsRecherche = new ArrayList<>();
+            if (e != null)
+                resultatsRecherche = new ArrayList<>();
+            else
+                resultatsRecherche = new ArrayList<>(Collections.singleton(e));
             resultats = filtrerEmployes(resultats, resultatsRecherche);
         }
 
