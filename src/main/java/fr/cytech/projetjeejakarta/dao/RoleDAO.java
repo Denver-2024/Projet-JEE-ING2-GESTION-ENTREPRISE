@@ -40,6 +40,30 @@ public class RoleDAO {
         return roles;
     }
 
+    public Role findWithAutorisations(Role role) {
+        if (role == null) {
+            return null;
+        }
+
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        Role roleWithAutorisations = null;
+
+        try {
+            // Utilise une requête JOIN FETCH pour charger les autorisations en une seule requête
+            String jpql = "SELECT r FROM Role r LEFT JOIN FETCH r.autorisations WHERE r.id_role = :id";
+            roleWithAutorisations = em.createQuery(jpql, Role.class)
+                    .setParameter("id", role.getId_role())
+                    .getSingleResult();
+        } catch (Exception e) {
+            System.err.println("Erreur lors du chargement du rôle avec autorisations: " + e.getMessage());
+            // Fallback: retourner le rôle original sans autorisations
+            roleWithAutorisations = role;
+        } finally {
+            em.close();
+        }
+
+        return roleWithAutorisations;
+    }
 
 
 
