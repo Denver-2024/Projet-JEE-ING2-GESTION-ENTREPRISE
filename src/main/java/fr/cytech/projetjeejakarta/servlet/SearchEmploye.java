@@ -1,9 +1,7 @@
-package fr.cytech.projetmodel.servlet;
+package fr.cytech.projetjeejakarta.servlet;
 
-import fr.cytech.projetmodel.dao.EmployeDAO;
-import fr.cytech.projetmodel.enumeration.Grade;
-import fr.cytech.projetmodel.enumeration.Sexe;
-import fr.cytech.projetmodel.model.Employe;
+import fr.cytech.projetjeejakarta.dao.EmployeDAO;
+import fr.cytech.projetjeejakarta.model.Employe;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -38,3 +36,4 @@ public class SearchEmploye extends HttpServlet {
 
     }
 }
+

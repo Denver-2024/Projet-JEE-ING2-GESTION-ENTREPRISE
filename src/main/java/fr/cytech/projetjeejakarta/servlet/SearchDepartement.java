@@ -1,10 +1,8 @@
-package fr.cytech.projetmodel.servlet;
+package fr.cytech.projetjeejakarta.servlet;
 
+import fr.cytech.projetjeejakarta.dao.DepartementDAO;
 
-import fr.cytech.projetmodel.dao.DepartementDAO;
-import fr.cytech.projetmodel.dao.EmployeDAO;
-import fr.cytech.projetmodel.model.Departement;
-import fr.cytech.projetmodel.model.Employe;
+import fr.cytech.projetjeejakarta.model.Departement;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
