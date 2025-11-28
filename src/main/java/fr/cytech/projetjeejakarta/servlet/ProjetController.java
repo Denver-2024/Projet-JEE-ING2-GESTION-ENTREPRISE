@@ -40,6 +40,9 @@ public class ProjetController extends HttpServlet {
             try {
                 List<Projet> projets = projetDAO.afficherTous();
                 request.setAttribute("projets", projets);
+                if (projets.isEmpty()) {
+                    request.setAttribute("messageErreur", "Aucun projet trouvé");
+                }
                 request.getRequestDispatcher("Projet/listeEtRechercheProjets.jsp").forward(request, response);
             } catch (Exception ex) {
                 request.setAttribute("messageErreur", "Erreur lors du chargement des projets");
@@ -52,6 +55,9 @@ public class ProjetController extends HttpServlet {
             try {
                 List<Projet> projets = projetDAO.rechercherProjets(nom);
                 request.setAttribute("projets", projets);
+                if (projets.isEmpty()) {
+                    request.setAttribute("messageErreur", "Aucun projet trouvé pour ce critère");
+                }
                 request.getRequestDispatcher("Projet/resultatRechercheProjet.jsp").forward(request, response);
             } catch (Exception e) {
                 request.setAttribute("messageErreur", "Erreur lors de la recherche");
@@ -59,19 +65,12 @@ public class ProjetController extends HttpServlet {
             }
 
         } else if ("modifier".equals(action)) {
-            // Modifier projet par ID
             int id = Integer.parseInt(request.getParameter("id"));
             Projet projet = projetDAO.rechercherProjetParID(id);
 
             if (projet != null) {
-                String url = "Projet/formulaireModifierProjet.jsp?id=" + id
-                        + "&name=" + URLEncoder.encode(projet.getNom(), StandardCharsets.UTF_8)
-                        + "&description=" + URLEncoder.encode(projet.getDescription(), StandardCharsets.UTF_8)
-                        + "&etat=" + projet.getEtat()
-                        + "&chefProjet=" + URLEncoder.encode(projet.getChefDeProjet().getNom(), StandardCharsets.UTF_8)
-                        + "&departement=" + URLEncoder.encode(projet.getDepartement().getNom(), StandardCharsets.UTF_8);
-
-                response.sendRedirect(url);
+                request.setAttribute("projet", projet);
+                request.getRequestDispatcher("Projet/formulaireModifierProjet.jsp").forward(request, response);
             } else {
                 request.setAttribute("messageErreur", "Projet introuvable");
                 List<Projet> projets = projetDAO.afficherTous();
@@ -79,7 +78,7 @@ public class ProjetController extends HttpServlet {
                 request.getRequestDispatcher("Projet/listeEtRechercheProjets.jsp").forward(request, response);
             }
 
-        } else if ("supprimer".equals(action)) {
+    } else if ("supprimer".equals(action)) {
             // Supprimer par ID
             int id = Integer.parseInt(request.getParameter("id"));
             try {
@@ -104,54 +103,100 @@ public class ProjetController extends HttpServlet {
         // Création ou modification d’un projet
         String nom = request.getParameter("nom");
         String description = request.getParameter("description");
-        String etatStr = request.getParameter("etat");
         String chefProjetStr = request.getParameter("chefProjet");
         String departementStr = request.getParameter("departement");
-        System.out.println("je suis dans doPost de ProjetController");
-        try {
-            EtatProjet etat = EtatProjet.valueOf(etatStr);
+        String action = request.getParameter("action");
 
-            EmployeDAO employeDAO = new EmployeDAO();
-            List<Employe> employes = employeDAO.rechercherParNom(chefProjetStr);
-            Employe chefProjet = !employes.isEmpty() ? employes.get(0) : null;
-            System.out.println("j'ai trouvé le nom du chef de projet");
+        //Si création d'un nouveau projet
+        if ("formulaireCreerProjet".equals(action)) {
+            EtatProjet etat = EtatProjet.EN_COURS;
 
-            DepartementDAO departementDAO = new DepartementDAO();
-            List<Departement> deps = departementDAO.rechercherParNom(departementStr);
-            Departement departement = !deps.isEmpty() ? deps.get(0) : null;
-            System.out.println("j'ai trouvé le nom du département");
+            try {
 
-            if (chefProjet == null || departement == null) {
-                request.setAttribute("messageErreur", "Chef de projet ou département introuvable");
+
+                EmployeDAO employeDAO = new EmployeDAO();
+                List<Employe> employes = employeDAO.rechercherParNom(chefProjetStr);
+                Employe chefProjet = !employes.isEmpty() ? employes.get(0) : null;
+
+                DepartementDAO departementDAO = new DepartementDAO();
+                List<Departement> deps = departementDAO.rechercherParNom(departementStr);
+                Departement departement = !deps.isEmpty() ? deps.get(0) : null;
+
+                if (chefProjet == null || departement == null) {
+                    request.setAttribute("messageErreur", "Chef de projet ou département introuvable");
+                    request.getRequestDispatcher("Projet/formulaireCreerProjet.jsp").forward(request, response);
+
+                    return;
+                }
+                Projet p = new Projet();
+                p.setNom(nom);
+                p.setDescription(description);
+                p.setEtat(etat);
+                p.setDepartement(departement);
+                p.setChefDeProjet(chefProjet);
+
+                projetDAO.creerOuModifierProjet(p);
+
+                request.setAttribute("messageSucces", "Projet enregistré avec succès");
+                List<Projet> projets = projetDAO.afficherTous();
+                request.setAttribute("projets", projets);
+                request.getRequestDispatcher("Projet/listeEtRechercheProjets.jsp").forward(request, response);
+
+            } catch (Exception e) {
+                request.setAttribute("messageErreur", "Erreur lors de l'enregistrement du projet");
                 request.getRequestDispatcher("Projet/formulaireCreerProjet.jsp").forward(request, response);
-                System.out.println("j'arrive pas à trouver le chef de projet ou le département");
-                return;
             }
 
-            Projet p = new Projet();
-            p.setNom(nom);
-            p.setDescription(description);
-            p.setEtat(etat);
-            p.setDepartement(departement);
-            p.setChefDeProjet(chefProjet);
+        }
+        else if ("formulaireModifierProjet".equals(action)) {
 
-            //Dans le cas de modification du projet
-            String idStr = request.getParameter("id");
-            if (idStr != null && !idStr.isEmpty()) {
-                int id = Integer.parseInt(idStr);
-                p.setIdProjet(id);
+            //Modification d'un projet déjà existant
+            String etatStr = request.getParameter("etat");
+
+            try {
+                EtatProjet etat = EtatProjet.EN_COURS;
+                if (etatStr != null && !etatStr.isEmpty()) {
+                    etat = EtatProjet.valueOf(etatStr);
+                }
+
+                EmployeDAO employeDAO = new EmployeDAO();
+                List<Employe> employes = employeDAO.rechercherParNom(chefProjetStr);
+                Employe chefProjet = !employes.isEmpty() ? employes.get(0) : null;
+
+                DepartementDAO departementDAO = new DepartementDAO();
+                List<Departement> deps = departementDAO.rechercherParNom(departementStr);
+                Departement departement = !deps.isEmpty() ? deps.get(0) : null;
+
+                if (chefProjet == null || departement == null) {
+                    request.setAttribute("messageErreur", "Chef de projet ou département introuvable");
+                    request.getRequestDispatcher("Projet/formulaireModifierProjet.jsp").forward(request, response);
+                    return;
+                }
+
+                Projet p = new Projet();
+                p.setNom(nom);
+                p.setDescription(description);
+                p.setEtat(etat);
+                p.setDepartement(departement);
+                p.setChefDeProjet(chefProjet);
+
+                String idStr = request.getParameter("id");
+                if (idStr != null && !idStr.isEmpty()) {
+                    int id = Integer.parseInt(idStr);
+                    p.setIdProjet(id);
+                }
+
+                projetDAO.creerOuModifierProjet(p);
+
+                request.setAttribute("messageSucces", "Projet modifié avec succès");
+                List<Projet> projets = projetDAO.afficherTous();
+                request.setAttribute("projets", projets);
+                request.getRequestDispatcher("Projet/listeEtRechercheProjets.jsp").forward(request, response);
+
+            } catch (Exception e) {
+                request.setAttribute("messageErreur", "Erreur lors de la modification du projet");
+                request.getRequestDispatcher("Projet/formulaireModifierProjet.jsp").forward(request, response);
             }
-
-            projetDAO.creerOuModifierProjet(p);
-            System.out.println("j'ai pu créer le projet");
-            request.setAttribute("messageSucces", "Projet enregistré avec succès");
-            List<Projet> projets = projetDAO.afficherTous();
-            request.setAttribute("projets", projets);
-            request.getRequestDispatcher("Projet/listeEtRechercheProjets.jsp").forward(request, response);
-
-        } catch (Exception e) {
-            request.setAttribute("messageErreur", "Erreur lors de l'enregistrement du projet");
-            request.getRequestDispatcher("Projet/formulaireCreerProjet.jsp").forward(request, response);
         }
     }
 }

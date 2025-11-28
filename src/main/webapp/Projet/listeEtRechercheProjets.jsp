@@ -64,6 +64,7 @@
     <%
     }
     %>
+    <hr>
     <a href="Projet/formulaireCreerProjet.jsp">Ajouter un nouveau projet</a>
 </div>
 </body>

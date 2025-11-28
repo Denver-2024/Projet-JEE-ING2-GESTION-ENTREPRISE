@@ -18,6 +18,7 @@
     }
     %>
     <form action="../ProjetController" method="post">
+        <input type="hidden" name="action" value="formulaireCreerProjet">
         <label for="nom">Nom :</label>
         <input type="text" name="nom" id="nom" required>
 
