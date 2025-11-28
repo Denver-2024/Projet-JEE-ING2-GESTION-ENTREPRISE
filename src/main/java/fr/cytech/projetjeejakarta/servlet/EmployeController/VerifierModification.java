@@ -1,4 +1,4 @@
-/*package fr.cytech.projetjeejakarta.servlet;
+package fr.cytech.projetjeejakarta.servlet.EmployeController;
 
 import fr.cytech.projetjeejakarta.dao.DepartementDAO;
 import fr.cytech.projetjeejakarta.enumeration.Grade;
@@ -77,12 +77,11 @@ public class VerifierModification extends HttpServlet {
                     changes.add("L'adrsse mail  de l'employé sera changée de " + employeAModifier.getEmail() + " à " + email);
                 }
 
-                if(!(id_departement == employeAModifier.getId_departement())){
-                    Departement oldDepartement = new Departement();
-                    Departement newDepartement = new Departement();
+                if(!(id_departement == employeAModifier.getDepartement().getId_departement())){
+
                     DepartementDAO dao = new DepartementDAO();
-                    newDepartement =dao.fetchDepartement(id_departement);
-                    oldDepartement=dao.fetchDepartement(employeAModifier.getId_departement());
+                    Departement newDepartement =dao.rechercherParId(id_departement);
+                    Departement oldDepartement=dao.rechercherParId(employeAModifier.getDepartement().getId_departement());
                     changes.add("Le département de l'employé sera changée de " + oldDepartement.getNom() + " à " + newDepartement.getNom());
                 }
 
@@ -129,4 +128,3 @@ public class VerifierModification extends HttpServlet {
 
     }
 }
-*/

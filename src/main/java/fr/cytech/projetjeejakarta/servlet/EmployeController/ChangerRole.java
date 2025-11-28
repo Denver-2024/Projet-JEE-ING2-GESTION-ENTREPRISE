@@ -1,4 +1,4 @@
-/*package fr.cytech.projetjeejakarta.servlet;
+package fr.cytech.projetjeejakarta.servlet;
 
 import fr.cytech.projetjeejakarta.dao.EmployeDAO;
 import fr.cytech.projetjeejakarta.dao.RoleDAO;
@@ -25,7 +25,7 @@ public class ChangerRole extends HttpServlet {
 
         int roleId = Integer.parseInt(roleIdStr);
         RoleDAO roleDAO = new RoleDAO();
-        Role role = roleDAO.fetchRole(roleId);
+        Role role = roleDAO.rechercherRole(roleId);
 
 
 
@@ -40,7 +40,7 @@ public class ChangerRole extends HttpServlet {
 
         employe.setRole(role);
         EmployeDAO employeDAO = new EmployeDAO();
-        employeDAO.updateEmploye(employe);
+        employeDAO.creerOuModifierEmploye(employe);
 
         request.setAttribute("messageRoleChanged","Le rôle de employé a été changé ");
         request.getRequestDispatcher("changerLeRole.jsp").forward(request, response);
@@ -50,4 +50,3 @@ public class ChangerRole extends HttpServlet {
 
     }
 }
-*/

@@ -27,6 +27,7 @@
         <%    for (Projet p : projets) {
     %>
             <tr>
+                <td><%=p.getIdProjet()%></td>
                 <td><%= p.getNom() %></td>
                 <td><%= p.getDescription() %></td>
                 <td><%= p.getEtat() %></td>

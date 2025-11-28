@@ -1,5 +1,6 @@
-/*package fr.cytech.projetjeejakarta.servlet;
+package fr.cytech.projetjeejakarta.servlet;
 
+import fr.cytech.projetjeejakarta.dao.DepartementDAO;
 import fr.cytech.projetjeejakarta.dao.EmployeDAO;
 import fr.cytech.projetjeejakarta.enumeration.Grade;
 import fr.cytech.projetjeejakarta.enumeration.Sexe;
@@ -34,21 +35,20 @@ public class ModifierInfoEmploye extends HttpServlet {
         Integer newIdDep = (Integer) session.getAttribute("newId_departement");
         Sexe newSexe = (Sexe) session.getAttribute("newSexe");
         Grade newGrade = (Grade) session.getAttribute("newGrade");
-
+        DepartementDAO departementDAO=new DepartementDAO();
         employe.setNom(newNom);
         employe.setPrenom(newPrenom);
         employe.setAdresse(newAdresse);
         employe.setNumero(newNumero);
         employe.setEmail(newEmail);
-        employe.setId_departement(newIdDep);
+        employe.setDepartement(departementDAO.rechercherParId(newIdDep));
         employe.setSexe(newSexe);
         employe.setGrade(newGrade);
 
         EmployeDAO employeDAO = new EmployeDAO();
-        employeDAO.updateEmploye(employe);
+        employeDAO.creerOuModifierEmploye(employe);
 
         System.out.println("Employe modifier");
         request.getRequestDispatcher("afficheEmploye.jsp").forward(request, response);
     }
 }
-*/

@@ -1,4 +1,4 @@
-/*package fr.cytech.projetjeejakarta.servlet;
+package fr.cytech.projetjeejakarta.servlet.EmployeController;
 
 
 import fr.cytech.projetjeejakarta.dao.EmployeDAO;
@@ -43,13 +43,11 @@ public class RechercheMatricule extends HttpServlet {
 
         Employe employeFoundMatricule = new Employe();
         EmployeDAO employeDAO = new EmployeDAO();
-        employeFoundMatricule = employeDAO.fetchEmploye(matricule);
+        employeFoundMatricule = employeDAO.rechercherParId(matricule);
 
         if(employeFoundMatricule==null){
             request.setAttribute("errorMessageEmployeNotFound","L'employé avec le matricule "+matricule+" est introuvable");
             request.getRequestDispatcher("rechercheMatricule.jsp").forward(request, response);
-            return;
-
         }
         else{
             HttpSession session = request.getSession();
@@ -59,4 +57,3 @@ public class RechercheMatricule extends HttpServlet {
         }
     }
 }
-*/

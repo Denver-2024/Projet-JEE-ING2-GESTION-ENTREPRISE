@@ -1,4 +1,4 @@
-/*package fr.cytech.projetjeejakarta.servlet;
+package fr.cytech.projetjeejakarta.servlet.EmployeController;
 
 import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
 import fr.cytech.projetjeejakarta.dao.DepartementDAO;
@@ -36,7 +36,7 @@ public class FetchAllDepartementsAndRoles implements ServletContextListener {
         Runnable refreshTask = () -> {
             try {
                 DepartementDAO departementDAO = new DepartementDAO();
-                List<Departement> departementsFound = departementDAO.getAllDepartements();
+                List<Departement> departementsFound = departementDAO.afficherTous();
                 sce.getServletContext().setAttribute("departementsFound", departementsFound);
 
                 RoleDAO roleDAO = new RoleDAO();
@@ -49,7 +49,7 @@ public class FetchAllDepartementsAndRoles implements ServletContextListener {
         };
 
         // Schedule the task every 5 minutes, initial delay 0
-        scheduler.scheduleAtFixedRate(refreshTask, 0, 5, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(refreshTask, 0, 2, TimeUnit.MINUTES);
     }
 
     @Override
@@ -79,4 +79,3 @@ public class FetchAllDepartementsAndRoles implements ServletContextListener {
 
     }
 }
-*/

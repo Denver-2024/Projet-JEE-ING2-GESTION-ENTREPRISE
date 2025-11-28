@@ -1,5 +1,6 @@
-/*package fr.cytech.projetjeejakarta.servlet;
+package fr.cytech.projetjeejakarta.servlet.EmployeController;
 
+import fr.cytech.projetjeejakarta.dao.DepartementDAO;
 import fr.cytech.projetjeejakarta.dao.EmployeDAO;
 import fr.cytech.projetjeejakarta.dao.RoleDAO;
 import fr.cytech.projetjeejakarta.enumeration.Grade;
@@ -60,8 +61,8 @@ public class AddEmploye extends HttpServlet {
         int id_departement = Integer.parseInt(id_departementString);
 
         System.out.println("Nom : "+nom+"\nPrenom : "+prenom+"\nAdresse : "+adresse+"\nNumero : "+numero+"\nEmail : "+email+"\nId departement : "+id_departement+"\nSexe : "+sexe+"\nGrade : "+grade+"\nRole ID : "+roleId);
-
-        Employe employe = new Employe(nom,prenom,adresse,id_departement,numero,email,sexe,grade,role);
+        DepartementDAO departementDao=new DepartementDAO();
+        Employe employe = new Employe(nom,prenom,adresse, departementDao.rechercherParId(id_departement),numero,email,sexe,grade,role);
 
         EmployeDAO employeDAO = new EmployeDAO();
 
@@ -70,7 +71,5 @@ public class AddEmploye extends HttpServlet {
         request.setAttribute("messageAjoutSucces","L'employé a été ajouté aves succès");
         request.getRequestDispatcher("ajouterEmploye.jsp").forward(request, response);
 
-
     }
 }
-*/

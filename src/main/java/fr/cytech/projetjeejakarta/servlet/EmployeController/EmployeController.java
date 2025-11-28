@@ -1,4 +1,4 @@
-package fr.cytech.projetjeejakarta.servlet;
+/*package fr.cytech.projetjeejakarta.servlet;
 
 import fr.cytech.projetjeejakarta.dao.DepartementDAO;
 import fr.cytech.projetjeejakarta.dao.EmployeDAO;
@@ -230,3 +230,4 @@ public class EmployeController extends HttpServlet {
     }
 
 }
+*/
