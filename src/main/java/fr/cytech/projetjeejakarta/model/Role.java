@@ -1,4 +1,4 @@
-package fr.cytech.projetmodel.model;
+package fr.cytech.projetjeejakarta.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -46,6 +46,7 @@ public class Role {
 
     @Override
     public String toString() {
-        return nom;
+        return nom ;
     }
 }
+

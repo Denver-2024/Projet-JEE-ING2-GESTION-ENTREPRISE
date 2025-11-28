@@ -1,8 +1,10 @@
-package fr.cytech.projetmodel.model;
+package fr.cytech.projetjeejakarta.model;
 
 
-import fr.cytech.projetmodel.enumeration.Grade;
-import fr.cytech.projetmodel.enumeration.Sexe;
+
+
+import fr.cytech.projetjeejakarta.enumeration.Grade;
+import fr.cytech.projetjeejakarta.enumeration.Sexe;
 import jakarta.persistence.*;
 
 @Entity
@@ -27,13 +29,17 @@ public class Employe {
     @JoinColumn(name = "id_role")
     private Role role;
 
+    private int salaire;
+    private String password;
+
     public Employe() {
 
     }
 
-    public Employe(String nom, String prenom,String adresse, int id_departement, String numero, String email, Sexe sexe, Grade grade, Role role ) {
+    public Employe(String nom, String prenom,int salaire,String adresse, int id_departement, String numero, String email, Sexe sexe, Grade grade, Role role ) {
         this.nom = nom;
         this.prenom = prenom;
+        this.salaire = salaire;
         this.adresse = adresse;
         this.id_departement = id_departement;
         this.numero = numero;
@@ -124,6 +130,13 @@ public class Employe {
         this.role = role;
     }
 
+    public int getSalaire() {
+        return salaire;
+    }
+    public void setSalaire(int salaire) {
+        this.salaire = salaire;
+    }
+
     @Override
     public String toString() {
         return "Employe{" +
@@ -139,4 +152,6 @@ public class Employe {
                 ", role=" + role +
                 '}';
     }
+
 }
+
