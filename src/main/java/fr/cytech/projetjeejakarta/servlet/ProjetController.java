@@ -98,13 +98,17 @@ public class ProjetController extends HttpServlet {
         }
         else if ("employes".equals(action)) {
             //Lister tous les employes affectés à un projet
-            String nom=request.getParameter("nom");
+            int idProjet=Integer.parseInt(request.getParameter("idProjet"));
             try {
-                Projet projet = projetDAO.rechercherProjetsParNom(nom) != null ? projetDAO.rechercherProjetsParNom(nom).get(0) : null;
+                Projet projet = projetDAO.rechercherProjetParID(idProjet);
                 List<Employe> employes = null;
+
                 if (projet != null) {
                     employes = projet.getEmployes();
+                    List<Employe> employesDepartement=projet.getDepartement().getEmployes();
                     request.setAttribute("employes", employes);
+                    request.setAttribute("projet", projet);
+                    request.setAttribute("employesDepartement", employesDepartement);
 
                 }
                 else{
@@ -120,11 +124,11 @@ public class ProjetController extends HttpServlet {
             }
         }
         else if ("affecterEmploye".equals(action)) {
-            String nom=request.getParameter("nom");
-            String nomEmploye=request.getParameter("nomEmploye");
+            int idProjet=Integer.parseInt(request.getParameter("idProjet"));
+            int idEmploye=Integer.parseInt(request.getParameter("idEmploye"));
             try{
-                Projet projet = projetDAO.rechercherProjetsParNom(nom) != null ? projetDAO.rechercherProjetsParNom(nom).get(0) : null;
-                Employe employe = employeDAO.rechercherParNom(nomEmploye)!=null? employeDAO.rechercherParNom(nomEmploye).get(0):null;
+                Projet projet = projetDAO.rechercherProjetParID(idProjet);
+                Employe employe = employeDAO.rechercherParId(idEmploye);
                 if (projet != null && employe != null) {
                     projet.affecterEmploye(employe);
                     List<Employe> employes=projet.getEmployes();
@@ -146,11 +150,11 @@ public class ProjetController extends HttpServlet {
         }
         else if ("enleverEmploye".equals(action)) {
 
-            String nom=request.getParameter("nom");
-            String nomEmploye=request.getParameter("nomEmploye");
+            int idProjet=Integer.parseInt(request.getParameter("idProjet"));
+            int idEmploye=Integer.parseInt(request.getParameter("idEmploye"));
             try{
-                Projet projet = projetDAO.rechercherProjetsParNom(nom) != null ? projetDAO.rechercherProjetsParNom(nom).get(0) : null;
-                Employe employe = employeDAO.rechercherParNom(nomEmploye)!=null? employeDAO.rechercherParNom(nomEmploye).get(0):null;
+                Projet projet = projetDAO.rechercherProjetParID(idProjet);
+                Employe employe = employeDAO.rechercherParId(idEmploye);
                 if (projet != null && employe != null) {
                     projet.enleverEmploye(employe);
                     List<Employe> employes=projet.getEmployes();
@@ -189,7 +193,6 @@ public class ProjetController extends HttpServlet {
             EtatProjet etat = EtatProjet.EN_COURS;
 
             try {
-
 
                 EmployeDAO employeDAO = new EmployeDAO();
                 List<Employe> employes = employeDAO.rechercherParNom(chefProjetStr);

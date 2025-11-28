@@ -54,6 +54,7 @@
             <td><%= (p.getDepartement() != null ? p.getDepartement().getNom() : "Non défini") %></td>
             <td>
                 <a href="../ProjetController?action=modifier&id=<%= p.getIdProjet() %>">Modifier</a><br>
+                <a href="../ProjetController?action=employes&idProjet=<%= p.getIdProjet() %>">Employés affectés</a><br>
                 <a href="../ProjetController?action=supprimer&id=<%= p.getIdProjet() %>">Supprimer</a>
             </td>
         </tr>
