@@ -97,22 +97,4 @@ public class EmployeDAO {
         }
         return e;
     }
-
-    // Rechercher des employés par département
-    public List<Employe> rechercherParDepartement(int idDepartement) {
-        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
-        List<Employe> e=null;
-        try {
-            e= em.createQuery(
-                    "SELECT e FROM Employe e LEFT JOIN FETCH e.departement WHERE e.departement.id_departement = :idDep",
-                    Employe.class
-            ).setParameter("idDep", idDepartement).getResultList();
-        } catch (Exception except) {
-            except.printStackTrace();
-
-        } finally {
-            em.close();
-        }
-        return e;
-    }
 }

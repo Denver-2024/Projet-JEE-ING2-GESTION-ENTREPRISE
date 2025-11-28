@@ -35,7 +35,7 @@ public class DepartementController extends HttpServlet {
             // Afficher tous les départements
             List<Departement> departements = departementDAO.afficherTous();
             request.setAttribute("departements", departements);
-            request.getRequestDispatcher("Departement/listeDepartements.jsp").forward(request, response);
+            request.getRequestDispatcher("Departement/listeEtRechercheDepartements.jsp").forward(request, response);
 
         } else if (action.equals("rechercher")) {
             // Rechercher par nom
@@ -50,7 +50,7 @@ public class DepartementController extends HttpServlet {
             // Modifier département par ID
             int id = Integer.parseInt(request.getParameter("id"));
             Departement departement = departementDAO.rechercherParId(id);
-            response.sendRedirect("Departement/departementFormulaire.jsp?id=" + id
+            response.sendRedirect("Departement/formulaireModifierDepartement.jsp?id=" + id
                     + "&name=" + departement.getNom()
                     + "&description=" + departement.getDescription()
                     + "&chefDepartement=" + departement.getChefDepartement().getNom());

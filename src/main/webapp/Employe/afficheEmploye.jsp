@@ -69,10 +69,10 @@
 <body>
 
 <div class="affiche">
-    <form action="${pageContext.request.contextPath}/rechercheMatricule.jsp">
+    <form action="${pageContext.request.contextPath}/Employe/rechercheMatricule.jsp">
         <input type="submit" value="Retour à la page de recherche">
     </form>
-    <form action="modifierEmploye.jsp" method="get">
+    <form action="Employe/modifierEmploye.jsp" method="get">
         <label>Matricule :${sessionScope.employeFoundMatricule.id_employe}</label><br>
         <label>Nom : ${sessionScope.employeFoundMatricule.nom}</label><br>
         <label>Prénom : ${sessionScope.employeFoundMatricule.prenom}</label><br>

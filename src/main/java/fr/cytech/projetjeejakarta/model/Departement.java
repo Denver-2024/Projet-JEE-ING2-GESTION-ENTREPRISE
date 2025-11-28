@@ -76,4 +76,15 @@ public class Departement {
         this.projets = projets;
     }
 
+    public void ajouterProjet(Projet projet){
+        this.getProjets().add(projet);
+    }
+    public void supprimerProjet(Projet projet){
+        this.getProjets().remove(projet);
+    }
+
+    public void setEmployeDepartement(Employe employe){
+        employe.setDepartement(this);
+    }
+
 }

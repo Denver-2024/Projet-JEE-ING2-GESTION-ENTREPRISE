@@ -83,7 +83,7 @@ public class ProjetDAO {
     }
 
     //Rechercher projets par nom (avec relations)
-    public List<Projet> rechercherProjets(String nom) {
+    public List<Projet> rechercherProjetsParNom(String nom) {
         EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
         try {
             return em.createQuery(
@@ -98,27 +98,4 @@ public class ProjetDAO {
         }
     }
 
-    //Obtenir l'état d'un projet
-    public EtatProjet etatProjet(String nom) {
-        List<Projet> projets = rechercherProjets(nom);
-        return !projets.isEmpty() ? projets.get(0).getEtat() : null;
-    }
-
-    //Obtenir le chef de projet
-    public Employe chefProjet(String nom) {
-        List<Projet> projets = rechercherProjets(nom);
-        return !projets.isEmpty() ? projets.get(0).getChefDeProjet() : null;
-    }
-
-    //Obtenir la description
-    public String descriptionProjet(String nom) {
-        List<Projet> projets = rechercherProjets(nom);
-        return !projets.isEmpty() ? projets.get(0).getDescription() : null;
-    }
-
-    //Obtenir le département
-    public Departement departementProjet(String nom) {
-        List<Projet> projets = rechercherProjets(nom);
-        return !projets.isEmpty() ? projets.get(0).getDepartement() : null;
-    }
 }

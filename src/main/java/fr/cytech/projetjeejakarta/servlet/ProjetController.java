@@ -23,10 +23,12 @@ import java.util.List;
 public class ProjetController extends HttpServlet {
 
     private ProjetDAO projetDAO;
+    private EmployeDAO employeDAO;
 
     @Override
     public void init() throws ServletException {
         projetDAO = new ProjetDAO();
+        employeDAO=new EmployeDAO();
     }
 
     @Override
@@ -53,7 +55,7 @@ public class ProjetController extends HttpServlet {
             // Rechercher par nom
             String nom = request.getParameter("nom");
             try {
-                List<Projet> projets = projetDAO.rechercherProjets(nom);
+                List<Projet> projets = projetDAO.rechercherProjetsParNom(nom);
                 request.setAttribute("projets", projets);
                 if (projets.isEmpty()) {
                     request.setAttribute("messageErreur", "Aucun projet trouvé pour ce critère");
@@ -93,6 +95,81 @@ public class ProjetController extends HttpServlet {
                 request.setAttribute("projets", projets);
                 request.getRequestDispatcher("Projet/listeEtRechercheProjets.jsp").forward(request, response);
             }
+        }
+        else if ("employes".equals(action)) {
+            //Lister tous les employes affectés à un projet
+            String nom=request.getParameter("nom");
+            try {
+                Projet projet = projetDAO.rechercherProjetsParNom(nom) != null ? projetDAO.rechercherProjetsParNom(nom).get(0) : null;
+                List<Employe> employes = null;
+                if (projet != null) {
+                    employes = projet.getEmployes();
+                    request.setAttribute("employes", employes);
+
+                }
+                else{
+                    request.setAttribute("messageErreur", "Projet introuvable");
+                }
+                request.getRequestDispatcher("Projet/listeEmployesProjets.jsp").forward(request, response);
+
+            } catch (Exception e) {
+                request.setAttribute("messageErreur", "Erreur lors du chargement des employes du projet");
+                List<Projet> projets = projetDAO.afficherTous();
+                request.setAttribute("projets", projets);
+                request.getRequestDispatcher("Projet/listeEtRechercheProjets.jsp").forward(request, response);
+            }
+        }
+        else if ("affecterEmploye".equals(action)) {
+            String nom=request.getParameter("nom");
+            String nomEmploye=request.getParameter("nomEmploye");
+            try{
+                Projet projet = projetDAO.rechercherProjetsParNom(nom) != null ? projetDAO.rechercherProjetsParNom(nom).get(0) : null;
+                Employe employe = employeDAO.rechercherParNom(nomEmploye)!=null? employeDAO.rechercherParNom(nomEmploye).get(0):null;
+                if (projet != null && employe != null) {
+                    projet.affecterEmploye(employe);
+                    List<Employe> employes=projet.getEmployes();
+                    request.setAttribute("employes", employes);
+                    request.setAttribute("messageSucces", "Employé affecté au projet avec succès");
+                }
+                else{
+                    request.setAttribute("messageErreur", "Employé ou projet introuvable");
+                }
+                request.getRequestDispatcher("Projet/listeEmployesProjets.jsp").forward(request, response);
+            }
+
+            catch (Exception e){
+                request.setAttribute("messageErreur", "Erreur lors du chargement des employes du projet");
+                List<Projet> projets = projetDAO.afficherTous();
+                request.setAttribute("projets", projets);
+                request.getRequestDispatcher("Projet/listeEtRechercheProjets.jsp").forward(request, response);
+            }
+        }
+        else if ("enleverEmploye".equals(action)) {
+
+            String nom=request.getParameter("nom");
+            String nomEmploye=request.getParameter("nomEmploye");
+            try{
+                Projet projet = projetDAO.rechercherProjetsParNom(nom) != null ? projetDAO.rechercherProjetsParNom(nom).get(0) : null;
+                Employe employe = employeDAO.rechercherParNom(nomEmploye)!=null? employeDAO.rechercherParNom(nomEmploye).get(0):null;
+                if (projet != null && employe != null) {
+                    projet.enleverEmploye(employe);
+                    List<Employe> employes=projet.getEmployes();
+                    request.setAttribute("employes", employes);
+                    request.setAttribute("messageSucces", "Employé enlevé du projet avec succès");
+                }
+                else{
+                    request.setAttribute("messageErreur", "Employé ou projet introuvable");
+                }
+                request.getRequestDispatcher("Projet/listeEmployesProjets.jsp").forward(request, response);
+            }
+
+            catch (Exception e){
+                request.setAttribute("messageErreur", "Erreur lors du chargement des employes du projet");
+                List<Projet> projets = projetDAO.afficherTous();
+                request.setAttribute("projets", projets);
+                request.getRequestDispatcher("Projet/listeEtRechercheProjets.jsp").forward(request, response);
+            }
+
         }
     }
 

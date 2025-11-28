@@ -22,7 +22,7 @@
             <td><%= e.getId_employe() %></td>
             <td><%= e.getNom() %></td>
             <td><%= e.getPrenom() %></td>
-            <td><%= e.getEmail() %></td>
+            <td><%= e.getRole() %></td>
             <td><%= e.getGrade() %></td>
         </tr>
         <%
