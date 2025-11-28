@@ -1,36 +1,45 @@
-package fr.cytech.projetmodel.dao;
+package fr.cytech.projetjeejakarta.dao;
 
-import fr.cytech.projetmodel.model.Employe;
-import fr.cytech.projetmodel.model.Role;
+import fr.cytech.projetjeejakarta.model.Departement;
+import fr.cytech.projetjeejakarta.model.Employe;
+import fr.cytech.projetjeejakarta.model.Role;
+import fr.cytech.projetjeejakarta.util.JpaUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Persistence;
 
-public class RoleDAO {
-    private EntityManagerFactory sessionFactory;
+import java.util.ArrayList;
+import java.util.List;
 
-    public RoleDAO() {
-        sessionFactory = Persistence.createEntityManagerFactory("Projet");
-    }
+public class RoleDAO {
 
     public Role fetchRole(int id_role){
-        EntityManager em = sessionFactory.createEntityManager();
-        em.getTransaction().begin();
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+
         try {
-            Role role =(Role) em.createQuery("select e from Role e where e.id = :id_role")
-                    .setParameter("id_role",id_role)
+            return em.createQuery("select e from Role e where e.id = :id_role", Role.class)
+                    .setParameter("id_role", id_role)
                     .getSingleResult();
-
-            return role;
-
-        }catch (NoResultException ex){
+        } catch (NoResultException ex) {
             System.out.println("No role found with id = " + id_role);
             return null;
+        } finally {
+            em.close();
         }
+    }
 
+    public List<Role> getAllRoles() {
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
 
-
-
+        try {
+            return em.createQuery("SELECT r FROM Role r", Role.class)
+                    .getResultList();
+        } catch (NoResultException ex) {
+            System.out.println("No Roles found");
+            return List.of();
+        } finally {
+            em.close();
+        }
     }
 }
