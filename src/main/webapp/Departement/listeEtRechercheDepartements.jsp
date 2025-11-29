@@ -8,7 +8,27 @@
 </head>
 <body>
 <div class="container">
+    <h2>Rechercher un Département</h2>
+    <form action="../DepartementController" method="get">
+        <input type="hidden" name="action" value="rechercher">
+        <label for="nomRecherche">Nom :</label>
+        <input type="text" name="nom" id="nomRecherche" required>
+        <input type="submit" value="Rechercher">
+    </form>
+    <hr>
     <h2>Liste complète des départements</h2>
+
+    <%
+        String messageErreur = (String) request.getAttribute("messageErreur");
+        String messageSucces = (String) request.getAttribute("messageSucces");
+
+        if (messageErreur != null) {
+    %>
+    <p class="messageErreur"><%= messageErreur %></p>
+    <% } else if (messageSucces != null) { %>
+    <p class="messageSucces"><%= messageSucces %></p>
+    <% } %>
+
     <%
         List<Departement> departements = (List<Departement>) request.getAttribute("departements");
         if (departements != null && !departements.isEmpty()) {
@@ -21,9 +41,7 @@
             <th>Chef de département</th>
             <th>Actions</th>
         </tr>
-        <%
-            for (Departement d : departements) {
-        %>
+        <% for (Departement d : departements) { %>
         <tr>
             <td><%= d.getId_departement() %></td>
             <td><%= d.getNom() %></td>
@@ -32,22 +50,18 @@
             <td>
                 <a href="../DepartementController?action=modifier&id=<%= d.getId_departement() %>">Modifier</a>
                 <a href="../DepartementController?action=supprimer&id=<%= d.getId_departement() %>">Supprimer</a>
-                <a href="../DepartementController?action=employes&nom=<%= d.getNom() %>">Voir employés</a>
-                <a href="../DepartementController?action=projets&nom=<%= d.getNom() %>">Voir projets</a>
+                <a href="../DepartementController?action=employes&idDepartement=<%= d.getId_departement() %>">Voir employés</a>
+                <a href="../DepartementController?action=projets&idDepartement=<%= d.getId_departement() %>">Voir projets</a>
             </td>
         </tr>
-        <%
-            }
-        %>
+        <% } %>
     </table>
-    <%
-    } else {
-    %>
+    <% } else if (messageErreur == null) { %>
     <p class="message">Aucun département enregistré.</p>
-    <%
-        }
-    %>
-    <a href="Departement/departementFormulaire.jsp">Créer un département</a>
+    <% } %>
+
+    <hr>
+    <a href="Departement/formulaireCreerDepartement.jsp">Créer un département</a>
 </div>
 </body>
 </html>

@@ -5,6 +5,7 @@
 <html>
 <head>
     <title>Résultat de la recherche des projets</title>
+
     <link rel="stylesheet" type="text/css" href="../CSS/style.css">
 </head>
 <body>
@@ -25,9 +26,7 @@
             <th>Département</th>
             <th>Actions</th>
         </tr>
-        <%
-            for (Projet p : projets) {
-        %>
+        <% for (Projet p : projets) { %>
         <tr>
             <td><%= p.getIdProjet() %></td>
             <td><%= p.getNom() %></td>
@@ -36,26 +35,24 @@
             <td><%= (p.getChefDeProjet() != null ? p.getChefDeProjet().getNom() : "Non défini") %></td>
             <td><%= (p.getDepartement() != null ? p.getDepartement().getNom() : "Non défini") %></td>
             <td>
+
                 <a href="../ProjetController?action=modifier&id=<%= p.getIdProjet() %>">Modifier</a><br>
                 <a href="../ProjetController?action=supprimer&id=<%= p.getIdProjet() %>">Supprimer</a>
             </td>
         </tr>
-        <%
-            }
-        %>
+        <% } %>
     </table>
-    <%
-    } else {
+    <% } else {
         String messageErreur = (String) request.getAttribute("messageErreur");
-        if (messageErreur != null) {
-    %>
+        if (messageErreur != null) { %>
     <p class="messageErreur"><%= messageErreur %></p>
-    <%
-            }
-        }
-    %>
+    <% } else { %>
+    <p>Aucun projet trouvé.</p>
+    <% }
+    } %>
 
     <hr>
+
     <a href="Projet/formulaireCreerProjet.jsp">Ajouter un nouveau projet</a> <br>
     <a href="../ProjetController?action=liste">Liste complète des projets</a>
 </div>

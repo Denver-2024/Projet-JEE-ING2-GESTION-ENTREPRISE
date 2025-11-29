@@ -2,16 +2,8 @@
 <html>
 <head>
     <title>Connexion - Gestion Entreprise</title>
+    <link rel="stylesheet" type="text/css" href="CSS/style.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
         .login-container {
             background: white;
             padding: 2rem;
@@ -37,14 +29,14 @@
         button {
             width: 100%;
             padding: 0.75rem;
-            background-color: #007bff;
+            background-color: black;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: gray;
         }
         .error {
             color: red;

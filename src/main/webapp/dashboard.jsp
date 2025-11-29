@@ -4,13 +4,9 @@
 <html>
 <head>
     <title>Tableau de Bord</title>
+    <link rel="stylesheet" type="text/css" href="CSS/style.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .header {
+        header {
             background-color: #343a40;
             color: white;
             padding: 1rem;
@@ -59,16 +55,16 @@
     </style>
 </head>
 <body>
-<div class="header">
+<header>
     <h1>Tableau de Bord - Gestion Entreprise</h1>
     <div>
         <span>Bienvenue, ${sessionScope.employe.prenom} ${sessionScope.employe.nom}</span>
         <span style="margin-left: 1rem;">Rôle: ${sessionScope.role}</span>
         <a href="${pageContext.request.contextPath}/logout" style="color: white; margin-left: 1rem;">Déconnexion</a>
     </div>
-</div>
+</header>
 
-<div class="menu">
+<section class="menu">
     <!-- Bouton profil toujours visible -->
     <button class="btn-profil" onclick="showSection('profil')">Mon Profil</button>
 
@@ -103,7 +99,7 @@
     <c:if test="${hasRoles}">
         <button class="btn-roles" onclick="showSection('roles')">Gestion des Rôles</button>
     </c:if>
-</div>
+</section>
 
 <div class="content">
     <h2>Bienvenue sur votre espace ${sessionScope.role}</h2>
