@@ -121,10 +121,9 @@
 <h1><%= "Hello World!" %>
 </h1>
 <br/>
-<a href="hello-servlet">Hello Servlet</a><br>
-<a href="modeltest.jsp">Mo</a><br>
-<a href="ajouterEmploye.jsp">Ajouter un employé</a><br>
-<a href="rechercheMatricule.jsp">Rechercher un employé par son matricule</a>
-<a href="rechercheEmploye.jsp">Recherche employé</a>
+
+<a href="Employe/ajouterEmploye.jsp">Ajouter un employé</a><br>
+<a href="Employe/rechercheMatricule.jsp">Rechercher un employé par son matricule</a>
+<a href="Employe/rechercherEmploye.jsp">Recherche employé</a>
 </body>
 </html>

@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet("/ChangeRoleController")
 
-public class ChangerRoleController extends HttpServlet {
+public class ChangeRoleController extends HttpServlet {
 
     private RoleDAO roleDAO;
     private EmployeDAO employeDAO;

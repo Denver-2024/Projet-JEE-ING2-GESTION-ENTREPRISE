@@ -3,7 +3,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <html>
 <head>
     <title>Ajouter un employé</title>
@@ -51,7 +50,6 @@
             background-color: #333;
         }
 
-
         #addform{
             background-color: white;
             padding: 25px 40px;
@@ -65,24 +63,20 @@
         }
         .radchoice {
             display: flex;
-            gap: 20px; /* control spacing between choices */
+            gap: 20px;
             margin-bottom: 5px;
         }
-
         .radchoice span {
             display: flex;
             align-items: center;
         }
-
         .radchoice span label {
-            margin-left: 4px;  /* tight label spacing */
+            margin-left: 4px;
         }
-
         label{
             margin: 5px;
         }
     </style>
-
 </head>
 <body>
 <div id="addform">
@@ -101,6 +95,7 @@
         <p style="color: red;">${errorSalaireNotNumber}</p>
     </c:if>
 
+    <!-- Formulaire avec chemin dynamique -->
     <form action="${pageContext.request.contextPath}/../EmployeController/AddEmployeController" method="post">
         <div class="title">
             <h1>Ajouter un nouvel employé</h1>
@@ -111,8 +106,6 @@
             <span><input type="radio" id="F" name="sexe" value="F"><label for="F">F</label></span>
             <span><input type="radio" id="X" name="sexe" value="X"><label for="X">X</label></span>
         </div>
-
-
 
         <label for="nom">Nom : </label>
         <input type="text" name="nom" required>
@@ -132,15 +125,12 @@
         <label> Email : </label><br>
         <input type="text" name="email" required><br>
 
-
         <div class="radchoice">
-            <label for="grade" >Grade :</label><br>
-            <span><input type="radio" id="junior" name="grade" value="JUNIOR" required><label for="junior">Junior</label><br></span>
-            <span><input type="radio" id="intermediaire" name="grade" value="INTERMEDIAIRE"><label for="intermediaire">Intermédiare</label></span>
+            <label for="grade">Grade :</label><br>
+            <span><input type="radio" id="junior" name="grade" value="JUNIOR" required><label for="junior">Junior</label></span>
+            <span><input type="radio" id="intermediaire" name="grade" value="INTERMEDIAIRE"><label for="intermediaire">Intermédiaire</label></span>
             <span><input type="radio" id="senior" name="grade" value="SENIOR"><label for="senior">Senior</label></span>
         </div>
-
-
 
         <label>Département : </label>
         <select name="id_departement" required>
@@ -151,7 +141,6 @@
         </select>
 
         <label>Rôle : </label>
-
         <select name="role" required>
             <option value="" disabled selected hidden>-- Sélectionner un rôle --</option>
             <c:forEach var="r" items="${applicationScope.rolesFound}">
@@ -161,8 +150,6 @@
 
         <input value="Ajouter Employe" type="submit">
     </form><br>
-
-
 </div>
 </body>
 </html>

@@ -79,13 +79,13 @@ public class AddEmployeController extends HttpServlet {
             salaire = Integer.parseInt(salaireStr);
             if(salaire < 500){
                 request.setAttribute("errorSalaireTooLow","Le salaire minimum est de 500 €");
-                request.getRequestDispatcher("ajouterEmploye.jsp").forward(request, response);
+                request.getRequestDispatcher("Employe/ajouterEmploye.jsp").forward(request, response);
                 return;
             }
 
         }catch (NumberFormatException e){
             request.setAttribute("errorSalaireNotNumber","Vous devez remplir un nombre entier comme salaire ( positif et inférieur à 2147483647 )");
-            request.getRequestDispatcher("ajouterEmploye.jsp").forward(request, response);
+            request.getRequestDispatcher("Employe/ajouterEmploye.jsp").forward(request, response);
             return;
         }
 

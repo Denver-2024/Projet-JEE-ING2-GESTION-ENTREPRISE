@@ -1,5 +1,5 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Absence</title>
@@ -62,15 +62,14 @@
             justify-content: center;
             align-items: center;
         }
-
     </style>
 </head>
 <body>
 <div class="ajoutabsence">
     <div class="title">
-<h1>Absence</h1>
-
+        <h1>Absence</h1>
     </div>
+
     <c:if test="${not empty errorMessageAbsenceDate}">
         <p style="color: red;">${errorMessageAbsenceDate}</p>
     </c:if>
@@ -80,22 +79,23 @@
     <c:if test="${not empty messageAbsenceAjoutee}">
         <p style="color: green;">${messageAbsenceAjoutee}</p>
     </c:if>
+
     <div class="dateabsence">
-    <form action="${pageContext.request.contextPath}/../EmployeController/AjouterAbsenceController" method="post">
-        <label for="startDate">Date du début de l'absence : </label><br>
-        <input type="date" id="startDate" name="startDate" min="${sessionScope.firstDayOfMonth}" max="${sessionScope.lastDayOfYear}" required><br><br>
+        <!-- Formulaire avec chemin dynamique -->
+        <form action="${pageContext.request.contextPath}/../EmployeController/AjouterAbsenceController" method="post">
+            <label for="startDate">Date du début de l'absence : </label><br>
+            <input type="date" id="startDate" name="startDate"
+                   min="${sessionScope.firstDayOfMonth}"
+                   max="${sessionScope.lastDayOfYear}" required><br><br>
 
-        <label for="endDate" >Date de la fin de l'absence : </label><br>
-        <input type="date" id="endDate" name="endDate" min="${sessionScope.firstDayOfMonth}" max="${sessionScope.lastDayOfYear}" required><br><br>
+            <label for="endDate">Date de la fin de l'absence : </label><br>
+            <input type="date" id="endDate" name="endDate"
+                   min="${sessionScope.firstDayOfMonth}"
+                   max="${sessionScope.lastDayOfYear}" required><br><br>
 
-
-
-
-        <input type="submit" value="Ajouter l'absence">
-
-    </form>
+            <input type="submit" value="Ajouter l'absence">
+        </form>
     </div>
-
 </div>
 </body>
 </html>

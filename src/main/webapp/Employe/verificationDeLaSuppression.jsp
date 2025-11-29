@@ -24,73 +24,47 @@
             padding-top: 50px;
         }
 
-
-        form {
-            margin-bottom: 30px;
-        }
-        label {
-            display: block;
-            text-align: left;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+        form { margin-bottom: 30px; }
+        label { display: block; text-align: left; margin-bottom: 5px; font-weight: bold; }
         input[type="text"], select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            width: 100%; padding: 8px; margin-bottom: 15px;
+            border: 1px solid #ccc; border-radius: 5px;
         }
         input[type="submit"] {
-            background-color: black;
-            border: none;
-            color: white;
-            padding: 10px;
-            font-size: 16px;
-            width: 100%;
-            cursor: pointer;
-            border-radius: 5px;
+            background-color: black; border: none; color: white;
+            padding: 10px; font-size: 16px; width: 100%;
+            cursor: pointer; border-radius: 5px;
         }
-        input[type="submit"]:hover {
-            background-color: #333;
+        input[type="submit"]:hover { background-color: #333; }
+        .verifSuppression {
+            background-color: white; padding: 25px 40px;
+            border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
-        .verifSuppression{
-            background-color: white;
-            padding: 25px 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        .nextAction {
+            display: flex; justify-content: center; align-items: center; gap: 40px;
         }
-        .nextAction{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px
-        }
-
-
-
-
     </style>
 </head>
 <body>
 <div class="verifSuppression">
+    <!-- Bouton retour accueil -->
     <form action="${pageContext.request.contextPath}/index.jsp">
         <input type="submit" value="Accueil">
     </form>
+
     <h1>Êtes-vous sûr de vouloir supprimer l'employé ${sessionScope.employeFoundMatricule.id_employe}</h1><br>
+
     <div class="nextAction">
+        <!-- Formulaire suppression avec chemin dynamique -->
         <form action="${pageContext.request.contextPath}/../EmployeController/DeleteEmployeController" method="post">
-
             <input type="submit" value="Supprimer">
-
-
         </form>
+
+        <!-- Formulaire annulation avec chemin dynamique -->
         <form action="${pageContext.request.contextPath}/Employe/modifierEmploye.jsp">
             <input type="submit" value="Annuler">
         </form><br>
     </div>
-
 
     <c:if test="${not empty messageEmployeDeleted}">
         <p style="color: green;">${messageEmployeDeleted}</p>

@@ -10,9 +10,7 @@
 <html>
 <head>
     <title>Changer le rôle</title>
-
     <style>
-
         body{
             background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
             background-repeat: no-repeat;
@@ -25,8 +23,6 @@
             align-items: flex-start;
             padding-top: 50px;
         }
-
-
 
         form {
             margin-bottom: 30px;
@@ -63,24 +59,19 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
     </style>
-
 </head>
 <body>
 <div class="changeRole">
     <h1>Changement du rôle de l'employé ${sessionScope.employeFoundMatricule.id_employe}</h1>
 
-
-
     <label>Rôle : </label>
+    <!-- Formulaire avec chemin dynamique -->
     <form action="${pageContext.request.contextPath}/../EmployeController/ChangeRoleController" method="post">
-        <select name="role" >
+        <select name="role">
             <c:forEach var="r" items="${applicationScope.rolesFound}">
                 <c:if test="${r.id_role == sessionScope.employeFoundMatricule.role.id_role}">
-                    <option value="${r.id_role}" selected>
-                            ${r.nom}
-                    </option>
+                    <option value="${r.id_role}" selected>${r.nom}</option>
                 </c:if>
             </c:forEach>
 
@@ -92,10 +83,12 @@
         </select><br><br>
         <input type="submit" value="Confirmer">
     </form>
+
     <c:if test="${not empty messagePasDeModificationRole}">
         <p style="color: green;">${messagePasDeModificationRole}</p>
     </c:if>
 
+    <!-- Bouton Annuler avec chemin dynamique -->
     <form action="${pageContext.request.contextPath}/Employe/afficheEmploye.jsp">
         <input type="submit" value="Annuler">
     </form>

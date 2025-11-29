@@ -69,7 +69,7 @@ public class VerifierModificationController extends HttpServlet {
 
         HttpSession session = request.getSession(false); // false avoids creating a new session
         if (session != null) {
-            Object obj = session.getAttribute("Employe/employeFoundMatricule");
+            Object obj = session.getAttribute("employeFoundMatricule");
             if (obj != null) {
                 // Cast it to the correct type
                 Employe employeAModifier = (Employe) obj;

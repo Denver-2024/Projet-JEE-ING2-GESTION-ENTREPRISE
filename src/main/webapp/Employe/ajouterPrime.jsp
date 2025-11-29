@@ -69,9 +69,9 @@
 <body>
 <div class="ajoutprime">
     <div class="title">
-    <h1>Prime</h1>
-
+        <h1>Prime</h1>
     </div>
+
     <c:if test="${not empty errorPrime}">
         <p style="color:red; font-weight:bold;">
                 ${errorPrime}
@@ -88,7 +88,7 @@
         </p>
     </c:if>
 
-
+    <!-- Formulaire avec chemin dynamique -->
     <form action="${pageContext.request.contextPath}/../EmployeController/AjouterPrimeController" method="post">
         <label for="mois"> Mois : </label><br>
         <select name="mois">
@@ -98,13 +98,12 @@
                     <option value="${m}">${m}</option>
                 </c:if>
             </c:forEach>
-
         </select>
+
         <label for="prime">Montant (en €): </label>
+        <input type="text" name="prime" id="prime">
 
-            <input type="text" name="prime" id="prime">
         <input type="submit" value="Ajouter la prime">
-
     </form>
 </div>
 </body>
