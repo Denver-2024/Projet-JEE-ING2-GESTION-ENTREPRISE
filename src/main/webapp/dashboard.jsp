@@ -56,6 +56,10 @@
             display: inline-block;
             font-size: 12px;
         }
+        .feature-disabled {
+            color: #6c757d;
+            text-decoration: line-through;
+        }
     </style>
 </head>
 <body>
@@ -132,55 +136,135 @@
 
     <div id="employes" style="display:none;">
         <h3>Gestion des Employés</h3>
-        <p>Interface de gestion des employés à implémenter...</p>
+        <p>Fonctionnalités disponibles selon vos autorisations :</p>
         <ul>
-            <li>Ajouter un nouvel employé</li>
-            <li>Modifier les informations d'un employé</li>
-            <li>Supprimer un employé</li>
-            <li>Lister tous les employés</li>
-            <li>Rechercher un employé</li>
+            <!-- CORRECTION : On parcourt chaque autorisation pour vérifier si elle existe -->
+            <c:set var="hasAjouterEmploye" value="false" />
+            <c:set var="hasModifierEmploye" value="false" />
+            <c:set var="hasSupprimerEmploye" value="false" />
+            <c:set var="hasListerEmployes" value="false" />
+            <c:set var="hasRechercherEmploye" value="false" />
+            <c:set var="hasAffecterProjet" value="false" />
+
+            <c:forEach var="autorisation" items="${sessionScope.autorisations}">
+                <c:if test="${autorisation.nom == 'ajouter_un_nouvel_employe'}"><c:set var="hasAjouterEmploye" value="true" /></c:if>
+                <c:if test="${autorisation.nom == 'modifier_les_informations_d_un_employe'}"><c:set var="hasModifierEmploye" value="true" /></c:if>
+                <c:if test="${autorisation.nom == 'supprimer_un_employe'}"><c:set var="hasSupprimerEmploye" value="true" /></c:if>
+                <c:if test="${autorisation.nom == 'lister_tous_les_employes'}"><c:set var="hasListerEmployes" value="true" /></c:if>
+                <c:if test="${autorisation.nom == 'rechercher_un_employe_par_nom_prenom_ou_departement' or autorisation.nom == 'rechercher_un_employe_par_matricule'}"><c:set var="hasRechercherEmploye" value="true" /></c:if>
+                <c:if test="${autorisation.nom == 'affecter_un_employe_a_un_ou_plusieurs_projets'}"><c:set var="hasAffecterProjet" value="true" /></c:if>
+            </c:forEach>
+
+            <c:if test="${hasAjouterEmploye}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/ajouterEmploye.jsp'">Ajouter un nouvel employé</button></c:if>
+            <c:if test="${hasListerEmployes}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/listerEmploye.jsp'">Lister tous les employés</button></c:if>
+            <c:if test="${hasRechercherEmploye || hasModifierEmploye || hasSupprimerEmploye}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/rechercheMatricule.jsp'">Rechercher un employé par matricule</button></li></c:if>
+            <c:if test="${hasAffecterProjet}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/rechercherEmploye.jsp'">Rechercher un employé</button></c:if>
+
+            <c:if test="${!hasEmployes}">
+                <li class="feature-disabled">⛔ Aucune autorisation pour la gestion des employés</li>
+            </c:if>
         </ul>
     </div>
 
     <div id="departements" style="display:none;">
         <h3>Gestion des Départements</h3>
-        <p>Interface de gestion des départements à implémenter...</p>
+        <p>Fonctionnalités disponibles selon vos autorisations :</p>
         <ul>
-            <li>Ajouter un département</li>
-            <li>Lister les départements</li>
-            <li>Affecter un employé à un département</li>
-            <li>Visualiser les membres d'un département</li>
+            <c:set var="hasAjouterDepartement" value="false" />
+            <c:set var="hasListerDepartements" value="false" />
+            <c:set var="hasAffecterDepartement" value="false" />
+            <c:set var="hasVisualiserMembres" value="false" />
+
+            <c:forEach var="autorisation" items="${sessionScope.autorisations}">
+                <c:if test="${autorisation.nom == 'ajouter_un_departement'}"><c:set var="hasAjouterDepartement" value="true" /></c:if>
+                <c:if test="${autorisation.nom == 'lister_les_departements'}"><c:set var="hasListerDepartements" value="true" /></c:if>
+                <c:if test="${autorisation.nom == 'affecter_un_employe_a_un_departement'}"><c:set var="hasAffecterDepartement" value="true" /></c:if>
+                <c:if test="${autorisation.nom == 'visualiser_les_membres_d_un_departement'}"><c:set var="hasVisualiserMembres" value="true" /></c:if>
+            </c:forEach>
+
+            <c:if test="${hasAjouterDepartement}"><li>Ajouter un département</li></c:if>
+            <c:if test="${hasListerDepartements}"><li>Lister les départements</li></c:if>
+            <c:if test="${hasAffecterDepartement}"><li>Affecter un employé à un département</li></c:if>
+            <c:if test="${hasVisualiserMembres}"><li>Visualiser les membres d'un département</li></c:if>
+
+            <c:if test="${!hasDepartements}">
+                <li class="feature-disabled">⛔ Aucune autorisation pour la gestion des départements</li>
+            </c:if>
         </ul>
     </div>
 
     <div id="projets" style="display:none;">
         <h3>Gestion des Projets</h3>
-        <p>Interface de gestion des projets à implémenter...</p>
+        <p>Fonctionnalités disponibles selon vos autorisations :</p>
         <ul>
-            <li>Créer/supprimer un projet</li>
-            <li>Modifier un projet</li>
-            <li>Affecter des employés à un projet</li>
-            <li>Suivre l'état d'avancement</li>
+            <c:set var="hasCreerProjet" value="false" />
+            <c:set var="hasModifierProjet" value="false" />
+            <c:set var="hasAffecterEmployesProjet" value="false" />
+            <c:set var="hasSuivreProjet" value="false" />
+
+            <c:forEach var="autorisation" items="${sessionScope.autorisations}">
+                <c:if test="${autorisation.nom == 'creer_supprimer_un_projet'}"><c:set var="hasCreerProjet" value="true" /></c:if>
+                <c:if test="${autorisation.nom == 'modifier_un_projet'}"><c:set var="hasModifierProjet" value="true" /></c:if>
+                <c:if test="${autorisation.nom == 'affecter_des_employes_a_un_projet'}"><c:set var="hasAffecterEmployesProjet" value="true" /></c:if>
+                <c:if test="${autorisation.nom == 'suivre_l_etat_d_avancement_etat_en_cours_termine_annule'}"><c:set var="hasSuivreProjet" value="true" /></c:if>
+            </c:forEach>
+
+            <c:if test="${hasCreerProjet}"><li>Créer/supprimer un projet</li></c:if>
+            <c:if test="${hasModifierProjet}"><li>Modifier un projet</li></c:if>
+            <c:if test="${hasAffecterEmployesProjet}"><li>Affecter des employés à un projet</li></c:if>
+            <c:if test="${hasSuivreProjet}"><li>Suivre l'état d'avancement</li></c:if>
+
+            <c:if test="${!hasProjets}">
+                <li class="feature-disabled">⛔ Aucune autorisation pour la gestion des projets</li>
+            </c:if>
         </ul>
     </div>
 
     <div id="fiches-paie" style="display:none;">
         <h3>Fiches de Paie</h3>
-        <p>Interface de gestion des fiches de paie à implémenter...</p>
+        <p>Fonctionnalités disponibles selon vos autorisations :</p>
         <ul>
-            <li>Créer une fiche de paie</li>
-            <li>Consulter les fiches de paie</li>
-            <li>Générer une fiche de paie imprimable</li>
-            <li>Rechercher les fiches par période</li>
+            <c:set var="hasCreerFichePaie" value="false" />
+            <c:set var="hasConsulterFiches" value="false" />
+            <c:set var="hasGenererFiche" value="false" />
+            <c:set var="hasRechercherFiches" value="false" />
+
+            <c:forEach var="autorisation" items="${sessionScope.autorisations}">
+                <c:if test="${autorisation.nom == 'creer_une_fiche_de_paie_pour_un_employe_pour_un_mois_donne'}"><c:set var="hasCreerFichePaie" value="true" /></c:if>
+                <c:if test="${autorisation.nom == 'consulter_les_fiches_de_paie_d_un_employe'}"><c:set var="hasConsulterFiches" value="true" /></c:if>
+                <c:if test="${autorisation.nom == 'generer_une_fiche_de_paie_imprimable'}"><c:set var="hasGenererFiche" value="true" /></c:if>
+                <c:if test="${autorisation.nom == 'rechercher_les_fiches_par_periode_ou_par_employe'}"><c:set var="hasRechercherFiches" value="true" /></c:if>
+            </c:forEach>
+
+            <c:if test="${hasCreerFichePaie}"><li>Créer une fiche de paie</li></c:if>
+            <c:if test="${hasConsulterFiches}"><li>Consulter les fiches de paie</li></c:if>
+            <c:if test="${hasGenererFiche}"><li>Générer une fiche de paie imprimable</li></c:if>
+            <c:if test="${hasRechercherFiches}"><li>Rechercher les fiches par période</li></c:if>
+
+            <c:if test="${!hasFichesPaie}">
+                <li class="feature-disabled">⛔ Aucune autorisation pour la gestion des fiches de paie</li>
+            </c:if>
         </ul>
     </div>
 
     <div id="roles" style="display:none;">
         <h3>Gestion des Rôles</h3>
-        <p>Interface de gestion des rôles à implémenter...</p>
+        <p>Fonctionnalités disponibles selon vos autorisations :</p>
         <ul>
-            <li>Gérer les rôles (Administrateur, RH, Chef de département, Chef de projet, Employé)</li>
-            <li>Attribuer des autorisations aux rôles</li>
+            <c:set var="hasGererRoles" value="false" />
+
+            <c:forEach var="autorisation" items="${sessionScope.autorisations}">
+                <c:if test="${autorisation.nom == 'gestion_des_roles_administrateur_administrateur_rh_chef_du_departement_chef_du_projet_employe'}"><c:set var="hasGererRoles" value="true" /></c:if>
+            </c:forEach>
+
+            <c:if test="${hasGererRoles}">
+                <li>Gérer les rôles (Administrateur, RH, Chef de département, Chef de projet, Employé)</li>
+                <li>Attribuer des autorisations aux rôles</li>
+            </c:if>
+
+            <c:if test="${!hasRoles}">
+                <li class="feature-disabled">⛔ Aucune autorisation pour la gestion des rôles</li>
+            </c:if>
         </ul>
     </div>
 </div>

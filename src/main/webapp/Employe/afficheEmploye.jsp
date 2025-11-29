@@ -69,7 +69,7 @@
 <body>
 
 <div class="affiche">
-    <form action="${pageContext.request.contextPath}/rechercheMatricule.jsp">
+    <form action="${pageContext.request.contextPath}/Employe/rechercheMatricule.jsp">
         <input type="submit" value="Retour à la page de recherche">
     </form>
     <form action="modifierEmploye.jsp" method="get">
@@ -77,11 +77,7 @@
         <label>Nom : ${sessionScope.employeFoundMatricule.nom}</label><br>
         <label>Prénom : ${sessionScope.employeFoundMatricule.prenom}</label><br>
         <label>Adresse :${sessionScope.employeFoundMatricule.adresse}</label><br>
-        <c:forEach var="d" items="${applicationScope.departementsFound}">
-            <c:if test="${d.id_departement == sessionScope.employeFoundMatricule.id_departement}">
-                <label>Département : ${d.nom}</label><br>
-            </c:if>
-        </c:forEach>
+        <label>Département : ${sessionScope.employeFoundMatricule.departement.nom}</label><br>
         <label>Numéro de téléphone : ${sessionScope.employeFoundMatricule.numero}</label><br>
         <label>Email : ${sessionScope.employeFoundMatricule.email}</label><br>
         <label>Sexe : ${sessionScope.employeFoundMatricule.sexe}</label><br>

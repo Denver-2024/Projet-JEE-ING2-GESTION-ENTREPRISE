@@ -18,7 +18,7 @@ public class RechercheMatricule extends HttpServlet {
         String matriculeStr = request.getParameter("matricule");
         if(matriculeStr == null || matriculeStr.isEmpty() ){
             request.setAttribute("errorMessageMatriculeNotInt","Veuillez mettre un nombre comme matricule. Le matricule "+matriculeStr+" n'est pas valide");
-            request.getRequestDispatcher("rechercheMatricule.jsp").forward(request, response);
+            request.getRequestDispatcher("/Employe/rechercheMatricule.jsp").forward(request, response);
             return;
         }
 
@@ -30,14 +30,14 @@ public class RechercheMatricule extends HttpServlet {
 
             System.out.println("Invalid matricule: " + matriculeStr);
             request.setAttribute("errorMessageMatriculeNotInt","Veuillez mettre un nombre comme matricule. Le matricule "+matriculeStr+" n'est pas valide");
-            request.getRequestDispatcher("rechercheMatricule.jsp").forward(request, response);
+            request.getRequestDispatcher("/Employe/rechercheMatricule.jsp").forward(request, response);
             return;
 
         }
 
         if(matricule < 0 ){
             request.setAttribute("errorMessageMatriculeNotPositive","Veuillez mettre un nombre positive comme matricule. Le matricule "+matricule+" n'est pas valide");
-            request.getRequestDispatcher("rechercheMatricule.jsp").forward(request, response);
+            request.getRequestDispatcher("/Employe/rechercheMatricule.jsp").forward(request, response);
             return;
         }
 
@@ -47,12 +47,12 @@ public class RechercheMatricule extends HttpServlet {
 
         if(employeFoundMatricule==null){
             request.setAttribute("errorMessageEmployeNotFound","L'employé avec le matricule "+matricule+" est introuvable");
-            request.getRequestDispatcher("rechercheMatricule.jsp").forward(request, response);
+            request.getRequestDispatcher("/Employe/rechercheMatricule.jsp").forward(request, response);
         }
         else{
             HttpSession session = request.getSession();
             session.setAttribute("employeFoundMatricule", employeFoundMatricule);
-            request.getRequestDispatcher("/afficheEmploye.jsp").forward(request, response);
+            request.getRequestDispatcher("/Employe/afficheEmploye.jsp").forward(request, response);
 
         }
     }
