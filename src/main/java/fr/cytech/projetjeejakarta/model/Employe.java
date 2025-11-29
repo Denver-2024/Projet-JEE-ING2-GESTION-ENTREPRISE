@@ -3,6 +3,7 @@ package fr.cytech.projetjeejakarta.model;
 
 import fr.cytech.projetjeejakarta.enumeration.*;
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="Employe")
@@ -18,25 +19,38 @@ public class Employe {
     @ManyToOne
     @JoinColumn(name = "id_departement")
     private Departement departement;
+
     private String numero;
     private String email;
+
     @Enumerated(EnumType.STRING)
     private Sexe sexe;
+
     @Enumerated(EnumType.STRING)
     private Grade grade;
+
     @ManyToOne
     @JoinColumn(name = "id_role")
     private Role role;
+
     private float salaire;
 
-    @Column(name="password")
     private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name="Employe_Projet",
+            joinColumns = @JoinColumn(name="id_employe"),
+            inverseJoinColumns=@JoinColumn(name="id_projet")
+    )
+    private List<Projet> projets;
 
     public Employe() {
 
     }
 
-    public Employe(String nom, String prenom,String adresse, Departement departement, String numero, String email, Sexe sexe, Grade grade, Role role ) {
+    public Employe(String nom, String prenom,String adresse,
+                   Departement departement, String numero, String email, Sexe sexe, Grade grade, Role role ) {
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
@@ -134,6 +148,17 @@ public class Employe {
 
     public String getPassword() {return password;}
     public void setPassword(String password) {this.password=password;}
+
+    public List<Projet> getProjets() {return projets;}
+    public void  setProjets(List<Projet> projets) {this.projets = projets;}
+
+    public void ajouterProjet(Projet projet){
+        this.getProjets().add(projet);
+    }
+
+    public void enleverProjet(Projet projet){
+        this.getProjets().remove(projet);
+    }
 
     @Override
     public String toString() {

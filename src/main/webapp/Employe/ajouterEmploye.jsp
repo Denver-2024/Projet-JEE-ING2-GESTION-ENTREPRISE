@@ -102,7 +102,7 @@
     <p style="color: green;">${messageAjoutSucces}</p>
 </c:if>
 
-<form action="${pageContext.request.contextPath}/add-employe" method="post">
+<form action="${pageContext.request.contextPath}/EmployeController/add-employe" method="post">
     <div class="title">
     <h1>Ajouter un nouvel employé</h1>
     </div>
@@ -159,9 +159,7 @@
 
     <input value="Ajouter Employe" type="submit">
 </form><br>
-
-
-
+    
 
 </div>
 </body>

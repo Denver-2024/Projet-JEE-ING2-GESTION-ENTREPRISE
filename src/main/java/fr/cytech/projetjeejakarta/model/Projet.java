@@ -26,6 +26,9 @@ public class Projet{
     @JoinColumn(name = "id_departement")
     private Departement departement;
 
+    @ManyToMany(mappedBy = "projets", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Employe> employes;
+
 
     public Projet() {}
 
@@ -50,6 +53,16 @@ public class Projet{
     }
     public void setDepartement(Departement departement) {
         this.departement = departement;
+    }
+
+    public List<Employe> getEmployes() {return employes;}
+    public void setEmployes(List<Employe> employes) {this.employes = employes;}
+
+    public void affecterEmploye(Employe employe){
+        this.getEmployes().add(employe);
+    }
+    public void enleverEmploye(Employe employe){
+        this.getEmployes().remove(employe);
     }
 
 }

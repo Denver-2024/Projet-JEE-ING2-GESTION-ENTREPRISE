@@ -2,23 +2,26 @@
 <html>
 <head>
     <title>Gestion des Projets</title>
+
     <link rel="stylesheet" type="text/css" href="../CSS/style.css">
 </head>
 <body>
 <div class="container">
     <h2>Créer un nouveau projet</h2>
-    <% String messageErreur =(String) request.getAttribute("messageErreur");
-    String messageSucces =(String) request.getAttribute("messageSucces");
-    if (messageErreur!=null){%>
-    <p class="messageErreur"><%=messageErreur%></p>
-    <%}
-    else if (messageSucces!=null){%>
-    <p class="messageSucces"><%=messageSucces%></p>
     <%
-    }
+        String messageErreur = (String) request.getAttribute("messageErreur");
+        String messageSucces = (String) request.getAttribute("messageSucces");
+        if (messageErreur != null) {
     %>
+    <p class="messageErreur"><%= messageErreur %></p>
+    <% } else if (messageSucces != null) { %>
+    <p class="messageSucces"><%= messageSucces %></p>
+    <% } %>
+
+
     <form action="../ProjetController" method="post">
         <input type="hidden" name="action" value="formulaireCreerProjet">
+
         <label for="nom">Nom :</label>
         <input type="text" name="nom" id="nom" required>
 

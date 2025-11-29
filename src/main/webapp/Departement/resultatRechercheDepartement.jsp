@@ -9,25 +9,52 @@
 <body>
 <div class="container">
     <h2>Résultat de la recherche</h2>
+
+    <%
+        String messageErreur = (String) request.getAttribute("messageErreur");
+        String messageSucces = (String) request.getAttribute("messageSucces");
+
+        if (messageErreur != null) {
+    %>
+    <p class="messageErreur"><%= messageErreur %></p>
+    <% } else if (messageSucces != null) { %>
+    <p class="messageSucces"><%= messageSucces %></p>
+    <% } %>
+
     <%
         List<Departement> departements = (List<Departement>) request.getAttribute("departements");
         if (departements != null && !departements.isEmpty()) {
-            for (Departement d : departements) {
     %>
-    <div class="projet">
-        <b>Nom :</b> <%= d.getNom() %><br>
-        <b>Description :</b> <%= d.getDescription() %><br>
-        <b>Chef de département :</b> <%= (d.getChefDepartement() != null ? d.getChefDepartement().getNom() : "Non défini") %><br>
-    </div>
-    <%
-        }
-    } else {
-    %>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Chef de département</th>
+            <th>Actions</th>
+        </tr>
+        <% for (Departement d : departements) { %>
+        <tr>
+            <td><%= d.getId_departement() %></td>
+            <td><%= d.getNom() %></td>
+            <td><%= d.getDescription() %></td>
+            <td><%= (d.getChefDepartement() != null ? d.getChefDepartement().getNom() : "Non défini") %></td>
+            <td>
+                <a href="../DepartementController?action=modifier&id=<%= d.getId_departement() %>">Modifier</a>
+                <a href="../DepartementController?action=supprimer&id=<%= d.getId_departement() %>">Supprimer</a>
+                <a href="../DepartementController?action=employes&idDepartement=<%= d.getId_departement() %>">Voir employés</a>
+                <a href="../DepartementController?action=projets&idDepartement=<%= d.getId_departement() %>">Voir projets</a>
+            </td>
+        </tr>
+        <% } %>
+    </table>
+    <% } else if (messageErreur == null) { %>
     <p class="message">Aucun département trouvé.</p>
-    <%
-        }
-    %>
-    <a href="Departement/departementFormulaire.jsp">Retour au formulaire</a>
+    <% } %>
+
+    <hr>
+    <a href="formulaireCreerDepartement.jsp">Créer un département</a> |
+    <a href="../DepartementController?action=liste">Retour à la liste des départements</a>
 </div>
 </body>
 </html>

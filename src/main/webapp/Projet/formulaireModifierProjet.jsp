@@ -6,6 +6,7 @@
 <html>
 <head>
     <title>Gestion des Projets</title>
+
     <link rel="stylesheet" type="text/css" href="../CSS/style.css">
 </head>
 <body>
@@ -21,8 +22,9 @@
     <p class="messageSucces"><%= messageSucces %></p>
     <% } %>
 
+
     <form action="../ProjetController" method="post">
-        <input type="hidden" name="action" value="modifier"/>
+        <input type="hidden" name="action" value="formulaireModifierProjet"/>
         <input type="hidden" name="id" value="<%= projet != null ? projet.getIdProjet() : "" %>"/>
 
         <label for="nom">Nom :</label>
@@ -50,6 +52,7 @@
     </form>
 
     <hr>
+
     <a href="../ProjetController?action=liste">Afficher tous les projets</a>
 </div>
 </body>

@@ -118,18 +118,30 @@ CREATE TABLE Employe_Projet (
 
 -- TABLE FICHE DE PAIE
 CREATE TABLE Fiche_de_paie (
-   id_fiche_de_paie INT AUTO_INCREMENT PRIMARY KEY,
-   id_employe INT NOT NULL,
+    id_fiche_de_paie INT AUTO_INCREMENT PRIMARY KEY,
+    id_employe INT NOT NULL,
+    date_fiche DATE NOT NULL,
+    salaire_base DECIMAL(11,2) NOT NULL,
+    cotisation_salariale DECIMAL(11,2) NOT NULL,
+    cotisation_patronale DECIMAL(11,2) NOT NULL,
+    prime DECIMAL(11,2) NOT NULL DEFAULT 0,
+    nombre_absences INT DEFAULT 0,
+    FOREIGN KEY (id_employe) REFERENCES Employe(id_employe) ON DELETE CASCADE ON UPDATE CASCADE );
 
-   date_fiche DATE NOT NULL,
-   salaire_base DECIMAL(11,2) NOT NULL,
-   cotisation_salariale DECIMAL(11,2) NOT NULL,
-   cotisation_patronale DECIMAL(11,2) NOT NULL,
-   prime DECIMAL(11,2) NOT NULL,
-   nombre_absences INT DEFAULT 0,
 
-   FOREIGN KEY (id_employe) REFERENCES Employe(id_employe)
-       ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE employe_absence (
+     id_employe INT,
+     date DATE,
+     PRIMARY KEY (id_employe , date)
+    );
+
+CREATE TABLE historique_paie (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     date_execution DATE NOT NULL,
+     status VARCHAR(20) NOT NULL,  -- SUCCESS or FAILED
+     message VARCHAR(255)          -- optional: error message or notes
 );
 
-COMMIT;
+
+
+    COMMIT;

@@ -1,7 +1,10 @@
 
-body {
+body{
+    background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
     font-family: 'Times New Roman', serif;
-    background: #f4f6f9;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -37,15 +40,17 @@ th {
 .messageErreur {
     text-align: center;
     font-style: italic;
+    font-weight: bold;
     color: red;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
 .messageSucces {
     text-align: center;
     font-style: italic;
+    font-weight: bold;
     color: green;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 a {
     text-decoration: none;
