@@ -1,7 +1,9 @@
-/*package fr.cytech.projetjeejakarta.model;
+package fr.cytech.projetjeejakarta.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+
+import java.sql.Date;
+
 
 @Entity
 @Table(name = "Fiche_de_Paie")
@@ -14,50 +16,94 @@ public class FicheDePaie {
     @JoinColumn(name = "id_employe")
     private Employe employe;
 
-    private LocalDate date;
+    @Column(name="date_fiche")
+    private Date dateFiche;
 
-    private double salaire_base;
+    private int salaire_base;
 
-    @Column(name="prime")
-    private double primes;
+    @Column(name = "prime")
+    private double prime;
 
     private int nombre_absences;
     private double cotisation_salariale;
     private double cotisation_patronale;
 
 
-    private double deductions;
+    public int getId_fiche_de_paie() {
+        return id_fiche_de_paie;
+    }
 
-    private double netAPayer;
+    public void setId_fiche_de_paie(int id_fiche_de_paie) {
+        this.id_fiche_de_paie = id_fiche_de_paie;
+    }
 
+    public Employe getEmploye() {
+        return employe;
+    }
 
-    public int getId_ficheDePaie() {return id_fiche_de_paie;}
-    public void setId_ficheDePaie(int id_ficheDePaie) {this.id_fiche_de_paie = id_ficheDePaie;}
+    public void setEmploye(Employe employe) {
+        this.employe = employe;
+    }
 
-    public Employe getEmploye() {return employe;}
-    public void setEmploye(Employe employe) {this.employe = employe;}
+    public Date getDateFiche() {
+        return dateFiche;
+    }
 
-    public LocalDate getDate() {return date;}
-    public void setDate(LocalDate date) {this.date = date;}
+    public void setDateFiche(Date date_fiche) {
+        this.dateFiche = date_fiche;
+    }
 
-    public double getSalaireBase() {return salaire_base;}
-    public void setSalaireBase(double salaire_base) {this.salaire_base = salaire_base;}
+    public int getSalaire_base() {
+        return salaire_base;
+    }
 
-    public double getPrimes() {return primes;}
-    public void setPrimes(double primes) {this.primes = primes;}
+    public void setSalaire_base(int salaire_base) {
+        this.salaire_base = salaire_base;
+    }
 
-    public double getNombreAbsences() {return nombre_absences;}
-    public void setNombreAbsences(int nombre_absences) {this.nombre_absences = nombre_absences;}
+    public double getPrime() {
+        return prime;
+    }
 
-    public double getCotisationSalariale() {return cotisation_salariale;}
-    public void setCotisationSalariale(double cotisation_salariale) {this.cotisation_salariale = cotisation_salariale;}
+    public void setPrime(double prime) {
+        this.prime = prime;
+    }
 
-    public double getCotisationPatronale() {return cotisation_patronale;}
-    public void setCotisationPatronale(double cotisation_patronale) {this.cotisation_patronale = cotisation_patronale;}
+    public int getNombre_absences() {
+        return nombre_absences;
+    }
 
+    public void setNombre_absences(int nombre_absences) {
+        this.nombre_absences = nombre_absences;
+    }
 
-    //A retravailler
-    public double getDeductions() {return deductions;}
-    public void setDeductions(double deductions) {this.deductions = deductions;}
+    public double getCotisation_salariale() {
+        return cotisation_salariale;
+    }
+
+    public void setCotisation_salariale(double cotisation_salariale) {
+        this.cotisation_salariale = cotisation_salariale;
+    }
+
+    public double getCotisation_patronale() {
+        return cotisation_patronale;
+    }
+
+    public void setCotisation_patronale(double cotisation_patronale) {
+        this.cotisation_patronale = cotisation_patronale;
+    }
+
+    @Override
+    public String toString() {
+        return "FicheDePaie{" +
+                "id_fiche_de_paie=" + id_fiche_de_paie +
+                ", employe=" + employe.getId_employe() +
+                ", date_fiche=" + dateFiche +
+                ", salaire_base=" + salaire_base +
+                ", prime=" + prime +
+                ", nombre_absences=" + nombre_absences +
+                ", cotisation_salariale=" + cotisation_salariale +
+                ", cotisation_patronale=" + cotisation_patronale +
+                '}';
+    }
 }
-*/

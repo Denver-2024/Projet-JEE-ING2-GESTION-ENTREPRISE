@@ -33,7 +33,6 @@ public class Employe {
     @JoinColumn(name = "id_role")
     private Role role;
 
-    private float salaire;
 
     private String password;
 
@@ -45,14 +44,19 @@ public class Employe {
     )
     private List<Projet> projets;
 
+    private int salaire;
+
+    private String password;
+
     public Employe() {
 
     }
 
-    public Employe(String nom, String prenom,String adresse,
+    public Employe(String nom, String prenom, int salaire, String adresse,
                    Departement departement, String numero, String email, Sexe sexe, Grade grade, Role role ) {
         this.nom = nom;
         this.prenom = prenom;
+        this.salaire=salaire;
         this.adresse = adresse;
         this.departement = departement;
         this.numero = numero;
@@ -143,8 +147,12 @@ public class Employe {
         this.role = role;
     }
 
-    public float getSalaire() {return salaire;}
-    public void setSalaire(float salaire) {this.salaire = salaire;}
+    public int getSalaire() {
+        return salaire;
+    }
+    public void setSalaire(int salaire) {
+        this.salaire = salaire;
+    }
 
     public String getPassword() {return password;}
     public void setPassword(String password) {this.password=password;}

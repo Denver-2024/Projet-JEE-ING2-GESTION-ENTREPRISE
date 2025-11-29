@@ -168,3 +168,81 @@ public class EmployeDAO {
         }
     }
 }
+public void promoteToChefDeDepartement(Employe newChef) {
+    EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+    try {
+        em.getTransaction().begin();
+        int departementId = newChef.getId_departement();
+        // 1. Fetch current chef of this department
+        Employe currentChef = em.createQuery("SELECT e FROM Employe e WHERE e.id_departement = :dep AND e.role.id_role = 3",
+                        Employe.class)
+                .setParameter("dep", departementId)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
+        // 2. If a chef exists, demote them to chef_de_projet (role 4)
+        if (currentChef != null && currentChef.getId_employe() != newChef.getId_employe()) {
+            Role newRoleChefProjet = em.find(Role.class, 4);
+            currentChef.setRole(newRoleChefProjet);
+            em.merge(currentChef);
+        }
+        // 3. Promote selected employee to chef_de_departement (role 3)
+        Role chefRole = em.find(Role.class, 3);
+        newChef.setRole(chefRole);
+        em.merge(newChef);
+        // 4. Update DEPARTEMENT table → set id_employe (chef)
+        em.createQuery("UPDATE Departement d SET d.directeur.id_employe = :chefId WHERE d.id_departement = :dep")
+                .setParameter("chefId", newChef.getId_employe())
+                .setParameter("dep", departementId)
+                .executeUpdate();
+        em.getTransaction().commit();
+    } catch (Exception e) {
+        if (em.getTransaction().isActive()) em.getTransaction().rollback();
+        e.printStackTrace();
+    } finally {
+        em.close();
+    }
+}
+    public void updateChef(int id_departement, int id_employe) {
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+
+            // Old chef
+            Employe oldChef = em.createQuery(
+                            "SELECT e FROM Employe e WHERE e.id_departement = :d AND e.role.id_role = 3",
+                            Employe.class
+                    ).setParameter("d", id_departement)
+                    .getResultStream().findFirst().orElse(null);
+
+            if (oldChef != null && oldChef.getId_employe() != id_employe) {
+                oldChef.setRole(em.find(Role.class, 4));
+                em.merge(oldChef);
+            }
+
+            // New chef
+            Employe newChef = em.find(Employe.class, id_employe);
+            if (newChef == null) {
+                throw new RuntimeException("New chef not found in DB!");
+            }
+            newChef.setRole(em.find(Role.class, 3));
+            em.merge(newChef);
+
+            // Update department
+            em.createQuery("UPDATE Departement d SET d.directeur.id_employe = :id WHERE d.id_departement = :dep")
+                    .setParameter("id", id_employe)
+                    .setParameter("dep", id_departement)
+                    .executeUpdate();
+
+            em.getTransaction().commit();
+
+        } catch (Exception ex) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw ex;
+        } finally {
+            em.close();
+        }
+
+    }
+}
