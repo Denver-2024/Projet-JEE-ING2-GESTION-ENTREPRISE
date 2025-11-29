@@ -1,4 +1,4 @@
-package fr.cytech.projetjeejakarta.servlet.auto;
+package fr.cytech.projetjeejakarta.model;
 
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
@@ -24,7 +24,7 @@ public class QuartzListener implements ServletContextListener {
             scheduler.getContext().put("servletContext", sce.getServletContext());
 
             // Define the job
-            JobDetail job = JobBuilder.newJob(MonthlyTaskJob.class)
+            JobDetail job = JobBuilder.newJob(fr.cytech.projetjeejakarta.servlet.auto.MonthlyTaskJob.class)
                     .withIdentity("monthlyTaskJob", "group1")
                     .build();
 

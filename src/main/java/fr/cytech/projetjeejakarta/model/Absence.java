@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "employe_absence")
+@Table(name = "Employe_Absence")
 public class Absence {
 
     @EmbeddedId

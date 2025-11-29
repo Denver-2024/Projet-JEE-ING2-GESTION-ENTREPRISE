@@ -46,7 +46,6 @@ public class Employe {
 
     private int salaire;
 
-    private String password;
 
     public Employe() {
 

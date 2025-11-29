@@ -71,30 +71,30 @@
 
 
 
-        </style>
+    </style>
 </head>
 <body>
 <div class="verifSuppression">
-<form action="${pageContext.request.contextPath}/index.jsp">
-    <input type="submit" value="Acceuil">
-</form>
-<h1>Êtes-vous sûr de vouloir supprimer l'employé ${sessionScope.employeFoundMatricule.id_employe}</h1><br>
+    <form action="${pageContext.request.contextPath}/index.jsp">
+        <input type="submit" value="Accueil">
+    </form>
+    <h1>Êtes-vous sûr de vouloir supprimer l'employé ${sessionScope.employeFoundMatricule.id_employe}</h1><br>
     <div class="nextAction">
-    <form action="${pageContext.request.contextPath}/supprimer-employe" method="post">
+        <form action="${pageContext.request.contextPath}/../EmployeController/DeleteEmployeController" method="post">
 
-    <input type="submit" value="Supprimer">
+            <input type="submit" value="Supprimer">
 
 
-</form>
-    <form action="${pageContext.request.contextPath}/modifierEmploye.jsp">
-        <input type="submit" value="Annuler">
-    </form><br>
+        </form>
+        <form action="${pageContext.request.contextPath}/Employe/modifierEmploye.jsp">
+            <input type="submit" value="Annuler">
+        </form><br>
     </div>
 
 
-<c:if test="${not empty messageEmployeDeleted}">
-    <p style="color: green;">${messageEmployeDeleted}</p>
-</c:if>
+    <c:if test="${not empty messageEmployeDeleted}">
+        <p style="color: green;">${messageEmployeDeleted}</p>
+    </c:if>
 </div>
 </body>
 </html>

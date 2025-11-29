@@ -69,40 +69,40 @@
 </head>
 <body>
 <div class="changeRole">
-<h1>Changement du rôle de l'employé ${sessionScope.employeFoundMatricule.id_employe}</h1>
+    <h1>Changement du rôle de l'employé ${sessionScope.employeFoundMatricule.id_employe}</h1>
 
 
 
-<label>Rôle : </label>
-<form action="${pageContext.request.contextPath}/changer-role" method="post">
-<select name="role" >
-    <c:forEach var="r" items="${applicationScope.rolesFound}">
-        <c:if test="${r.id_role == sessionScope.employeFoundMatricule.role.id_role}">
-            <option value="${r.id_role}" selected>
-                    ${r.nom}
-            </option>
-        </c:if>
-    </c:forEach>
+    <label>Rôle : </label>
+    <form action="${pageContext.request.contextPath}/../EmployeController/ChangeRoleController" method="post">
+        <select name="role" >
+            <c:forEach var="r" items="${applicationScope.rolesFound}">
+                <c:if test="${r.id_role == sessionScope.employeFoundMatricule.role.id_role}">
+                    <option value="${r.id_role}" selected>
+                            ${r.nom}
+                    </option>
+                </c:if>
+            </c:forEach>
 
-    <c:forEach var="r" items="${applicationScope.rolesFound}">
-        <c:if test="${r.id_role != sessionScope.employeFoundMatricule.role.id_role}">
-            <option value="${r.id_role}">${r.nom}</option>
-        </c:if>
-    </c:forEach>
-</select><br><br>
-    <input type="submit" value="Confirmer">
-</form>
-<c:if test="${not empty messagePasDeModificationRole}">
-    <p style="color: green;">${messagePasDeModificationRole}</p>
-</c:if>
+            <c:forEach var="r" items="${applicationScope.rolesFound}">
+                <c:if test="${r.id_role != sessionScope.employeFoundMatricule.role.id_role}">
+                    <option value="${r.id_role}">${r.nom}</option>
+                </c:if>
+            </c:forEach>
+        </select><br><br>
+        <input type="submit" value="Confirmer">
+    </form>
+    <c:if test="${not empty messagePasDeModificationRole}">
+        <p style="color: green;">${messagePasDeModificationRole}</p>
+    </c:if>
 
-<form action="${pageContext.request.contextPath}/afficheEmploye.jsp">
-    <input type="submit" value="Annuler">
-</form>
+    <form action="${pageContext.request.contextPath}/Employe/afficheEmploye.jsp">
+        <input type="submit" value="Annuler">
+    </form>
 
-<c:if test="${not empty messageRoleChanged}">
-    <p style="color: green;">${messageRoleChanged}</p>
-</c:if>
+    <c:if test="${not empty messageRoleChanged}">
+        <p style="color: green;">${messageRoleChanged}</p>
+    </c:if>
 </div>
 </body>
 </html>

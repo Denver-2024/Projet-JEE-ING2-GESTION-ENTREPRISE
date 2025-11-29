@@ -1,15 +1,8 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Cytech
-  Date: 22/11/2025
-  Time: 18:29
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Vérifier les changements</title>
+    <title>Absence</title>
     <style>
         body{
             background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
@@ -22,12 +15,6 @@
             justify-content: center;
             align-items: flex-start;
             padding-top: 50px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
         }
 
         form {
@@ -59,38 +46,56 @@
         input[type="submit"]:hover {
             background-color: #333;
         }
-        .verifModif{
+        .ajoutabsence{
             background-color: white;
             padding: 25px 40px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        .nextAction{
+        .title{
             display: flex;
-            justify-content: space-evenly;
+            justify-content: center;
+            align-items: center;
+        }
+        .dateabsence{
+            display: flex;
+            justify-content: center;
             align-items: center;
         }
 
-
     </style>
-
 </head>
 <body>
-<div class="verifModif">
-    <ul>
-        <c:forEach var="change" items="${changes}">
-            <li>${change}</li>
-        </c:forEach>
-    </ul>
-    <div class="nextAction">
-        <form action="${pageContext.request.contextPath}/../EmployeController/ModifierEmployeController" method="post">
-            <input type="submit" value="Valider les changements">
-        </form>
+<div class="ajoutabsence">
+    <div class="title">
+<h1>Absence</h1>
 
-        <form action="${pageContext.request.contextPath}/Employe/modifierEmploye.jsp">
-            <input type="submit" value="Annuler">
-        </form>
     </div>
+    <c:if test="${not empty errorMessageAbsenceDate}">
+        <p style="color: red;">${errorMessageAbsenceDate}</p>
+    </c:if>
+    <c:if test="${not empty errorDatesAbsence}">
+        <p style="color: red;">${errorDatesAbsence}</p>
+    </c:if>
+    <c:if test="${not empty messageAbsenceAjoutee}">
+        <p style="color: green;">${messageAbsenceAjoutee}</p>
+    </c:if>
+    <div class="dateabsence">
+    <form action="${pageContext.request.contextPath}/../EmployeController/AjouterAbsenceController" method="post">
+        <label for="startDate">Date du début de l'absence : </label><br>
+        <input type="date" id="startDate" name="startDate" min="${sessionScope.firstDayOfMonth}" max="${sessionScope.lastDayOfYear}" required><br><br>
+
+        <label for="endDate" >Date de la fin de l'absence : </label><br>
+        <input type="date" id="endDate" name="endDate" min="${sessionScope.firstDayOfMonth}" max="${sessionScope.lastDayOfYear}" required><br><br>
+
+
+
+
+        <input type="submit" value="Ajouter l'absence">
+
+    </form>
+    </div>
+
 </div>
 </body>
 </html>

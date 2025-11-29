@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: Cytech
-  Date: 22/11/2025
-  Time: 18:29
+  Date: 25/11/2025
+  Time: 20:22
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Vérifier les changements</title>
+    <title>Prime</title>
     <style>
         body{
             background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
@@ -22,12 +22,6 @@
             justify-content: center;
             align-items: flex-start;
             padding-top: 50px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
         }
 
         form {
@@ -59,38 +53,59 @@
         input[type="submit"]:hover {
             background-color: #333;
         }
-        .verifModif{
+        .ajoutprime{
             background-color: white;
             padding: 25px 40px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        .nextAction{
+        .title{
             display: flex;
-            justify-content: space-evenly;
+            justify-content: center;
             align-items: center;
         }
-
-
     </style>
-
 </head>
 <body>
-<div class="verifModif">
-    <ul>
-        <c:forEach var="change" items="${changes}">
-            <li>${change}</li>
-        </c:forEach>
-    </ul>
-    <div class="nextAction">
-        <form action="${pageContext.request.contextPath}/../EmployeController/ModifierEmployeController" method="post">
-            <input type="submit" value="Valider les changements">
-        </form>
+<div class="ajoutprime">
+    <div class="title">
+    <h1>Prime</h1>
 
-        <form action="${pageContext.request.contextPath}/Employe/modifierEmploye.jsp">
-            <input type="submit" value="Annuler">
-        </form>
     </div>
+    <c:if test="${not empty errorPrime}">
+        <p style="color:red; font-weight:bold;">
+                ${errorPrime}
+        </p>
+    </c:if>
+    <c:if test="${not empty errorPrimeTrop}">
+        <p style="color:red; font-weight:bold;">
+                ${errorPrimeTrop}
+        </p>
+    </c:if>
+    <c:if test="${not empty successPrime}">
+        <p style="color:green; font-weight:bold;">
+                ${successPrime}
+        </p>
+    </c:if>
+
+
+    <form action="${pageContext.request.contextPath}/../EmployeController/AjouterPrimeController" method="post">
+        <label for="mois"> Mois : </label><br>
+        <select name="mois">
+            <option value="${sessionScope.months.get(0)}">${sessionScope.months.get(0)}</option>
+            <c:forEach var="m" items="${sessionScope.months}" varStatus="status">
+                <c:if test="${status.index != 0}">
+                    <option value="${m}">${m}</option>
+                </c:if>
+            </c:forEach>
+
+        </select>
+        <label for="prime">Montant (en €): </label>
+
+            <input type="text" name="prime" id="prime">
+        <input type="submit" value="Ajouter la prime">
+
+    </form>
 </div>
 </body>
 </html>

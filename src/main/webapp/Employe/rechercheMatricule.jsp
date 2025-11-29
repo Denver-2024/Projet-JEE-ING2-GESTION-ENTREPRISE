@@ -73,13 +73,18 @@
 </head>
 <body>
 <div class="rechercheM">
-    <form action="${pageContext.request.contextPath}/recherche-matricule" method="get">
+    <form action="${pageContext.request.contextPath}/../EmployeController/RechercheMatriculeController" method="get">
         <div class="title">
             <h1> Rechercher un employé par son matricule</h1>
         </div>
         <input type="text" name="matricule"><br><br>
         <input type="submit" value="Rechercher">
     </form>
+    <c:if test="${showGenerateButton}">
+        <form action="${pageContext.request.contextPath}/../EmployeController/GenererLesFichesDePaieController" method="post">
+            <input type="submit" value="Générer les fiches de paie">
+        </form>
+    </c:if>
     <c:if test="${not empty errorMessageEmployeNotFound}">
         <p style="color:red; font-weight:bold;">
                 ${errorMessageEmployeNotFound}
@@ -96,7 +101,6 @@
         </p>
     </c:if>
 </div>
-
 
 </body>
 </html>

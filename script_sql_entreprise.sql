@@ -8,6 +8,8 @@ DROP TABLE IF EXISTS Autorisation;
 DROP TABLE IF EXISTS Employe_Projet;
 DROP TABLE IF EXISTS Projet;
 DROP TABLE IF EXISTS Fiche_de_paie;
+DROP TABLE IF EXISTS Employe_Absence;
+DROP TABLE IF EXISTS Historique_Paie;
 DROP TABLE IF EXISTS Employe;
 DROP TABLE IF EXISTS Departement;
 DROP TABLE IF EXISTS Role;
@@ -129,19 +131,17 @@ CREATE TABLE Fiche_de_paie (
     FOREIGN KEY (id_employe) REFERENCES Employe(id_employe) ON DELETE CASCADE ON UPDATE CASCADE );
 
 
-CREATE TABLE employe_absence (
-     id_employe INT,
+CREATE TABLE Employe_Absence (
+     id_employe INT NOT NULL,
      date DATE,
-     PRIMARY KEY (id_employe , date)
-    );
+     PRIMARY KEY (id_employe , date),
+     FOREIGN KEY (id_employe) REFERENCES Employe(id_employe) ON DELETE CASCADE ON UPDATE CASCADE);
 
-CREATE TABLE historique_paie (
+CREATE TABLE Historique_Paie (
      id INT AUTO_INCREMENT PRIMARY KEY,
      date_execution DATE NOT NULL,
      status VARCHAR(20) NOT NULL,  -- SUCCESS or FAILED
      message VARCHAR(255)          -- optional: error message or notes
 );
-
-
 
     COMMIT;
