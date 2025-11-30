@@ -93,7 +93,7 @@
         <c:forEach var="autorisation" items="${sessionScope.autorisations}">
             <c:if test="${fn:contains(autorisation.nom, 'ajouter_un_departement')}">
                 <form action="${pageContext.request.contextPath}/Employe/changerLeRole.jsp">
-                    <a href="formulaireCreerDepartement.jsp">Créer un département</a>
+                    <a href="/Departement/formulaireCreerDepartement.jsp">Créer un département</a>
                 </form>
             </c:if>
         </c:forEach>
