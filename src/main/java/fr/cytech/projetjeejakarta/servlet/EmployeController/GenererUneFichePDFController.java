@@ -32,7 +32,7 @@ public class GenererUneFichePDFController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id_employe =  Integer.parseInt(request.getParameter("id_employe"));
         int id_fiche_de_paie =  Integer.parseInt(request.getParameter("id_fiche_de_paie"));
-        String logoPath = getServletContext().getRealPath("../resources/img/logo.png");
+        String logoPath = getServletContext().getRealPath("../resources/img/logoClient.png");
         String signaturePath = getServletContext().getRealPath("../resources/img/signature.png");
         FicheDePaieDAO ficheDao = new FicheDePaieDAO();
         FicheDePaie fiche = ficheDao.rechercherFicheDePaie(id_fiche_de_paie);
