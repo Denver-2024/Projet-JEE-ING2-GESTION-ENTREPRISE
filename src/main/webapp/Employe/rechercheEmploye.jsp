@@ -127,38 +127,37 @@
             <input type="submit" value="Rechercher">
         </form>
 
-        <div class="empoloyes">
-            <c:if test="${not empty employes}">
-                <table class="tablemployes">
-                    <thead>
+    <div class="empoloyes">
+        <c:if test="${not empty employes}">
+            <table class="tablemployes">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Rôle</th>
+                    <th>Département</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="employe" items="${employes}">
                     <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Rôle</th>
-                        <th>Département</th>
-                        <th>Action</th>
+                        <td>${employe.nom}</td>
+                        <td>${employe.prenom}</td>
+                        <td>${employe.role.nom}</td>
+                        <td>${employe.departement.nom}</td>
+                        <td class="actionTD">
+                            <!-- Chemin dynamique pour sélectionner un employé -->
+                            <form action="${pageContext.request.contextPath}/" method="get">
+                                <input type="hidden" name="id_employe" value="${employe.id_employe}">
+                                <input type="submit" value="Sélectionner"/>
+                            </form>
+                        </td>
                     </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="employe" items="${employes}">
-                        <tr>
-                            <td>${employe.nom}</td>
-                            <td>${employe.prenom}</td>
-                            <td>${employe.role.nom}</td>
-                            <td>${employe.departement.nom}</td>
-                            <td class="actionTD">
-                                <!-- Chemin dynamique pour sélectionner un employé -->
-                                <form action="${pageContext.request.contextPath}/AfficheEmployeController" method="get">
-                                    <input type="hidden" name="id_employe" value="${employe.id_employe}">
-                                    <input type="submit" value="Sélectionner"/>
-                                </form>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-            </c:if>
-        </div>
+                </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
     </div>
 </div>
 </body>
