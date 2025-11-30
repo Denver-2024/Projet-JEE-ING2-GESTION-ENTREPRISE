@@ -256,7 +256,7 @@
                 </c:forEach>
 
                 <c:if test="${hasAjouterDepartement}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Departement/formulaireCreerDepartement.jsp'">Ajouter un département</button></c:if>
-                <c:if test="${hasListerDepartements}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Departement/listeEtRechercheDepartements.jsp'">Lister/Rechercher les départements</button></c:if>
+                <c:if test="${hasListerDepartements}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/DepartementController'">Lister/Rechercher les départements</button></c:if>
 
                 <c:if test="${!hasDepartements}">
                     <li class="feature-disabled">Aucune autorisation pour la gestion des départements</li>
@@ -281,7 +281,7 @@
                 </c:forEach>
 
                 <c:if test="${hasCreerProjet}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Projet/formulaireCreerProjet.jsp'">Créer un projet</button></c:if>
-                <c:if test="${hasSuivreProjet}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Projet/listeEtRechercheProjets.jsp'">Lister les projets</button></c:if>
+                <c:if test="${hasSuivreProjet}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/ProjetController'">Lister les projets</button></c:if>
 
                 <c:if test="${!hasProjets}">
                     <li class="feature-disabled">Aucune autorisation pour la gestion des projets</li>

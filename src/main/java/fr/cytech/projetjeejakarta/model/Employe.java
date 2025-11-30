@@ -33,7 +33,7 @@ public class Employe {
     @JoinColumn(name = "id_role")
     private Role role;
 
-
+    @Column(name="password",  nullable=false, columnDefinition = "VARCHAR(255) NOT NULL DEFAULT 'JEE_Killers'")
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})

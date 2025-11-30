@@ -50,7 +50,7 @@ public class AddEmployeController extends HttpServlet {
         Grade grade = null;
         String gradeParam = request.getParameter("grade");
 
-        String roleIdStr = request.getParameter("role");
+        String roleIdStr = request.getParameter("id_role");
 
 
 
@@ -104,7 +104,7 @@ public class AddEmployeController extends HttpServlet {
         employeDAO.creerOuModifierEmploye(employe);
 
         request.setAttribute("newEmploye",employe);
-        request.getRequestDispatcher("DemoteChefController").forward(request, response);
+        request.getRequestDispatcher("ListerEmployesController").forward(request, response);
 
     }
 }
