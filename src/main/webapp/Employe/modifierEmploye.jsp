@@ -103,10 +103,10 @@
     <input type="text" id="adresse" name="adresse" value="${sessionScope.employeFoundMatricule.adresse}"><br>
 
     <label>Département : </label>
-    <select id="departement" name="id_departement" data-original="${sessionScope.employeFoundMatricule.id_departement}" required>
+    <select id="departement" name="id_departement" data-original="${sessionScope.employeFoundMatricule.departement.id_departement}" required>
         <!-- First, show the current department as selected -->
         <c:forEach var="d" items="${applicationScope.departementsFound}">
-            <c:if test="${d.id_departement == sessionScope.employeFoundMatricule.id_departement}">
+            <c:if test="${d.id_departement == sessionScope.employeFoundMatricule.departement.id_departement}">
                 <option value="${d.id_departement}" selected>
                         ${d.nom}
                 </option>
@@ -115,7 +115,7 @@
 
         <!-- Then show all other departments -->
         <c:forEach var="d" items="${applicationScope.departementsFound}">
-            <c:if test="${d.id_departement != sessionScope.employeFoundMatricule.id_departement}">
+            <c:if test="${d.id_departement != sessionScope.employeFoundMatricule.departement.id_departement}">
                 <option value="${d.id_departement}">
                         ${d.nom}
                 </option>
