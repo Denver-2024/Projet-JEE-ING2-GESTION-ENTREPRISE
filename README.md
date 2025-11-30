@@ -45,6 +45,7 @@ Les prérequis techniques sont supposés installés et fonctionnels.
     - script_sql_entreprise.sql
     - donnees_statiques.sql
     - jeu_donnees.sql
+
 L'application est configurée pour se connecter à cette base de données en utilisant l'utilisateur root avec comme mot de passe "cytech0001". Vous aurez besoin, pour que la connexion fonctionne : soit de changer le mot de passe de l'utilisateur root dans MySQL, soit de modifier le mot de passe utilisé par l'application dans le fichier suivant :
 /src/main/resources/persistence.xml, en adaptant la ligne :`<property name="jakarta.persistence.jdbc.password" value="cytech0001"/>`.
 - Enfin, lancez Tomcat (en exécutant  startup.sh ou  startup.bat selon votre système d'exploitation), de façon à ce que Tomcat détecte automatiquement le WAR.
