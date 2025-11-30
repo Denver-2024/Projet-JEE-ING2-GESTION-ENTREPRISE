@@ -71,6 +71,6 @@ public class RechercheEmployeController extends HttpServlet {
             return;
         }
         request.setAttribute("employes",employes);
-        request.getRequestDispatcher("Employe/rechercheEmploye.jsp").forward(request, response);
+        request.getRequestDispatcher("Employe/afficheEmployeSimple.jsp").forward(request, response);
     }
 }

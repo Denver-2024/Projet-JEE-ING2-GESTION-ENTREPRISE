@@ -33,7 +33,6 @@ public class Employe {
     @JoinColumn(name = "id_role")
     private Role role;
 
-
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -47,7 +46,7 @@ public class Employe {
     private int salaire;
 
     public Employe(){
-
+        this.password = "JEE_Killers";
     }
 
     public Employe(String nom, String prenom, int salaire, String adresse,
@@ -62,6 +61,7 @@ public class Employe {
         this.sexe = sexe;
         this.grade = grade;
         this.role = role;
+        this.password="JEE_Killers";
 
     }
 
@@ -155,10 +155,17 @@ public class Employe {
     }
 
     public String getPassword() {return password;}
-    public void setPassword(String password) {this.password=password;}
+
+    public void setPassword(String password) {
+        if (password == null || password.isBlank()) {
+            this.password = "JEE_Killers";
+        } else {
+            this.password = password;
+        }
+    }
 
     public List<Projet> getProjets() {return projets;}
-    public void  setProjets(List<Projet> projets) {this.projets = projets;}
+    public  void setProjets(List<Projet> projets) {this.projets = projets;}
 
     public void ajouterProjet(Projet projet){
         this.getProjets().add(projet);
