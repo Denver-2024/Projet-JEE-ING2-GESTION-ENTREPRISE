@@ -18,10 +18,16 @@
             background-size: cover;
 
             font-family: 'Times New Roman', serif;
+        }
+
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 50px;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px 10px 0 0;
         }
 
         form { margin-bottom: 30px; }
@@ -46,29 +52,46 @@
     </style>
 </head>
 <body>
-<div class="verifSuppression">
-    <!-- Bouton retour accueil -->
-    <form action="${pageContext.request.contextPath}/index.jsp">
-        <input type="submit" value="Accueil">
-    </form>
-
-    <h1>Êtes-vous sûr de vouloir supprimer l'employé ${sessionScope.employeFoundMatricule.id_employe}</h1><br>
-
-    <div class="nextAction">
-        <!-- Formulaire suppression avec chemin dynamique -->
-        <form action="${pageContext.request.contextPath}/DeleteEmployeController" method="post">
-            <input type="submit" value="Supprimer">
+<header>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="${pageContext.request.contextPath}/dashboard" style="text-decoration: none; display: flex; align-items: center; gap: 1rem;">
+            <img src="${pageContext.request.contextPath}/images/Logo.png"
+                 alt="Logo Gestion Entreprise"
+                 style="height: 60px; width: auto;">
+            <h1 style="color: white; margin: 0;">Tableau de Bord - Gestion Entreprise</h1>
+        </a>
+    </div>
+    <div>
+        <span>Bienvenue, ${sessionScope.employe.prenom} ${sessionScope.employe.nom}</span>
+        <span style="margin-left: 1rem;">Rôle: ${sessionScope.role}</span>
+        <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Déconnexion</a>
+    </div>
+</header>
+<div class="page">
+    <div class="verifSuppression">
+        <!-- Bouton retour accueil -->
+        <form action="${pageContext.request.contextPath}/index.jsp">
+            <input type="submit" value="Accueil">
         </form>
 
-        <!-- Formulaire annulation avec chemin dynamique -->
-        <form action="${pageContext.request.contextPath}/Employe/modifierEmploye.jsp">
-            <input type="submit" value="Annuler">
-        </form><br>
-    </div>
+        <h1>Êtes-vous sûr de vouloir supprimer l'employé ${sessionScope.employeFoundMatricule.id_employe}</h1><br>
 
-    <c:if test="${not empty messageEmployeDeleted}">
-        <p style="color: green;">${messageEmployeDeleted}</p>
-    </c:if>
+        <div class="nextAction">
+            <!-- Formulaire suppression avec chemin dynamique -->
+            <form action="${pageContext.request.contextPath}/DeleteEmployeController" method="post">
+                <input type="submit" value="Supprimer">
+            </form>
+
+            <!-- Formulaire annulation avec chemin dynamique -->
+            <form action="${pageContext.request.contextPath}/Employe/modifierEmploye.jsp">
+                <input type="submit" value="Annuler">
+            </form><br>
+        </div>
+
+        <c:if test="${not empty messageEmployeDeleted}">
+            <p style="color: green;">${messageEmployeDeleted}</p>
+        </c:if>
+    </div>
 </div>
 </body>
 </html>

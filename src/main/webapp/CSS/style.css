@@ -8,6 +8,13 @@ body{
     padding: 0;
 }
 
+.page{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 50px;
+}
+
 .container {
     background: white;
     padding: 25px 40px;

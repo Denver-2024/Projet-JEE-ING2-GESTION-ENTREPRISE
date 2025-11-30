@@ -14,10 +14,16 @@
             background-size: cover;
 
             font-family: 'Times New Roman', serif;
+        }
+
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 50px;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px 10px 0 0;
         }
 
         form { margin-bottom: 30px; }
@@ -44,76 +50,93 @@
     </style>
 </head>
 <body>
-<div id="addform">
-    <c:if test="${not empty errorMessageInputNotFilled}">
-        <p style="color:red; font-weight:bold;">${errorMessageInputNotFilled}</p>
-    </c:if>
-    <c:if test="${not empty messageAjoutSucces}">
-        <p style="color: green;">${messageAjoutSucces}</p>
-    </c:if>
-    <c:if test="${not empty errorSalaireTooLow}">
-        <p style="color: red;">${errorSalaireTooLow}</p>
-    </c:if>
-    <c:if test="${not empty errorSalaireNotNumber}">
-        <p style="color: red;">${errorSalaireNotNumber}</p>
-    </c:if>
+<header>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="${pageContext.request.contextPath}/dashboard" style="text-decoration: none; display: flex; align-items: center; gap: 1rem;">
+            <img src="${pageContext.request.contextPath}/images/Logo.png"
+                 alt="Logo Gestion Entreprise"
+                 style="height: 60px; width: auto;">
+            <h1 style="color: white; margin: 0;">Tableau de Bord - Gestion Entreprise</h1>
+        </a>
+    </div>
+    <div>
+        <span>Bienvenue, ${sessionScope.employe.prenom} ${sessionScope.employe.nom}</span>
+        <span style="margin-left: 1rem;">Rôle: ${sessionScope.role}</span>
+        <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Déconnexion</a>
+    </div>
+</header>
+<div class="page">
+    <div id="addform">
+        <c:if test="${not empty errorMessageInputNotFilled}">
+            <p style="color:red; font-weight:bold;">${errorMessageInputNotFilled}</p>
+        </c:if>
+        <c:if test="${not empty messageAjoutSucces}">
+            <p style="color: green;">${messageAjoutSucces}</p>
+        </c:if>
+        <c:if test="${not empty errorSalaireTooLow}">
+            <p style="color: red;">${errorSalaireTooLow}</p>
+        </c:if>
+        <c:if test="${not empty errorSalaireNotNumber}">
+            <p style="color: red;">${errorSalaireNotNumber}</p>
+        </c:if>
 
-    <!-- Formulaire avec chemin dynamique -->
-    <form action="${pageContext.request.contextPath}/AddEmployeController" method="post">
-        <div class="title">
-            <h1>Ajouter un nouvel employé</h1>
-        </div>
-        <div class="radchoice">
-            <label>Civilité :</label>
-            <span><input type="radio" id="M" name="sexe" value="M"><label for="M">M</label></span>
-            <span><input type="radio" id="F" name="sexe" value="F"><label for="F">F</label></span>
-            <span><input type="radio" id="X" name="sexe" value="X"><label for="X">X</label></span>
-        </div>
+        <!-- Formulaire avec chemin dynamique -->
+        <form action="${pageContext.request.contextPath}/AddEmployeController" method="post">
+            <div class="title">
+                <h1>Ajouter un nouvel employé</h1>
+            </div>
+            <div class="radchoice">
+                <label>Civilité :</label>
+                <span><input type="radio" id="M" name="sexe" value="M"><label for="M">M</label></span>
+                <span><input type="radio" id="F" name="sexe" value="F"><label for="F">F</label></span>
+                <span><input type="radio" id="X" name="sexe" value="X"><label for="X">X</label></span>
+            </div>
 
-        <label for="nom">Nom : </label>
-        <input type="text" name="nom" required>
+            <label for="nom">Nom : </label>
+            <input type="text" name="nom" required>
 
-        <label for="prenom">Prénom : </label>
-        <input type="text" name="prenom" required>
+            <label for="prenom">Prénom : </label>
+            <input type="text" name="prenom" required>
 
-        <label for="salaire">Salaire : </label>
-        <input type="text" name="salaire" required>
+            <label for="salaire">Salaire : </label>
+            <input type="text" name="salaire" required>
 
-        <label>Adresse : </label><br>
-        <input type="text" name="adresse" required><br>
+            <label>Adresse : </label><br>
+            <input type="text" name="adresse" required><br>
 
-        <label>Numéro de téléphone : </label><br>
-        <input type="text" name="numero" required><br>
+            <label>Numéro de téléphone : </label><br>
+            <input type="text" name="numero" required><br>
 
-        <label>Email : </label><br>
-        <input type="text" name="email" required><br>
+            <label>Email : </label><br>
+            <input type="text" name="email" required><br>
 
-        <div class="radchoice">
-            <label for="grade">Grade :</label><br>
-            <span><input type="radio" id="junior" name="grade" value="JUNIOR" required><label for="junior">Junior</label></span>
-            <span><input type="radio" id="intermediaire" name="grade" value="INTERMEDIAIRE"><label for="intermediaire">Intermédiaire</label></span>
-            <span><input type="radio" id="senior" name="grade" value="SENIOR"><label for="senior">Senior</label></span>
-        </div>
+            <div class="radchoice">
+                <label for="grade">Grade :</label><br>
+                <span><input type="radio" id="junior" name="grade" value="JUNIOR" required><label for="junior">Junior</label></span>
+                <span><input type="radio" id="intermediaire" name="grade" value="INTERMEDIAIRE"><label for="intermediaire">Intermédiaire</label></span>
+                <span><input type="radio" id="senior" name="grade" value="SENIOR"><label for="senior">Senior</label></span>
+            </div>
 
-        <label>Département : </label>
-        <!-- On utilise departement.id_departement pour refléter la relation objet -->
-        <select name="departement.id_departement" required>
-            <option value="" disabled selected hidden>-- Sélectionner un département --</option>
-            <c:forEach var="d" items="${applicationScope.departementsFound}">
-                <option value="${d.id_departement}">${d.nom}</option>
-            </c:forEach>
-        </select>
+            <label>Département : </label>
+            <!-- On utilise departement.id_departement pour refléter la relation objet -->
+            <select name="departement.id_departement" required>
+                <option value="" disabled selected hidden>-- Sélectionner un département --</option>
+                <c:forEach var="d" items="${applicationScope.departementsFound}">
+                    <option value="${d.id_departement}">${d.nom}</option>
+                </c:forEach>
+            </select>
 
-        <label>Rôle : </label>
-        <select name="role.id_role" required>
-            <option value="" disabled selected hidden>-- Sélectionner un rôle --</option>
-            <c:forEach var="r" items="${applicationScope.rolesFound}">
-                <option value="${r.id_role}">${r.nom}</option>
-            </c:forEach>
-        </select><br><br>
+            <label>Rôle : </label>
+            <select name="role.id_role" required>
+                <option value="" disabled selected hidden>-- Sélectionner un rôle --</option>
+                <c:forEach var="r" items="${applicationScope.rolesFound}">
+                    <option value="${r.id_role}">${r.nom}</option>
+                </c:forEach>
+            </select><br><br>
 
-        <input value="Ajouter Employe" type="submit">
-    </form><br>
+            <input value="Ajouter Employe" type="submit">
+        </form><br>
+    </div>
 </div>
 </body>
 </html>

@@ -20,10 +20,16 @@
             background-size: cover;
 
             font-family: 'Times New Roman', serif;
+        }
+
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 50px;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px 10px 0 0;
         }
 
         form { margin-bottom: 30px; }
@@ -59,83 +65,100 @@
     </style>
 </head>
 <body>
-<div class="rechercheE">
-    <!-- Formulaire avec chemin dynamique -->
-    <form action="${pageContext.request.contextPath}/RechercheEmployeController" method="get">
-        <div class="title">
-            <h1> Rechercher un employé </h1>
-        </div>
-        <c:if test="${not empty errorMessageAucunParametre}">
-            <p style="color: red;">${errorMessageAucunParametre}</p>
-        </c:if>
-        <c:if test="${not empty messageAucunEmploye}">
-            <p style="color: red;">${messageAucunEmploye}</p>
-        </c:if>
+<header>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="${pageContext.request.contextPath}/dashboard" style="text-decoration: none; display: flex; align-items: center; gap: 1rem;">
+            <img src="${pageContext.request.contextPath}/images/Logo.png"
+                 alt="Logo Gestion Entreprise"
+                 style="height: 60px; width: auto;">
+            <h1 style="color: white; margin: 0;">Tableau de Bord - Gestion Entreprise</h1>
+        </a>
+    </div>
+    <div>
+        <span>Bienvenue, ${sessionScope.employe.prenom} ${sessionScope.employe.nom}</span>
+        <span style="margin-left: 1rem;">Rôle: ${sessionScope.role}</span>
+        <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Déconnexion</a>
+    </div>
+</header>
+<div class="page">
+    <div class="rechercheE">
+        <!-- Formulaire avec chemin dynamique -->
+        <form action="${pageContext.request.contextPath}/RechercheEmployeController" method="get">
+            <div class="title">
+                <h1> Rechercher un employé </h1>
+            </div>
+            <c:if test="${not empty errorMessageAucunParametre}">
+                <p style="color: red;">${errorMessageAucunParametre}</p>
+            </c:if>
+            <c:if test="${not empty messageAucunEmploye}">
+                <p style="color: red;">${messageAucunEmploye}</p>
+            </c:if>
 
-        <label for="nom">Nom : </label>
-        <input type="text" name="nom" id="nom"><br>
-        <label for="prenom">Prénom : </label>
-        <input type="text" name="prenom" id="prenom"><br>
+            <label for="nom">Nom : </label>
+            <input type="text" name="nom" id="nom"><br>
+            <label for="prenom">Prénom : </label>
+            <input type="text" name="prenom" id="prenom"><br>
 
-        <label for="departement">Département : </label>
-        <select id="departement" name="departement.id_departement">
-            <option value="" disabled selected hidden>-- Sélectionner un département --</option>
-            <c:forEach var="d" items="${applicationScope.departementsFound}">
-                <option value="${d.id_departement}">${d.nom}</option>
-            </c:forEach>
-        </select><br><br>
-
-        <label for="grade">Grade : </label>
-        <select name="grade">
-            <option value="" disabled selected hidden>-- Sélectionner un grade --</option>
-            <c:set var="grades" value="${fn:split('JUNIOR,INTERMEDIAIRE,SENIOR', ',')}" />
-            <c:forEach var="g" items="${grades}">
-                <option value="${g}">${g}</option>
-            </c:forEach>
-        </select><br>
-
-        <label>Rôle : </label>
-        <select name="role.id_role">
-            <option value="" disabled selected hidden>-- Sélectionner un rôle --</option>
-            <c:forEach var="r" items="${applicationScope.rolesFound}">
-                <option value="${r.id_role}">${r.nom}</option>
-            </c:forEach>
-        </select><br><br>
-
-        <input type="submit" value="Rechercher">
-    </form>
-
-    <div class="empoloyes">
-        <c:if test="${not empty employes}">
-            <table class="tablemployes">
-                <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Rôle</th>
-                    <th>Département</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="employe" items="${employes}">
-                    <tr>
-                        <td>${employe.nom}</td>
-                        <td>${employe.prenom}</td>
-                        <td>${employe.role.nom}</td>
-                        <td>${employe.departement.nom}</td>
-                        <td class="actionTD">
-                            <!-- Chemin dynamique pour sélectionner un employé -->
-                            <form action="${pageContext.request.contextPath}/AfficheEmployeController" method="get">
-                                <input type="hidden" name="id_employe" value="${employe.id_employe}">
-                                <input type="submit" value="Sélectionner"/>
-                            </form>
-                        </td>
-                    </tr>
+            <label for="departement">Département : </label>
+            <select id="departement" name="departement.id_departement">
+                <option value="" disabled selected hidden>-- Sélectionner un département --</option>
+                <c:forEach var="d" items="${applicationScope.departementsFound}">
+                    <option value="${d.id_departement}">${d.nom}</option>
                 </c:forEach>
-                </tbody>
-            </table>
-        </c:if>
+            </select><br><br>
+
+            <label for="grade">Grade : </label>
+            <select name="grade">
+                <option value="" disabled selected hidden>-- Sélectionner un grade --</option>
+                <c:set var="grades" value="${fn:split('JUNIOR,INTERMEDIAIRE,SENIOR', ',')}" />
+                <c:forEach var="g" items="${grades}">
+                    <option value="${g}">${g}</option>
+                </c:forEach>
+            </select><br>
+
+            <label>Rôle : </label>
+            <select name="role.id_role">
+                <option value="" disabled selected hidden>-- Sélectionner un rôle --</option>
+                <c:forEach var="r" items="${applicationScope.rolesFound}">
+                    <option value="${r.id_role}">${r.nom}</option>
+                </c:forEach>
+            </select><br><br>
+
+            <input type="submit" value="Rechercher">
+        </form>
+
+        <div class="empoloyes">
+            <c:if test="${not empty employes}">
+                <table class="tablemployes">
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Rôle</th>
+                        <th>Département</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="employe" items="${employes}">
+                        <tr>
+                            <td>${employe.nom}</td>
+                            <td>${employe.prenom}</td>
+                            <td>${employe.role.nom}</td>
+                            <td>${employe.departement.nom}</td>
+                            <td class="actionTD">
+                                <!-- Chemin dynamique pour sélectionner un employé -->
+                                <form action="${pageContext.request.contextPath}/AfficheEmployeController" method="get">
+                                    <input type="hidden" name="id_employe" value="${employe.id_employe}">
+                                    <input type="submit" value="Sélectionner"/>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+        </div>
     </div>
 </div>
 </body>

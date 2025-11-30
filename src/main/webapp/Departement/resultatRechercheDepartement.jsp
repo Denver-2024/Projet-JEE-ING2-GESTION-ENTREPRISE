@@ -4,57 +4,85 @@
 <html>
 <head>
     <title>Résultat recherche département</title>
+    <style>
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px 10px 0 0;
+        }
+    </style>
     <link rel="stylesheet" type="text/css" href="../CSS/style.css">
 </head>
 <body>
-<div class="container">
-    <h2>Résultat de la recherche</h2>
+<header>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="${pageContext.request.contextPath}/dashboard" style="text-decoration: none; display: flex; align-items: center; gap: 1rem;">
+            <img src="${pageContext.request.contextPath}/images/Logo.png"
+                 alt="Logo Gestion Entreprise"
+                 style="height: 60px; width: auto;">
+            <h1 style="color: white; margin: 0;">Tableau de Bord - Gestion Entreprise</h1>
+        </a>
+    </div>
+    <div>
+        <span>Bienvenue, ${sessionScope.employe.prenom} ${sessionScope.employe.nom}</span>
+        <span style="margin-left: 1rem;">Rôle: ${sessionScope.role}</span>
+        <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Déconnexion</a>
+    </div>
+</header>
+<div class="page">
+    <div class="container">
+        <h2>Résultat de la recherche</h2>
 
-    <%
-        String messageErreur = (String) request.getAttribute("messageErreur");
-        String messageSucces = (String) request.getAttribute("messageSucces");
+        <%
+            String messageErreur = (String) request.getAttribute("messageErreur");
+            String messageSucces = (String) request.getAttribute("messageSucces");
 
-        if (messageErreur != null) {
-    %>
-    <p class="messageErreur"><%= messageErreur %></p>
-    <% } else if (messageSucces != null) { %>
-    <p class="messageSucces"><%= messageSucces %></p>
-    <% } %>
-
-    <%
-        List<Departement> departements = (List<Departement>) request.getAttribute("departements");
-        if (departements != null && !departements.isEmpty()) {
-    %>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Description</th>
-            <th>Chef de département</th>
-            <th>Actions</th>
-        </tr>
-        <% for (Departement d : departements) { %>
-        <tr>
-            <td><%= d.getId_departement() %></td>
-            <td><%= d.getNom() %></td>
-            <td><%= d.getDescription() %></td>
-            <td><%= (d.getChefDepartement() != null ? d.getChefDepartement().getNom() : "Non défini") %></td>
-            <td>
-                <a href="../DepartementController?action=modifier&id=<%= d.getId_departement() %>">Modifier</a>
-                <a href="../DepartementController?action=supprimer&id=<%= d.getId_departement() %>">Supprimer</a>
-                <a href="../DepartementController?action=employes&idDepartement=<%= d.getId_departement() %>">Voir employés</a>
-                <a href="../DepartementController?action=projets&idDepartement=<%= d.getId_departement() %>">Voir projets</a>
-            </td>
-        </tr>
+            if (messageErreur != null) {
+        %>
+        <p class="messageErreur"><%= messageErreur %></p>
+        <% } else if (messageSucces != null) { %>
+        <p class="messageSucces"><%= messageSucces %></p>
         <% } %>
-    </table>
-    <% } else if (messageErreur == null) { %>
-    <p class="message">Aucun département trouvé.</p>
-    <% } %>
 
-    <hr>
-    <a href="formulaireCreerDepartement.jsp">Créer un département</a> |
-    <a href="../DepartementController?action=liste">Retour à la liste des départements</a>
+        <%
+            List<Departement> departements = (List<Departement>) request.getAttribute("departements");
+            if (departements != null && !departements.isEmpty()) {
+        %>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Chef de département</th>
+                <th>Actions</th>
+            </tr>
+            <% for (Departement d : departements) { %>
+            <tr>
+                <td><%= d.getId_departement() %></td>
+                <td><%= d.getNom() %></td>
+                <td><%= d.getDescription() %></td>
+                <td><%= (d.getChefDepartement() != null ? d.getChefDepartement().getNom() : "Non défini") %></td>
+                <td>
+                    <a href="../DepartementController?action=modifier&id=<%= d.getId_departement() %>">Modifier</a>
+                    <a href="../DepartementController?action=supprimer&id=<%= d.getId_departement() %>">Supprimer</a>
+                    <a href="../DepartementController?action=employes&idDepartement=<%= d.getId_departement() %>">Voir employés</a>
+                    <a href="../DepartementController?action=projets&idDepartement=<%= d.getId_departement() %>">Voir projets</a>
+                </td>
+            </tr>
+            <% } %>
+        </table>
+        <% } else if (messageErreur == null) { %>
+        <p class="message">Aucun département trouvé.</p>
+        <% } %>
+
+        <hr>
+        <a href="formulaireCreerDepartement.jsp">Créer un département</a> |
+        <a href="../DepartementController?action=liste">Retour à la liste des départements</a>
+    </div>
 </div>
 </body>
 </html>

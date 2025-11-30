@@ -10,12 +10,17 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
-
             font-family: 'Times New Roman', serif;
+        }
+
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 50px;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px 10px 0 0;
         }
 
         form { margin-bottom: 30px; }
@@ -37,38 +42,54 @@
     </style>
 </head>
 <body>
+<header>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="${pageContext.request.contextPath}/dashboard" style="text-decoration: none; display: flex; align-items: center; gap: 1rem;">
+            <img src="${pageContext.request.contextPath}/images/Logo.png"
+                 alt="Logo Gestion Entreprise"
+                 style="height: 60px; width: auto;">
+            <h1 style="color: white; margin: 0;">Tableau de Bord - Gestion Entreprise</h1>
+        </a>
+    </div>
+    <div>
+        <span>Bienvenue, ${sessionScope.employe.prenom} ${sessionScope.employe.nom}</span>
+        <span style="margin-left: 1rem;">Rôle: ${sessionScope.role}</span>
+        <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Déconnexion</a>
+    </div>
+</header>
+<div class="page">
+    <div class="affiche">
+        <!-- Retour à la page de recherche -->
+        <form action="${pageContext.request.contextPath}/Employe/rechercheMatricule.jsp">
+            <input type="submit" value="Retour à la page de recherche">
+        </form>
 
-<div class="affiche">
-    <!-- Retour à la page de recherche -->
-    <form action="${pageContext.request.contextPath}/Employe/rechercheMatricule.jsp">
-        <input type="submit" value="Retour à la page de recherche">
-    </form>
+        <!-- Formulaire de modification -->
+        <form action="${pageContext.request.contextPath}/Employe/modifierEmploye.jsp" method="get">
+            <label>Matricule : ${sessionScope.employeFoundMatricule.id_employe}</label><br>
+            <label>Nom : ${sessionScope.employeFoundMatricule.nom}</label><br>
+            <label>Prénom : ${sessionScope.employeFoundMatricule.prenom}</label><br>
+            <label>Salaire (en €) : ${sessionScope.employeFoundMatricule.salaire} €</label><br>
+            <label>Adresse : ${sessionScope.employeFoundMatricule.adresse}</label><br>
 
-    <!-- Formulaire de modification -->
-    <form action="${pageContext.request.contextPath}/Employe/modifierEmploye.jsp" method="get">
-        <label>Matricule : ${sessionScope.employeFoundMatricule.id_employe}</label><br>
-        <label>Nom : ${sessionScope.employeFoundMatricule.nom}</label><br>
-        <label>Prénom : ${sessionScope.employeFoundMatricule.prenom}</label><br>
-        <label>Salaire (en €) : ${sessionScope.employeFoundMatricule.salaire} €</label><br>
-        <label>Adresse : ${sessionScope.employeFoundMatricule.adresse}</label><br>
+            <!-- Affichage direct du département via l'objet Departement -->
+            <label>Département : ${sessionScope.employeFoundMatricule.departement.nom}</label><br>
 
-        <!-- Affichage direct du département via l'objet Departement -->
-        <label>Département : ${sessionScope.employeFoundMatricule.departement.nom}</label><br>
+            <label>Numéro de téléphone : ${sessionScope.employeFoundMatricule.numero}</label><br>
+            <label>Email : ${sessionScope.employeFoundMatricule.email}</label><br>
+            <label>Sexe : ${sessionScope.employeFoundMatricule.sexe}</label><br>
+            <label>Grade : ${sessionScope.employeFoundMatricule.grade}</label><br>
+            <label>Role : ${sessionScope.employeFoundMatricule.role.nom}</label><br><br>
 
-        <label>Numéro de téléphone : ${sessionScope.employeFoundMatricule.numero}</label><br>
-        <label>Email : ${sessionScope.employeFoundMatricule.email}</label><br>
-        <label>Sexe : ${sessionScope.employeFoundMatricule.sexe}</label><br>
-        <label>Grade : ${sessionScope.employeFoundMatricule.grade}</label><br>
-        <label>Role : ${sessionScope.employeFoundMatricule.role.nom}</label><br><br>
+            <input type="submit" value="Modifier">
+        </form>
 
-        <input type="submit" value="Modifier">
-    </form>
+        <!-- Voir les fiches de paie -->
+        <form action="${pageContext.request.contextPath}/Employe/rechercherFichesDePaie.jsp" method="get">
+            <input type="submit" value="Voir les fiches de paie">
+        </form>
 
-    <!-- Voir les fiches de paie -->
-    <form action="${pageContext.request.contextPath}/Employe/rechercherFichesDePaie.jsp" method="get">
-        <input type="submit" value="Voir les fiches de paie">
-    </form>
-
+    </div>
 </div>
 </body>
 </html>

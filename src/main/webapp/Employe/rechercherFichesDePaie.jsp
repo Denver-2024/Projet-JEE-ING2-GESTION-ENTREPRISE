@@ -21,10 +21,16 @@
             background-size: cover;
 
             font-family: 'Times New Roman', serif;
+        }
+
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 50px;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px 10px 0 0;
         }
 
         form { margin-bottom: 30px; }
@@ -60,62 +66,79 @@
     </style>
 </head>
 <body>
-<div class="recherchefiches">
-    <div class="title">
-        <h1>Rechercher les fiches de paie par période</h1>
+<header>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="${pageContext.request.contextPath}/dashboard" style="text-decoration: none; display: flex; align-items: center; gap: 1rem;">
+            <img src="${pageContext.request.contextPath}/images/Logo.png"
+                 alt="Logo Gestion Entreprise"
+                 style="height: 60px; width: auto;">
+            <h1 style="color: white; margin: 0;">Tableau de Bord - Gestion Entreprise</h1>
+        </a>
     </div>
-
-    <c:if test="${not empty errorMessagePeriodeDate}">
-        <p style="color: red;">${errorMessagePeriodeDate}</p>
-    </c:if>
-    <c:if test="${not empty errorDatesPeriode}">
-        <p style="color: red;">${errorDatesPeriode}</p>
-    </c:if>
-
-    <div class="dateperiode">
-        <!-- Formulaire avec chemin dynamique -->
-        <form action="${pageContext.request.contextPath}/RechercherLesFichesDePaieController" method="get">
-            <input value="${sessionScope.employeFoundMatricule.id_employe}" type="hidden" name="employe">
-            <label for="startDate">Date du début de la période souhaitée : </label><br>
-            <input type="date" id="startDate" name="startDate"><br><br>
-
-            <label for="endDate">Date de la fin de la période souhaitée : </label><br>
-            <input type="date" id="endDate" name="endDate" required><br><br>
-
-            <input type="submit" value="Rechercher">
-        </form>
+    <div>
+        <span>Bienvenue, ${sessionScope.employe.prenom} ${sessionScope.employe.nom}</span>
+        <span style="margin-left: 1rem;">Rôle: ${sessionScope.role}</span>
+        <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Déconnexion</a>
     </div>
+</header>
+<div class="page">
+    <div class="recherchefiches">
+        <div class="title">
+            <h1>Rechercher les fiches de paie par période</h1>
+        </div>
 
-    <c:if test="${not empty messagePasDeFiche}">
-        <p style="color: red;">${messagePasDeFiche}</p>
-    </c:if>
+        <c:if test="${not empty errorMessagePeriodeDate}">
+            <p style="color: red;">${errorMessagePeriodeDate}</p>
+        </c:if>
+        <c:if test="${not empty errorDatesPeriode}">
+            <p style="color: red;">${errorDatesPeriode}</p>
+        </c:if>
 
-    <div class="fiches">
-        <table class="tablefiches">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Date</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="fiche" items="${fiches}">
+        <div class="dateperiode">
+            <!-- Formulaire avec chemin dynamique -->
+            <form action="${pageContext.request.contextPath}/RechercherLesFichesDePaieController" method="get">
+                <input value="${sessionScope.employeFoundMatricule.id_employe}" type="hidden" name="employe">
+                <label for="startDate">Date du début de la période souhaitée : </label><br>
+                <input type="date" id="startDate" name="startDate"><br><br>
+
+                <label for="endDate">Date de la fin de la période souhaitée : </label><br>
+                <input type="date" id="endDate" name="endDate" required><br><br>
+
+                <input type="submit" value="Rechercher">
+            </form>
+        </div>
+
+        <c:if test="${not empty messagePasDeFiche}">
+            <p style="color: red;">${messagePasDeFiche}</p>
+        </c:if>
+
+        <div class="fiches">
+            <table class="tablefiches">
+                <thead>
                 <tr>
-                    <td>${fiche.id_fiche_de_paie}</td>
-                    <td><fmt:formatDate value="${fiche.dateFiche}" pattern="MMMM yyyy"/></td>
-                    <td class="actionTD">
-                        <!-- Formulaire avec chemin dynamique -->
-                        <form action="${pageContext.request.contextPath}/GenererUneFichePDFController" method="get" target="_blank">
-                            <input type="hidden" name="id_employe" value="${sessionScope.employeFoundMatricule.id_employe}">
-                            <input type="hidden" name="id_fiche_de_paie" value="${fiche.id_fiche_de_paie}">
-                            <input type="submit" value="Générer PDF"/>
-                        </form>
-                    </td>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Action</th>
                 </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <c:forEach var="fiche" items="${fiches}">
+                    <tr>
+                        <td>${fiche.id_fiche_de_paie}</td>
+                        <td><fmt:formatDate value="${fiche.dateFiche}" pattern="MMMM yyyy"/></td>
+                        <td class="actionTD">
+                            <!-- Formulaire avec chemin dynamique -->
+                            <form action="${pageContext.request.contextPath}/GenererUneFichePDFController" method="get" target="_blank">
+                                <input type="hidden" name="id_employe" value="${sessionScope.employeFoundMatricule.id_employe}">
+                                <input type="hidden" name="id_fiche_de_paie" value="${fiche.id_fiche_de_paie}">
+                                <input type="submit" value="Générer PDF"/>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 </body>

@@ -18,10 +18,16 @@
             background-size: cover;
 
             font-family: 'Times New Roman', serif;
+        }
+
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 50px;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px 10px 0 0;
         }
 
         form { margin-bottom: 30px; }
@@ -43,40 +49,57 @@
     </style>
 </head>
 <body>
-<div class="changeRole">
-    <h1>Changement du rôle de l'employé ${sessionScope.employeFoundMatricule.id_employe}</h1>
+<header>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="${pageContext.request.contextPath}/dashboard" style="text-decoration: none; display: flex; align-items: center; gap: 1rem;">
+            <img src="${pageContext.request.contextPath}/images/Logo.png"
+                 alt="Logo Gestion Entreprise"
+                 style="height: 60px; width: auto;">
+            <h1 style="color: white; margin: 0;">Tableau de Bord - Gestion Entreprise</h1>
+        </a>
+    </div>
+    <div>
+        <span>Bienvenue, ${sessionScope.employe.prenom} ${sessionScope.employe.nom}</span>
+        <span style="margin-left: 1rem;">Rôle: ${sessionScope.role}</span>
+        <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Déconnexion</a>
+    </div>
+</header>
+<div class="page">
+    <div class="changeRole">
+        <h1>Changement du rôle de l'employé ${sessionScope.employeFoundMatricule.id_employe}</h1>
 
-    <label>Rôle : </label>
-    <!-- Formulaire avec chemin dynamique vers le servlet -->
-    <form action="${pageContext.request.contextPath}/ChangeRoleController" method="post">
-        <select name="role.id_role">
-            <c:forEach var="r" items="${applicationScope.rolesFound}">
-                <c:if test="${r.id_role == sessionScope.employeFoundMatricule.role.id_role}">
-                    <option value="${r.id_role}" selected>${r.nom}</option>
-                </c:if>
-            </c:forEach>
+        <label>Rôle : </label>
+        <!-- Formulaire avec chemin dynamique vers le servlet -->
+        <form action="${pageContext.request.contextPath}/ChangeRoleController" method="post">
+            <select name="role.id_role">
+                <c:forEach var="r" items="${applicationScope.rolesFound}">
+                    <c:if test="${r.id_role == sessionScope.employeFoundMatricule.role.id_role}">
+                        <option value="${r.id_role}" selected>${r.nom}</option>
+                    </c:if>
+                </c:forEach>
 
-            <c:forEach var="r" items="${applicationScope.rolesFound}">
-                <c:if test="${r.id_role != sessionScope.employeFoundMatricule.role.id_role}">
-                    <option value="${r.id_role}">${r.nom}</option>
-                </c:if>
-            </c:forEach>
-        </select><br><br>
-        <input type="submit" value="Confirmer">
-    </form>
+                <c:forEach var="r" items="${applicationScope.rolesFound}">
+                    <c:if test="${r.id_role != sessionScope.employeFoundMatricule.role.id_role}">
+                        <option value="${r.id_role}">${r.nom}</option>
+                    </c:if>
+                </c:forEach>
+            </select><br><br>
+            <input type="submit" value="Confirmer">
+        </form>
 
-    <c:if test="${not empty messagePasDeModificationRole}">
-        <p style="color: green;">${messagePasDeModificationRole}</p>
-    </c:if>
+        <c:if test="${not empty messagePasDeModificationRole}">
+            <p style="color: green;">${messagePasDeModificationRole}</p>
+        </c:if>
 
-    <!-- Bouton Annuler avec chemin dynamique -->
-    <form action="${pageContext.request.contextPath}/Employe/afficheEmploye.jsp">
-        <input type="submit" value="Annuler">
-    </form>
+        <!-- Bouton Annuler avec chemin dynamique -->
+        <form action="${pageContext.request.contextPath}/Employe/afficheEmploye.jsp">
+            <input type="submit" value="Annuler">
+        </form>
 
-    <c:if test="${not empty messageRoleChanged}">
-        <p style="color: green;">${messageRoleChanged}</p>
-    </c:if>
+        <c:if test="${not empty messageRoleChanged}">
+            <p style="color: green;">${messageRoleChanged}</p>
+        </c:if>
+    </div>
 </div>
 </body>
 </html>

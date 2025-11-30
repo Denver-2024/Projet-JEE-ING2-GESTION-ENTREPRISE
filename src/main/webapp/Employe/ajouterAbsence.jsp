@@ -11,10 +11,16 @@
             background-size: cover;
 
             font-family: 'Times New Roman', serif;
+        }
+
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 50px;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px 10px 0 0;
         }
 
         form { margin-bottom: 30px; }
@@ -38,36 +44,53 @@
     </style>
 </head>
 <body>
-<div class="ajoutabsence">
-    <div class="title">
-        <h1>Absence</h1>
+<header>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="${pageContext.request.contextPath}/dashboard" style="text-decoration: none; display: flex; align-items: center; gap: 1rem;">
+            <img src="${pageContext.request.contextPath}/images/Logo.png"
+                 alt="Logo Gestion Entreprise"
+                 style="height: 60px; width: auto;">
+            <h1 style="color: white; margin: 0;">Tableau de Bord - Gestion Entreprise</h1>
+        </a>
     </div>
+    <div>
+        <span>Bienvenue, ${sessionScope.employe.prenom} ${sessionScope.employe.nom}</span>
+        <span style="margin-left: 1rem;">Rôle: ${sessionScope.role}</span>
+        <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Déconnexion</a>
+    </div>
+</header>
+<div class="page">
+    <div class="ajoutabsence">
+        <div class="title">
+            <h1>Absence</h1>
+        </div>
 
-    <c:if test="${not empty errorMessageAbsenceDate}">
-        <p style="color: red;">${errorMessageAbsenceDate}</p>
-    </c:if>
-    <c:if test="${not empty errorDatesAbsence}">
-        <p style="color: red;">${errorDatesAbsence}</p>
-    </c:if>
-    <c:if test="${not empty messageAbsenceAjoutee}">
-        <p style="color: green;">${messageAbsenceAjoutee}</p>
-    </c:if>
+        <c:if test="${not empty errorMessageAbsenceDate}">
+            <p style="color: red;">${errorMessageAbsenceDate}</p>
+        </c:if>
+        <c:if test="${not empty errorDatesAbsence}">
+            <p style="color: red;">${errorDatesAbsence}</p>
+        </c:if>
+        <c:if test="${not empty messageAbsenceAjoutee}">
+            <p style="color: green;">${messageAbsenceAjoutee}</p>
+        </c:if>
 
-    <div class="dateabsence">
-        <!-- Formulaire avec chemin dynamique vers le servlet -->
-        <form action="${pageContext.request.contextPath}/AjouterAbsenceController" method="post">
-            <label for="startDate">Date du début de l'absence : </label><br>
-            <input type="date" id="startDate" name="startDate"
-                   min="${sessionScope.firstDayOfMonth}"
-                   max="${sessionScope.lastDayOfYear}" required><br><br>
+        <div class="dateabsence">
+            <!-- Formulaire avec chemin dynamique vers le servlet -->
+            <form action="${pageContext.request.contextPath}/AjouterAbsenceController" method="post">
+                <label for="startDate">Date du début de l'absence : </label><br>
+                <input type="date" id="startDate" name="startDate"
+                       min="${sessionScope.firstDayOfMonth}"
+                       max="${sessionScope.lastDayOfYear}" required><br><br>
 
-            <label for="endDate">Date de la fin de l'absence : </label><br>
-            <input type="date" id="endDate" name="endDate"
-                   min="${sessionScope.firstDayOfMonth}"
-                   max="${sessionScope.lastDayOfYear}" required><br><br>
+                <label for="endDate">Date de la fin de l'absence : </label><br>
+                <input type="date" id="endDate" name="endDate"
+                       min="${sessionScope.firstDayOfMonth}"
+                       max="${sessionScope.lastDayOfYear}" required><br><br>
 
-            <input type="submit" value="Ajouter l'absence">
-        </form>
+                <input type="submit" value="Ajouter l'absence">
+            </form>
+        </div>
     </div>
 </div>
 </body>

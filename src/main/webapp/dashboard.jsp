@@ -306,7 +306,7 @@
                 </c:forEach>
 
 
-                <c:if test="${hasRechercherFiches}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/FicheDePaie/rechercherFichesDePaie.jsp'">Rechercher mes fiches de paie par période</button></c:if>
+                <c:if test="${hasRechercherFiches}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/rechercherFichesDePaie.jsp'">Rechercher mes fiches de paie par période</button></c:if>
 
                 <c:if test="${!hasFichesPaie}">
                     <li class="feature-disabled">Aucune autorisation pour la gestion des fiches de paie</li>

@@ -18,10 +18,16 @@
             background-size: cover;
 
             font-family: 'Times New Roman', serif;
+        }
+
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding-top: 50px;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px 10px 0 0;
         }
 
         table {
@@ -52,22 +58,39 @@
     </style>
 </head>
 <body>
-<div class="verifModif">
-    <ul>
-        <c:forEach var="change" items="${changes}">
-            <li>${change}</li>
-        </c:forEach>
-    </ul>
-    <div class="nextAction">
-        <!-- Formulaire avec chemin dynamique vers le servlet -->
-        <form action="${pageContext.request.contextPath}/ModifierEmployeController" method="post">
-            <input type="submit" value="Valider les changements">
-        </form>
+<header>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="${pageContext.request.contextPath}/dashboard" style="text-decoration: none; display: flex; align-items: center; gap: 1rem;">
+            <img src="${pageContext.request.contextPath}/images/Logo.png"
+                 alt="Logo Gestion Entreprise"
+                 style="height: 60px; width: auto;">
+            <h1 style="color: white; margin: 0;">Tableau de Bord - Gestion Entreprise</h1>
+        </a>
+    </div>
+    <div>
+        <span>Bienvenue, ${sessionScope.employe.prenom} ${sessionScope.employe.nom}</span>
+        <span style="margin-left: 1rem;">Rôle: ${sessionScope.role}</span>
+        <a href="${pageContext.request.contextPath}/logout" class="logout-btn">Déconnexion</a>
+    </div>
+</header>
+<div class="page">
+    <div class="verifModif">
+        <ul>
+            <c:forEach var="change" items="${changes}">
+                <li>${change}</li>
+            </c:forEach>
+        </ul>
+        <div class="nextAction">
+            <!-- Formulaire avec chemin dynamique vers le servlet -->
+            <form action="${pageContext.request.contextPath}/ModifierEmployeController" method="post">
+                <input type="submit" value="Valider les changements">
+            </form>
 
-        <!-- Formulaire annulation avec chemin dynamique -->
-        <form action="${pageContext.request.contextPath}/Employe/modifierEmploye.jsp">
-            <input type="submit" value="Annuler">
-        </form>
+            <!-- Formulaire annulation avec chemin dynamique -->
+            <form action="${pageContext.request.contextPath}/Employe/modifierEmploye.jsp">
+                <input type="submit" value="Annuler">
+            </form>
+        </div>
     </div>
 </div>
 </body>
