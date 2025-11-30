@@ -70,11 +70,10 @@
             <input type="submit" value="Rechercher">
         </form>
 
-        <c:if test="${showGenerateButton}">
             <form action="${pageContext.request.contextPath}/GenererLesFichesDePaieController" method="post">
                 <input type="submit" value="Générer les fiches de paie">
             </form>
-        </c:if>
+
 
         <c:if test="${not empty errorMessageEmployeNotFound}">
             <p style="color:red; font-weight:bold;">${errorMessageEmployeNotFound}</p>
