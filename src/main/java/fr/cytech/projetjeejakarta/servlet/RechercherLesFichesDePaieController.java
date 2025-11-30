@@ -24,7 +24,7 @@ public class RechercherLesFichesDePaieController extends HttpServlet {
         String startDateStr = req.getParameter("startDate");
         String endDateStr = req.getParameter("endDate");
         int id_employe = Integer.parseInt(req.getParameter("employe"));
-
+        String redirection = req.getParameter("redirection");
 
 
 
@@ -34,7 +34,12 @@ public class RechercherLesFichesDePaieController extends HttpServlet {
         if(startDate.after(endDate)) {
             req.setAttribute("errorMessagePeriodeDate", "La date de la fin de l'absence ne peut pas être après la date du début de l'absence." );
             req.setAttribute("errorDatesPeriode","Vous avez saisie : \nDate début : "+startDate+"\n Date fin : "+endDate);
-            req.getRequestDispatcher("Employe/rechercherFichesDePaie.jsp").forward(req, resp);
+            if(redirection.equals("SesFichesDePaie")) {
+                req.getRequestDispatcher("Employe/rechercherSesFichesDePaie.jsp").forward(req, resp);
+            }
+            else {
+                req.getRequestDispatcher("Employe/rechercherFichesDePaie.jsp").forward(req, resp);
+            }
             return;
         }
 
@@ -53,13 +58,23 @@ public class RechercherLesFichesDePaieController extends HttpServlet {
         if(fiches.isEmpty()){
             req.setAttribute("messagePasDeFiche", "Aucune fiche de paie n'ai été trouvée." );
 
-            req.getRequestDispatcher("Employe/rechercherFichesDePaie.jsp").forward(req, resp);
+            if(redirection.equals("SesFichesDePaie")) {
+                req.getRequestDispatcher("Employe/rechercherSesFichesDePaie.jsp").forward(req, resp);
+            }
+            else {
+                req.getRequestDispatcher("Employe/rechercherFichesDePaie.jsp").forward(req, resp);
+            }
             return;
         }
 
         req.setAttribute("fiches", fiches);
 
-        req.getRequestDispatcher("Employe/rechercherFichesDePaie.jsp").forward(req, resp);
 
+        if(redirection.equals("SesFichesDePaie")) {
+            req.getRequestDispatcher("Employe/rechercherSesFichesDePaie.jsp").forward(req, resp);
+        }
+        else {
+            req.getRequestDispatcher("Employe/rechercherFichesDePaie.jsp").forward(req, resp);
+        }
     }
 }
