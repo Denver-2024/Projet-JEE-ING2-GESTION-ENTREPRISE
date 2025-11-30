@@ -30,67 +30,44 @@
             margin-top: 20px;
         }
 
-        form {
-            margin-bottom: 30px;
-        }
-        label {
-            display: block;
-            text-align: left;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+        form { margin-bottom: 30px; }
+        label { display: block; text-align: left; margin-bottom: 5px; font-weight: bold; }
         input[type="text"], select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            width: 100%; padding: 8px; margin-bottom: 15px;
+            border: 1px solid #ccc; border-radius: 5px;
         }
         input[type="submit"] {
-            background-color: black;
-            border: none;
-            color: white;
-            padding: 10px;
-            font-size: 16px;
-            width: 100%;
-            cursor: pointer;
-            border-radius: 5px;
+            background-color: black; border: none; color: white;
+            padding: 10px; font-size: 16px; width: 100%;
+            cursor: pointer; border-radius: 5px;
         }
-        input[type="submit"]:hover {
-            background-color: #333;
+        input[type="submit"]:hover { background-color: #333; }
+        .verifModif {
+            background-color: white; padding: 25px 40px;
+            border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        .verifModif{
-            background-color: white;
-            padding: 25px 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        .nextAction {
+            display: flex; justify-content: space-evenly; align-items: center;
         }
-        .nextAction{
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-        }
-
-
-
     </style>
-
 </head>
 <body>
 <div class="verifModif">
-<ul>
-    <c:forEach var="change" items="${changes}">
-        <li>${change}</li>
-    </c:forEach>
-</ul>
+    <ul>
+        <c:forEach var="change" items="${changes}">
+            <li>${change}</li>
+        </c:forEach>
+    </ul>
     <div class="nextAction">
-<form action="${pageContext.request.contextPath}/modifier-employe" method="post">
-    <input type="submit" value="Valider les changements">
-</form>
+        <!-- Formulaire avec chemin dynamique -->
+        <form action="${pageContext.request.contextPath}/../EmployeController/ModifierEmployeController" method="post">
+            <input type="submit" value="Valider les changements">
+        </form>
 
-<form action="${pageContext.request.contextPath}/modifierEmploye.jsp">
-    <input type="submit" value="Annuler">
-</form>
+        <!-- Formulaire annulation avec chemin dynamique -->
+        <form action="${pageContext.request.contextPath}/Employe/modifierEmploye.jsp">
+            <input type="submit" value="Annuler">
+        </form>
     </div>
 </div>
 </body>

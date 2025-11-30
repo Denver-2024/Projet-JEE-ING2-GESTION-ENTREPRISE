@@ -48,7 +48,7 @@ public class FetchAllDepartementsAndRoles implements ServletContextListener {
             }
         };
 
-        // Schedule the task every 5 minutes, initial delay 0
+        // Schedule the task every 2 minutes, initial delay 0
         scheduler.scheduleAtFixedRate(refreshTask, 0, 2, TimeUnit.MINUTES);
     }
 
@@ -75,7 +75,6 @@ public class FetchAllDepartementsAndRoles implements ServletContextListener {
             AbandonedConnectionCleanupThread.checkedShutdown();
         } catch (Exception ignored) {
         }
-
 
     }
 }

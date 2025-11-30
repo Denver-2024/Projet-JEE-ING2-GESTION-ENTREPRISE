@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Cytech
-  Date: 21/11/2025
-  Time: 23:16
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -24,7 +17,6 @@
             align-items: flex-start;
             padding-top: 50px;
         }
-
 
         form {
             margin-bottom: 30px;
@@ -61,23 +53,28 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
-
     </style>
-
 </head>
 <body>
 
 <div class="affiche">
+    <!-- Retour à la page de recherche -->
     <form action="${pageContext.request.contextPath}/Employe/rechercheMatricule.jsp">
         <input type="submit" value="Retour à la page de recherche">
     </form>
-    <form action="Employe/modifierEmploye.jsp" method="get">
-        <label>Matricule :${sessionScope.employeFoundMatricule.id_employe}</label><br>
+
+    <!-- Formulaire de modification -->
+    <form action="${pageContext.request.contextPath}/Employe/modifierEmploye.jsp" method="get">
+        <label>Matricule : ${sessionScope.employeFoundMatricule.id_employe}</label><br>
         <label>Nom : ${sessionScope.employeFoundMatricule.nom}</label><br>
         <label>Prénom : ${sessionScope.employeFoundMatricule.prenom}</label><br>
-        <label>Adresse :${sessionScope.employeFoundMatricule.adresse}</label><br>
-        <label>Département : ${sessionScope.employeFoundMatricule.departement.nom}</label><br>
+        <label>Salaire (en €) : ${sessionScope.employeFoundMatricule.salaire} €</label><br>
+        <label>Adresse : ${sessionScope.employeFoundMatricule.adresse}</label><br>
+        <c:forEach var="d" items="${applicationScope.departementsFound}">
+            <c:if test="${d.id_departement == sessionScope.employeFoundMatricule.id_departement}">
+                <label>Département : ${d.nom}</label><br>
+            </c:if>
+        </c:forEach>
         <label>Numéro de téléphone : ${sessionScope.employeFoundMatricule.numero}</label><br>
         <label>Email : ${sessionScope.employeFoundMatricule.email}</label><br>
         <label>Sexe : ${sessionScope.employeFoundMatricule.sexe}</label><br>
@@ -85,7 +82,11 @@
         <label>Role : ${sessionScope.employeFoundMatricule.role.nom}</label><br><br>
 
         <input type="submit" value="Modifier">
+    </form>
 
+    <!-- Voir les fiches de paie -->
+    <form action="${pageContext.request.contextPath}/Employe/rechercherFichesDePaie.jsp" method="get">
+        <input type="submit" value="Voir les fiches de paie">
     </form>
 
 </div>

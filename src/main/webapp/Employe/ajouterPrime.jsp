@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: Cytech
-  Date: 22/11/2025
-  Time: 21:31
+  Date: 25/11/2025
+  Time: 20:22
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Changer le rôle</title>
+    <title>Prime</title>
     <style>
         body{
             background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
@@ -53,49 +53,58 @@
         input[type="submit"]:hover {
             background-color: #333;
         }
-        .changeRole{
+        .ajoutprime{
             background-color: white;
             padding: 25px 40px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
+        .title{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
-<div class="changeRole">
-    <h1>Changement du rôle de l'employé ${sessionScope.employeFoundMatricule.id_employe}</h1>
+<div class="ajoutprime">
+    <div class="title">
+        <h1>Prime</h1>
+    </div>
 
-    <label>Rôle : </label>
+    <c:if test="${not empty errorPrime}">
+        <p style="color:red; font-weight:bold;">
+                ${errorPrime}
+        </p>
+    </c:if>
+    <c:if test="${not empty errorPrimeTrop}">
+        <p style="color:red; font-weight:bold;">
+                ${errorPrimeTrop}
+        </p>
+    </c:if>
+    <c:if test="${not empty successPrime}">
+        <p style="color:green; font-weight:bold;">
+                ${successPrime}
+        </p>
+    </c:if>
+
     <!-- Formulaire avec chemin dynamique -->
-    <form action="${pageContext.request.contextPath}/../EmployeController/ChangeRoleController" method="post">
-        <select name="role">
-            <c:forEach var="r" items="${applicationScope.rolesFound}">
-                <c:if test="${r.id_role == sessionScope.employeFoundMatricule.role.id_role}">
-                    <option value="${r.id_role}" selected>${r.nom}</option>
+    <form action="${pageContext.request.contextPath}/../EmployeController/AjouterPrimeController" method="post">
+        <label for="mois"> Mois : </label><br>
+        <select name="mois">
+            <option value="${sessionScope.months.get(0)}">${sessionScope.months.get(0)}</option>
+            <c:forEach var="m" items="${sessionScope.months}" varStatus="status">
+                <c:if test="${status.index != 0}">
+                    <option value="${m}">${m}</option>
                 </c:if>
             </c:forEach>
+        </select>
 
-            <c:forEach var="r" items="${applicationScope.rolesFound}">
-                <c:if test="${r.id_role != sessionScope.employeFoundMatricule.role.id_role}">
-                    <option value="${r.id_role}">${r.nom}</option>
-                </c:if>
-            </c:forEach>
-        </select><br><br>
-        <input type="submit" value="Confirmer">
+        <label for="prime">Montant (en €): </label>
+        <input type="text" name="prime" id="prime">
+
+        <input type="submit" value="Ajouter la prime">
     </form>
-
-    <c:if test="${not empty messagePasDeModificationRole}">
-        <p style="color: green;">${messagePasDeModificationRole}</p>
-    </c:if>
-
-    <!-- Bouton Annuler avec chemin dynamique -->
-    <form action="${pageContext.request.contextPath}/Employe/afficheEmploye.jsp">
-        <input type="submit" value="Annuler">
-    </form>
-
-    <c:if test="${not empty messageRoleChanged}">
-        <p style="color: green;">${messageRoleChanged}</p>
-    </c:if>
 </div>
 </body>
 </html>

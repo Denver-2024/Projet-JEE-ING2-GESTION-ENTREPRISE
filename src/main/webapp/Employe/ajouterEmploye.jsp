@@ -1,15 +1,7 @@
 <%@ page import="java.util.List" %>
-<%@ page import="fr.cytech.projetjeejakarta.model.Departement" %><%--
-  Created by IntelliJ IDEA.
-  User: Cytech
-  Date: 20/11/2025
-  Time: 17:42
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="fr.cytech.projetjeejakarta.model.Departement" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
 
 <html>
 <head>
@@ -58,7 +50,6 @@
             background-color: #333;
         }
 
-
         #addform{
             background-color: white;
             padding: 25px 40px;
@@ -72,95 +63,93 @@
         }
         .radchoice {
             display: flex;
-            gap: 20px; /* control spacing between choices */
+            gap: 20px;
             margin-bottom: 5px;
         }
-
         .radchoice span {
             display: flex;
             align-items: center;
         }
-
         .radchoice span label {
-            margin-left: 4px;  /* tight label spacing */
+            margin-left: 4px;
         }
-
         label{
             margin: 5px;
         }
-        </style>
-
+    </style>
 </head>
 <body>
 <div id="addform">
-<c:if test="${not empty errorMessageInputNotFilled}">
-    <p style="color:red; font-weight:bold;">
-            ${errorMessageInputNotFilled}
-    </p>
-</c:if>
-<c:if test="${not empty messageAjoutSucces}">
-    <p style="color: green;">${messageAjoutSucces}</p>
-</c:if>
+    <c:if test="${not empty errorMessageInputNotFilled}">
+        <p style="color:red; font-weight:bold;">
+                ${errorMessageInputNotFilled}
+        </p>
+    </c:if>
+    <c:if test="${not empty messageAjoutSucces}">
+        <p style="color: green;">${messageAjoutSucces}</p>
+    </c:if>
+    <c:if test="${not empty errorSalaireTooLow}">
+        <p style="color: red;">${errorSalaireTooLow}</p>
+    </c:if>
+    <c:if test="${not empty errorSalaireNotNumber}">
+        <p style="color: red;">${errorSalaireNotNumber}</p>
+    </c:if>
 
-<form action="${pageContext.request.contextPath}/EmployeController/add-employe" method="post">
-    <div class="title">
-    <h1>Ajouter un nouvel employé</h1>
-    </div>
-    <div class="radchoice">
-        <label>Civilité :</label>
-        <span><input type="radio" id="M" name="sexe" value="M"><label for="M">M</label></span>
-        <span><input type="radio" id="F" name="sexe" value="F"><label for="F">F</label></span>
-        <span><input type="radio" id="X" name="sexe" value="X"><label for="X">X</label></span>
-    </div>
+    <!-- Formulaire avec chemin dynamique -->
+    <form action="${pageContext.request.contextPath}/../EmployeController/AddEmployeController" method="post">
+        <div class="title">
+            <h1>Ajouter un nouvel employé</h1>
+        </div>
+        <div class="radchoice">
+            <label>Civilité :</label>
+            <span><input type="radio" id="M" name="sexe" value="M"><label for="M">M</label></span>
+            <span><input type="radio" id="F" name="sexe" value="F"><label for="F">F</label></span>
+            <span><input type="radio" id="X" name="sexe" value="X"><label for="X">X</label></span>
+        </div>
 
+        <label for="nom">Nom : </label>
+        <input type="text" name="nom" required>
 
+        <label for="prenom">Prénom : </label>
+        <input type="text" name="prenom" required>
 
-    <label for="nom">Nom : </label>
-    <input type="text" name="nom" required>
+        <label for="salaire">Salaire : </label>
+        <input type="text" name="salaire" required>
 
-    <label for="prenom">Prénom : </label>
-    <input type="text" name="prenom" required>
+        <label> Adresse : </label><br>
+        <input type="text" name="adresse" required><br>
 
-    <label> Adresse : </label><br>
-    <input type="text" name="adresse" required><br>
+        <label> Numéro de téléphone : </label><br>
+        <input type="text" name="numero" required><br>
 
-    <label> Numéro de téléphone : </label><br>
-    <input type="text" name="numero" required><br>
+        <label> Email : </label><br>
+        <input type="text" name="email" required><br>
 
-    <label> Email : </label><br>
-    <input type="text" name="email" required><br>
+        <div class="radchoice">
+            <label for="grade">Grade :</label><br>
+            <span><input type="radio" id="junior" name="grade" value="JUNIOR" required><label for="junior">Junior</label></span>
+            <span><input type="radio" id="intermediaire" name="grade" value="INTERMEDIAIRE"><label for="intermediaire">Intermédiaire</label></span>
+            <span><input type="radio" id="senior" name="grade" value="SENIOR"><label for="senior">Senior</label></span>
+        </div>
 
+        <label>Département : </label>
+        <select name="id_departement" required>
+            <option value="" disabled selected hidden>-- Sélectionner un département --</option>
+            <c:forEach var="d" items="${applicationScope.departementsFound}">
+                <option value="${d.id_departement}">${d.nom}</option>
+            </c:forEach>
+        </select>
 
-    <div class="radchoice">
-    <label for="grade" >Grade :</label><br>
-        <span><input type="radio" id="junior" name="grade" value="JUNIOR" required><label for="junior">Junior</label><br></span>
-        <span><input type="radio" id="intermediaire" name="grade" value="INTERMEDIAIRE"><label for="intermediaire">Intermédiare</label></span>
-        <span><input type="radio" id="senior" name="grade" value="SENIOR"><label for="senior">Senior</label></span>
-    </div>
+        <label>Rôle : </label>
+        <select name="role" required>
+            <option value="" disabled selected hidden>-- Sélectionner un rôle --</option>
+            <c:forEach var="r" items="${applicationScope.rolesFound}">
+                <option value="${r.id_role}">${r.nom}</option>
+            </c:forEach>
+        </select><br><br>
 
-
-
-    <label>Département : </label>
-    <select name="id_departement" required>
-        <option value="" disabled selected hidden>-- Sélectionner un département --</option>
-        <c:forEach var="d" items="${applicationScope.departementsFound}">
-            <option value="${d.id_departement}">${d.nom}</option>
-        </c:forEach>
-    </select>
-
-    <label>Rôle : </label>
-
-    <select name="role" required>
-        <option value="" disabled selected hidden>-- Sélectionner un rôle --</option>
-        <c:forEach var="r" items="${applicationScope.rolesFound}">
-            <option value="${r.id_role}">${r.nom}</option>
-        </c:forEach>
-    </select><br><br>
-
-    <input value="Ajouter Employe" type="submit">
-</form><br>
-    
-
+        <input value="Ajouter Employe" type="submit">
+    </form><br>
 </div>
 </body>
 </html>

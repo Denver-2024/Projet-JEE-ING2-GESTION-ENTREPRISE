@@ -16,11 +16,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/verification-modification-employe")
-public class VerifierModification extends HttpServlet {
+@WebServlet("/VerifierModificationController")
+public class VerifierModificationController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nom = request.getParameter("nom");
         String prenom =  request.getParameter("prenom");
+        String salaireStr = request.getParameter("salaire");
         String adresse  = request.getParameter("adresse");
         String numero= request.getParameter("numero");
         String email  = request.getParameter("email");
@@ -34,7 +35,7 @@ public class VerifierModification extends HttpServlet {
         if(nom == null || prenom == null || adresse == null || numero == null || email == null || sexeParam == null || gradeParam == null || id_departementString == null
                 || nom.isEmpty() || prenom.isEmpty() || adresse.isEmpty() || numero.isEmpty() || email.isEmpty() || sexeParam.isBlank() || gradeParam.isBlank() || id_departementString.isEmpty()){
             request.setAttribute("errorMessageModifInputNotFilled","Vous devez remplir tous les champs");
-            request.getRequestDispatcher("modifierEmploye.jsp").forward(request, response);
+            request.getRequestDispatcher("Employe/modifierEmploye.jsp").forward(request, response);
             return;
         }
 
@@ -48,6 +49,23 @@ public class VerifierModification extends HttpServlet {
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid grade value: " + gradeParam);
         }
+        int salaire;
+        try{
+            salaire = Integer.parseInt(salaireStr);
+            if(salaire < 500){
+                request.setAttribute("errorSalaireTooLow","Le salaire minimum est de 500 €");
+                request.getRequestDispatcher("Employe/modifierEmploye.jsp").forward(request, response);
+                return;
+            }
+
+
+        }catch (NumberFormatException e){
+            request.setAttribute("errorSalaireNotNumber","Vous devez remplir un nombre entier comme salaire ( positif et inférieur à 2147483647 )");
+            request.getRequestDispatcher("Employe/modifierEmploye.jsp").forward(request, response);
+            return;
+        }
+
+
 
         HttpSession session = request.getSession(false); // false avoids creating a new session
         if (session != null) {
@@ -64,6 +82,9 @@ public class VerifierModification extends HttpServlet {
                 if(!prenom.equals(employeAModifier.getPrenom())){
                     changes.add("Le nom de l'employé sera changé de " + employeAModifier.getPrenom() + " à " + prenom);
                 }
+                if(!(salaire == employeAModifier.getSalaire())){
+                    changes.add("Le salaire de l'employé sera changé de " + employeAModifier.getSalaire() + " € à " + salaire+" €");
+                }
 
                 if(!adresse.equals(employeAModifier.getAdresse())){
                     changes.add("L'adresse  de l'employé sera changée de " + employeAModifier.getAdresse() + " à " + adresse);
@@ -78,25 +99,25 @@ public class VerifierModification extends HttpServlet {
                 }
 
                 if(!(id_departement == employeAModifier.getDepartement().getId_departement())){
-
+                    Departement oldDepartement = new Departement();
+                    Departement newDepartement = new Departement();
                     DepartementDAO dao = new DepartementDAO();
-                    Departement newDepartement =dao.rechercherParId(id_departement);
-                    Departement oldDepartement=dao.rechercherParId(employeAModifier.getDepartement().getId_departement());
-                    changes.add("Le département de l'employé sera changée de " + oldDepartement.getNom() + " à " + newDepartement.getNom());
+                    newDepartement =dao.rechercherParId(id_departement);
+                    oldDepartement=dao.rechercherParId(employeAModifier.getDepartement().getId_departement());
+                    changes.add(STR."Le département de l'employé sera changée de \{oldDepartement.getNom()} à \{newDepartement.getNom()}");
                 }
 
-                if(!sexe.equals(employeAModifier.getSexe())){
-                    changes.add("Le sexe de l'employé sera changé de " + employeAModifier.getSexe() + " à " + sexe);
+                if(sexe!=null && !sexe.equals(employeAModifier.getSexe())){
+                    changes.add(STR."Le sexe de l'employé sera changé de \{employeAModifier.getSexe()} à \{sexe}");
                 }
 
-                if(!grade.equals(employeAModifier.getGrade())){
-                    changes.add("Le grade  de l'employé sera changé de " + employeAModifier.getGrade() + " à " + grade);
+                if(grade!=null && !grade.equals(employeAModifier.getGrade())){
+                    changes.add(STR."Le grade  de l'employé sera changé de \{employeAModifier.getGrade()} à \{grade}");
                 }
 
                 if(changes.isEmpty()){
-
-                    request.setAttribute("messagePasDeModification","Vous n'avez effectuez aucun changement");
-                    request.getRequestDispatcher("modifierEmploye.jsp").forward(request, response);
+                    request.setAttribute("messagePasDeModification","Vous n'avez effectué aucun changement");
+                    request.getRequestDispatcher("Employe/modifierEmploye.jsp").forward(request, response);
                     return;
 
                 }
@@ -109,19 +130,19 @@ public class VerifierModification extends HttpServlet {
                     session.setAttribute("newId_departement", id_departement);
                     session.setAttribute("newSexe", sexe);
                     session.setAttribute("newGrade", grade);
+                    session.setAttribute("newSalaire", salaire);
 
 
                     request.setAttribute("changes", changes);
-                    request.getRequestDispatcher("/verificationDesChangements.jsp").forward(request, response);
+                    request.getRequestDispatcher("Employe/verificationDesChangements.jsp").forward(request, response);
 
                 }
 
-                System.out.println("Employeé à vérifier les modification : "+employeAModifier);
+                System.out.println(STR."Employeé à vérifier les modification : \{employeAModifier}");
                 System.out.println(changes);
 
             }
         }
-
 
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

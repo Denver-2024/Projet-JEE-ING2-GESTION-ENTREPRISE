@@ -28,150 +28,119 @@
             padding-top: 50px;
         }
 
-
-
-
-
-
-        form {
-            margin-bottom: 30px;
-        }
-        label {
-            display: block;
-            text-align: left;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+        form { margin-bottom: 30px; }
+        label { display: block; text-align: left; margin-bottom: 5px; font-weight: bold; }
         input[type="text"], select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            width: 100%; padding: 8px; margin-bottom: 15px;
+            border: 1px solid #ccc; border-radius: 5px;
         }
         input[type="submit"] {
-            background-color: black;
-            border: none;
-            color: white;
-            padding: 10px;
-            font-size: 16px;
-            width: 100%;
-            cursor: pointer;
-            border-radius: 5px;
+            background-color: black; border: none; color: white;
+            padding: 10px; font-size: 16px; width: 100%;
+            cursor: pointer; border-radius: 5px;
         }
-        input[type="submit"]:hover {
-            background-color: #333;
-        }
-        .modif{
-            background-color: white;
-            padding: 25px 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-
-        }
-        .nextAction{
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-        }
-
-
+        input[type="submit"]:hover { background-color: #333; }
+        .modif { background-color: white; padding: 25px 40px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .nextAction { display: flex; justify-content: space-evenly; align-items: center; }
     </style>
 
 </head>
 <body>
 <div class="modif">
 
-<h1>Modification des informations de l'employé avec le matricule: ${sessionScope.employeFoundMatricule.id_employe}</h1>
-<c:if test="${not empty errorMessageModifInputNotFilled}">
-    <p style="color:red; font-weight:bold;">
-            ${errorMessageModifInputNotFilled}
-    </p>
-</c:if>
+    <h1>Modification des informations de l'employé avec le matricule: ${sessionScope.employeFoundMatricule.id_employe}</h1>
+
+    <c:if test="${not empty errorMessageModifInputNotFilled}">
+        <p style="color:red; font-weight:bold;">${errorMessageModifInputNotFilled}</p>
+    </c:if>
     <c:if test="${not empty messagePasDeModification}">
         <p style="color: red;">${messagePasDeModification}</p>
     </c:if>
-<div>
-<form id="myForm" action="${pageContext.request.contextPath}/verification-modification-employe" method="post">
-    <label for="nom">Nom :  </label>
-    <input type="text" id="nom" name="nom" value="${sessionScope.employeFoundMatricule.nom}" ><br>
+    <c:if test="${not empty errorSalaireTooLow}">
+        <p style="color: red;">${errorSalaireTooLow}</p>
+    </c:if>
+    <c:if test="${not empty errorSalaireNotNumber}">
+        <p style="color: red;">${errorSalaireNotNumber}</p>
+    </c:if>
 
-    <label for="prenom">Prénom :  </label>
-    <input type="text" id="prenom" name="prenom" value="${sessionScope.employeFoundMatricule.prenom}" ><br>
+    <div class="nextAction">
+        <form action="${pageContext.request.contextPath}/../EmployeController/RecupDateAbsenceController" method="get">
+            <input type="submit" value="Ajouter une absence">
+        </form>
+        <form action="${pageContext.request.contextPath}/../EmployeController/RecupMoisController" method="post">
+            <input type="submit" value="Ajouter une prime">
+        </form>
+    </div>
 
-    <label for="adresse">Adresse :  </label>
-    <input type="text" id="adresse" name="adresse" value="${sessionScope.employeFoundMatricule.adresse}"><br>
+    <div>
+        <form id="myForm" action="${pageContext.request.contextPath}/../EmployeController/VerifierModificationController" method="post">
+            <label for="nom">Nom :  </label>
+            <input type="text" id="nom" name="nom" value="${sessionScope.employeFoundMatricule.nom}" ><br>
 
-    <label>Département : </label>
-    <select id="departement" name="id_departement" data-original="${sessionScope.employeFoundMatricule.departement.id_departement}" required>
-        <!-- First, show the current department as selected -->
-        <c:forEach var="d" items="${applicationScope.departementsFound}">
-            <c:if test="${d.id_departement == sessionScope.employeFoundMatricule.departement.id_departement}">
-                <option value="${d.id_departement}" selected>
-                        ${d.nom}
-                </option>
-            </c:if>
-        </c:forEach>
+            <label for="prenom">Prénom :  </label>
+            <input type="text" id="prenom" name="prenom" value="${sessionScope.employeFoundMatricule.prenom}" ><br>
 
-        <!-- Then show all other departments -->
-        <c:forEach var="d" items="${applicationScope.departementsFound}">
-            <c:if test="${d.id_departement != sessionScope.employeFoundMatricule.departement.id_departement}">
-                <option value="${d.id_departement}">
-                        ${d.nom}
-                </option>
-            </c:if>
-        </c:forEach>
-    </select><br><br>
+            <label for="salaire">Salaire (en €) :  </label>
+            <input type="text" id="salaire" name="salaire" value="${sessionScope.employeFoundMatricule.salaire}" ><br>
 
-    <label for="numero">Numéro de téléphone :  </label>
-    <input type="text" id="numero" name="numero" value="${sessionScope.employeFoundMatricule.numero}"><br>
+            <label for="adresse">Adresse :  </label>
+            <input type="text" id="adresse" name="adresse" value="${sessionScope.employeFoundMatricule.adresse}"><br>
 
-    <label for="email">Email :  </label>
-    <input type="text" id="email" name="email" value="${sessionScope.employeFoundMatricule.email}"><br>
+            <label for="departement">Département : </label>
+            <select id="departement" name="id_departement" data-original="${sessionScope.employeFoundMatricule.id_departement}" required>
+                <c:forEach var="d" items="${applicationScope.departementsFound}">
+                    <c:if test="${d.id_departement == sessionScope.employeFoundMatricule.id_departement}">
+                        <option value="${d.id_departement}" selected>${d.nom}</option>
+                    </c:if>
+                </c:forEach>
+                <c:forEach var="d" items="${applicationScope.departementsFound}">
+                    <c:if test="${d.id_departement != sessionScope.employeFoundMatricule.id_departement}">
+                        <option value="${d.id_departement}">${d.nom}</option>
+                    </c:if>
+                </c:forEach>
+            </select><br><br>
 
-    <label for="sexe">Sexe :  </label>
-    <select name="sexe">
-        <option  value="${sessionScope.employeFoundMatricule.sexe}" selected>${sessionScope.employeFoundMatricule.sexe}</option>
-        <c:set var="sexes" value="${fn:split('M,F,X', ',')}" />
+            <label for="numero">Numéro de téléphone :  </label>
+            <input type="text" id="numero" name="numero" value="${sessionScope.employeFoundMatricule.numero}"><br>
 
-        <c:forEach var="s" items="${sexes}">
-            <c:if test="${s != sessionScope.employeFoundMatricule.sexe}">
-                <option value="${s}">${s}</option>
-            </c:if>
-        </c:forEach>
+            <label for="email">Email :  </label>
+            <input type="text" id="email" name="email" value="${sessionScope.employeFoundMatricule.email}"><br>
 
-    </select><br>
+            <label for="sexe">Sexe :  </label>
+            <select name="sexe" id="sexe">
+                <option value="${sessionScope.employeFoundMatricule.sexe}" selected>${sessionScope.employeFoundMatricule.sexe}</option>
+                <c:set var="sexes" value="${fn:split('M,F,X', ',')}" />
+                <c:forEach var="s" items="${sexes}">
+                    <c:if test="${s != sessionScope.employeFoundMatricule.sexe}">
+                        <option value="${s}">${s}</option>
+                    </c:if>
+                </c:forEach>
+            </select><br>
 
-    <label for="grade">Grade :  </label>
-    <select name="grade">
-        <option  value="${sessionScope.employeFoundMatricule.grade}" selected>${sessionScope.employeFoundMatricule.grade}</option>
-        <c:set var="grades" value="${fn:split('JUNIOR,INTERMEDIAIRE,SENIOR', ',')}" />
+            <label for="grade">Grade :  </label>
+            <select name="grade" id="grade">
+                <option value="${sessionScope.employeFoundMatricule.grade}" selected>${sessionScope.employeFoundMatricule.grade}</option>
+                <c:set var="grades" value="${fn:split('JUNIOR,INTERMEDIAIRE,SENIOR', ',')}" />
+                <c:forEach var="g" items="${grades}">
+                    <c:if test="${g != sessionScope.employeFoundMatricule.grade}">
+                        <option value="${g}">${g}</option>
+                    </c:if>
+                </c:forEach>
+            </select><br>
 
-        <c:forEach var="g" items="${grades}">
-            <c:if test="${g != sessionScope.employeFoundMatricule.grade}">
-                <option value="${g}">${g}</option>
-            </c:if>
-        </c:forEach>
+            <input type="submit" value="Modifier">
+        </form>
+    </div>
 
-    </select><br>
-
-
-
-
-
-    <input type="submit" value="Modifier">
-
-</form>
-</div>
-    <form action="${pageContext.request.contextPath}/changerLeRole.jsp">
+    <form action="${pageContext.request.contextPath}/Employe/changerLeRole.jsp">
         <input type="submit" value="Changer le rôle de l'employé">
     </form>
 
     <div class="nextAction">
-<form action="${pageContext.request.contextPath}/verificationDeLaSuppression.jsp" >
-    <input type="submit" value="Supprimer l'employé">
-</form>
-        <form action="${pageContext.request.contextPath}/afficheEmploye.jsp">
+        <form action="${pageContext.request.contextPath}/Employe/verificationDeLaSuppression.jsp">
+            <input type="submit" value="Supprimer l'employé">
+        </form>
+        <form action="${pageContext.request.contextPath}/Employe/afficheEmploye.jsp">
             <input type="submit" value="Annuler">
         </form>
     </div>

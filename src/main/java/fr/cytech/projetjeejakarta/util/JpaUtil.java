@@ -3,6 +3,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.util.Properties;
+
 public class JpaUtil {
     private static final EntityManagerFactory emf= buildEntityManagerFactory();
 
