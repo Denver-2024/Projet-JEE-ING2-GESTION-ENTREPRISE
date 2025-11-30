@@ -1,6 +1,4 @@
-package fr.cytech.projetjeejakarta.servlet.auto;
-
-
+package fr.cytech.projetjeejakarta.model;
 
 import fr.cytech.projetjeejakarta.dao.FicheDePaieDAO;
 import fr.cytech.projetjeejakarta.dao.HistoriquePaieDAO;

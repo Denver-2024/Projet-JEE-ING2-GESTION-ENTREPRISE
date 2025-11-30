@@ -24,7 +24,7 @@ public class QuartzListener implements ServletContextListener {
             scheduler.getContext().put("servletContext", sce.getServletContext());
 
             // Define the job
-            JobDetail job = JobBuilder.newJob(fr.cytech.projetjeejakarta.servlet.auto.MonthlyTaskJob.class)
+            JobDetail job = JobBuilder.newJob(fr.cytech.projetjeejakarta.model.MonthlyTaskJob.class)
                     .withIdentity("monthlyTaskJob", "group1")
                     .build();
 

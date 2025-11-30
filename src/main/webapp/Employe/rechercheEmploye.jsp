@@ -126,7 +126,7 @@
                         <td>${employe.departement.nom}</td>
                         <td class="actionTD">
                             <!-- Chemin dynamique pour sélectionner un employé -->
-                            <form action="${pageContext.request.contextPath}/AfficheEmployeController" method="get">
+                            <form action="${pageContext.request.contextPath}/" method="get">
                                 <input type="hidden" name="id_employe" value="${employe.id_employe}">
                                 <input type="submit" value="Sélectionner"/>
                             </form>

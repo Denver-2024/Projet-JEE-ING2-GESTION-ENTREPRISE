@@ -2,6 +2,7 @@ package fr.cytech.projetjeejakarta.dao;
 
 import com.lowagie.text.Font;
 import com.lowagie.text.Image;
+import com.lowagie.text.Rectangle;
 import fr.cytech.projetjeejakarta.model.Employe;
 import fr.cytech.projetjeejakarta.model.FicheDePaie;
 import fr.cytech.projetjeejakarta.util.JpaUtil;
@@ -215,200 +216,219 @@ public class FicheDePaieDAO {
     }
 
 
-        public byte[] generateFicheDePaie(String logoPath, String signaturePath, Employe employe,FicheDePaie fiche) {
-            Color BLUE_HEADER = new Color(210, 230, 255);  // light blue
-            Color ROW_ZEBRA = new Color(245, 245, 245);    // light grey
-            Color TOTAL_GREY = new Color(230, 230, 230);   // darker subtotal background
-            try {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                Document document = new Document(PageSize.A4);
-                PdfWriter.getInstance(document, baos);
-                document.open();
+    public byte[] generateFicheDePaie(String logoPath, String signaturePath, Employe employe, FicheDePaie fiche) {
+        Color BLUE_HEADER = new Color(210, 230, 255);
+        Color ROW_ZEBRA = new Color(245, 245, 245);
+        Color TOTAL_GREY = new Color(230, 230, 230);
 
-                // ---------------------------------------
-                // 1. COMPANY LOGO
-                // ---------------------------------------
-                Image logo = Image.getInstance(logoPath);
-                logo.scaleToFit(120, 120);
-                logo.setAlignment(Image.ALIGN_LEFT);
-                document.add(logo);
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            Document document = new Document(PageSize.A4);
+            PdfWriter writer = PdfWriter.getInstance(document, baos);
 
-                // Title
-                /*Paragraph title = new Paragraph("FICHE DE PAIE", new Font(Font.HELVETICA, 20, Font.BOLD));
-                title.setAlignment(Element.ALIGN_CENTER);
-                title.setSpacingBefore(10);
-                title.setSpacingAfter(20);
-                document.add(title);*/
-                PdfPTable headerTable = new PdfPTable(2);
-                headerTable.setWidthPercentage(100);
+            // Activer le gestionnaire de pagination
+            FooterPageEvent event = new FooterPageEvent();
+            writer.setPageEvent(event);
 
-                PdfPCell employerCell = new PdfPCell(new Phrase("Employeur :\n\nFoodNCo\nAdresse : 55 Rue du Faubourg Saint-Honoré, 75008 Paris"));
-                employerCell.setPadding(10);
-                employerCell.setBorderWidth(1);
+            document.open();
 
+            // ---------------------------------------
+            // 1. LOGO + TITRE
+            // ---------------------------------------
+            PdfPTable titleTable = new PdfPTable(2);
+            titleTable.setWidthPercentage(100);
+            titleTable.setWidths(new float[]{1, 4});
 
-                LocalDate ficheDate = fiche.getDateFiche().toLocalDate();
-                LocalDate firstDay = ficheDate.withDayOfMonth(1);
+            Image logo = Image.getInstance(logoPath);
+            logo.scaleToFit(100, 100);
+            PdfPCell logoCell = new PdfPCell(logo, false);
+            logoCell.setBorder(Rectangle.NO_BORDER);
+            logoCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 
-                PdfPCell periodCell = new PdfPCell(new Phrase(
-                        "Période de paie : " + firstDay +" "+ fiche.getDateFiche()
-                ));
-                periodCell.setPadding(10);
-                periodCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-                periodCell.setBorderWidth(1);
+            Font titleFont = new Font(Font.HELVETICA, 24, Font.BOLD);
+            Paragraph title = new Paragraph("FICHE DE PAIE", titleFont);
+            title.setAlignment(Element.ALIGN_LEFT);
 
-                headerTable.addCell(employerCell);
-                headerTable.addCell(periodCell);
+            PdfPCell titleCell = new PdfPCell(title);
+            titleCell.setBorder(Rectangle.NO_BORDER);
+            titleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            titleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
 
-                document.add(headerTable);
-                document.add(new Paragraph("\n"));
+            titleTable.addCell(logoCell);
+            titleTable.addCell(titleCell);
 
-                // ---------------------------------------
-                // 2. EMPLOYEE INFORMATION TABLE
-                // ---------------------------------------
-                PdfPTable employeeTable = new PdfPTable(2);
-                employeeTable.setWidthPercentage(100);
-                employeeTable.setSpacingAfter(25);
+            document.add(titleTable);
+            document.add(new Paragraph("\n"));
 
-                // Enable full borders
-                employeeTable.getDefaultCell().setBorderWidth(1);
-                employeeTable.getDefaultCell().setPadding(8);
+            // ---------------------------------------
+            // 2. HEADER TABLE (Employeur + période)
+            // ---------------------------------------
+            PdfPTable headerTable = new PdfPTable(2);
+            headerTable.setWidthPercentage(100);
 
-                addCell(employeeTable, "Nom :", true);
-                addCell(employeeTable, employe.getNom(), false);
+            PdfPCell employerCell = new PdfPCell(new Phrase("Employeur : FoodNCo\n\nAdresse : 55 Rue du Faubourg Saint-Honoré, 75008 Paris"));
+            employerCell.setPadding(8);
+            employerCell.setBorderWidth(1);
 
-                addCell(employeeTable, "Prénom :", true);
-                addCell(employeeTable, employe.getPrenom(), false);
+            LocalDate ficheDate = fiche.getDateFiche().toLocalDate();
+            LocalDate firstDay = ficheDate.withDayOfMonth(1);
 
-                addCell(employeeTable, "Adresse :", true);
-                addCell(employeeTable, employe.getAdresse(), false);
+            PdfPCell periodCell = new PdfPCell(new Phrase("Période: du " + firstDay + " au " + fiche.getDateFiche()));
+            periodCell.setPadding(8);
+            periodCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            periodCell.setBorderWidth(1);
 
-                addCell(employeeTable, "Grade :", true);
-                addCell(employeeTable, employe.getGrade().toString(), false);
+            headerTable.addCell(employerCell);
+            headerTable.addCell(periodCell);
 
-                addCell(employeeTable, "Poste :", true);
-                addCell(employeeTable, employe.getRole().toString(), false);
+            document.add(headerTable);
+            document.add(new Paragraph("\n"));
 
-                document.add(employeeTable);
+            // ---------------------------------------
+            // 3. EMPLOYEE INFORMATION TABLE
+            // ---------------------------------------
+            PdfPTable employeeTable = new PdfPTable(2);
+            employeeTable.setWidthPercentage(100);
+            employeeTable.setSpacingAfter(15);
 
-                // ---------------------------------------
-                // 3. SALARY BREAKDOWN TABLE WITH BORDERS
-                // ---------------------------------------
-                PdfPTable payTable = new PdfPTable(4);
-                payTable.setWidthPercentage(100);
-                payTable.setWidths(new float[]{40, 20, 20, 20}); // Désignation | Base | Taux | Montant
-                payTable.setSpacingBefore(15);
+            addCell(employeeTable, "Nom :", true);
+            addCell(employeeTable, employe.getNom(), false);
 
-                // ---- HEADER ----
-                PdfPCell h1 = new PdfPCell(new Phrase("Cotisation / Élément"));
-                PdfPCell h2 = new PdfPCell(new Phrase("Base (€)"));
-                PdfPCell h3 = new PdfPCell(new Phrase("Taux (%)"));
-                PdfPCell h4 = new PdfPCell(new Phrase("Montant (€)"));
+            addCell(employeeTable, "Prénom :", true);
+            addCell(employeeTable, employe.getPrenom(), false);
 
-                PdfPCell[] headers = {h1, h2, h3, h4};
-                for (PdfPCell h : headers) {
-                    h.setBackgroundColor(BLUE_HEADER);
-                    h.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    h.setPadding(8);
-                    h.setBorderWidth(1);
-                    payTable.addCell(h);
+            addCell(employeeTable, "Adresse :", true);
+            addCell(employeeTable, employe.getAdresse(), false);
+
+            addCell(employeeTable, "Grade :", true);
+            addCell(employeeTable, employe.getGrade().toString(), false);
+
+            addCell(employeeTable, "Poste :", true);
+            addCell(employeeTable, employe.getRole().getNom(), false);
+
+            document.add(employeeTable);
+
+            // ---------------------------------------
+            // 4. SALARY BREAKDOWN TABLE
+            // ---------------------------------------
+            PdfPTable payTable = new PdfPTable(4);
+            payTable.setWidthPercentage(100);
+            payTable.setWidths(new float[]{40, 20, 20, 20});
+            payTable.setSpacingBefore(15);
+
+            String[] headers = {"Cotisation / Élément", "Base (€)", "Taux (%)", "Montant (€)"};
+            for (String h : headers) {
+                PdfPCell cell = new PdfPCell(new Phrase(h));
+                cell.setBackgroundColor(BLUE_HEADER);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setPadding(8);
+                cell.setBorderWidth(1);
+                payTable.addCell(cell);
+            }
+
+            AtomicInteger rowIndex = new AtomicInteger(0);
+            BiConsumer<String[], Boolean> addRow = (vals, bold) -> {
+                Font font = bold ? new Font(Font.HELVETICA, 12, Font.BOLD) : new Font(Font.HELVETICA, 11);
+                Color bg = (rowIndex.getAndIncrement() % 2 == 0) ? ROW_ZEBRA : Color.WHITE;
+                for (String val : vals) {
+                    PdfPCell c = new PdfPCell(new Phrase(val, font));
+                    c.setBackgroundColor(bg);
+                    c.setPadding(7);
+                    c.setBorderWidth(1);
+                    payTable.addCell(c);
                 }
+            };
 
-                // Utility to add a row with optional zebra background
-                AtomicInteger rowIndex = new AtomicInteger(0);
-                BiConsumer<String[], Boolean> addRow = (vals, bold) -> {
-                    Font font = bold ? new Font(Font.HELVETICA, 12, Font.BOLD) : new Font(Font.HELVETICA, 11);
+            addRow.accept(new String[]{"Salaire Brut", format(fiche.getSalaire_base()), "-", format(fiche.getSalaire_base())}, false);
+            addRow.accept(new String[]{"Prime", format(fiche.getPrime()), "-", format(fiche.getPrime())}, false);
+            addRow.accept(new String[]{"Sécurité Sociale (URSSAF)", format(fiche.getSalaire_base()), format(COTISATIONSALARIALE), "-" + format(fiche.getCotisation_salariale())}, false);
+            addRow.accept(new String[]{"CSG / CRDS", format(fiche.getSalaire_base()), format(COTISATIONPATRONALE), "-" + format(fiche.getCotisation_patronale())}, false);
+            addRow.accept(new String[]{"Assurance Chômage", format(fiche.getSalaire_base()), "4.05", "-" + format(fiche.getSalaire_base() * 0.0405)}, false);
+            addRow.accept(new String[]{"Absence (" + fiche.getNombre_absences() + " jours)", "-", "-", "-" + format(fiche.getNombre_absences() * COUNTABSENCE)}, false);
 
-                    Color bg = (rowIndex.getAndIncrement() % 2 == 0) ? ROW_ZEBRA : Color.WHITE;
+            PdfPCell subtotal = new PdfPCell(new Phrase("NET IMPOSABLE", new Font(Font.HELVETICA, 12, Font.BOLD)));
+            subtotal.setColspan(4);
+            subtotal.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            subtotal.setBackgroundColor(TOTAL_GREY);
+            subtotal.setPadding(10);
+            subtotal.setBorderWidth(1);
+            payTable.addCell(subtotal);
 
-                    for (String val : vals) {
-                        PdfPCell c = new PdfPCell(new Phrase(val, font));
-                        c.setBackgroundColor(bg);
-                        c.setPadding(7);
-                        c.setBorderWidth(1);
-                        payTable.addCell(c);
-                    }
-                };
+            document.add(payTable);
 
-                // ---- SALAIRE BRUT ----
-                addRow.accept(new String[]{
-                        "Salaire Brut", format(fiche.getSalaire_base()), "-", format(fiche.getSalaire_base())
-                }, false);
+            // ---------------------------------------
+            // 5. FINAL NET PAY
+            // ---------------------------------------
+            double total = (fiche.getSalaire_base() + fiche.getPrime())
+                    - fiche.getCotisation_salariale()
+                    - fiche.getCotisation_patronale()
+                    - (fiche.getNombre_absences() * (fiche.getSalaire_base() * COUNTABSENCE))
+                    - (fiche.getSalaire_base() * 0.0405);
 
-                // ---- PRIMES ----
-                addRow.accept(new String[]{
-                        "Prime", format(fiche.getPrime()), "-", format(fiche.getPrime())
-                }, false);
+            Paragraph net = new Paragraph("NET À PAYER : " + format(total) + " €", new Font(Font.HELVETICA, 16, Font.BOLD));
+            net.setAlignment(Element.ALIGN_RIGHT);
+            net.setSpacingBefore(20);
+            document.add(net);
 
-                // ---- URSSAF COTISATIONS ----
-                addRow.accept(new String[]{"Sécurité Sociale (URSSAF)", format(fiche.getSalaire_base()), format(COTISATIONSALARIALE), "-" + format(fiche.getCotisation_salariale())}, false);
+            // ---------------------------------------
+            // 6. SIGNATURE
+            // ---------------------------------------
+            PdfPTable signatureTable = new PdfPTable(1);
+            signatureTable.setWidthPercentage(40);
+            signatureTable.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            signatureTable.setSpacingBefore(3);
 
-                addRow.accept(new String[]{"CSG / CRDS", format(fiche.getSalaire_base()), format(COTISATIONPATRONALE), "-" + format(fiche.getCotisation_patronale())}, false);
+            PdfPCell label = new PdfPCell(new Phrase("Signature de l'employeur"));
+            label.setPadding(10);
+            label.setHorizontalAlignment(Element.ALIGN_CENTER);
+            label.setBackgroundColor(BLUE_HEADER);
+            label.setBorderWidth(1);
+            signatureTable.addCell(label);
 
-                addRow.accept(new String[]{"Assurance Chômage", format(fiche.getSalaire_base()), "4.05", "-" + format(fiche.getSalaire_base() * 0.0405)}, false);
+            Image signature = Image.getInstance(signaturePath);
+            signature.scaleToFit(140, 60);
 
-            // ---- ABSENCES ----
-                addRow.accept(new String[]{
-                        "Absence (" + fiche.getNombre_absences() + " jours)", "-", "-", "-" + format(fiche.getNombre_absences()*COUNTABSENCE)
-                }, false);
+            PdfPCell signCell = new PdfPCell(signature, false);
+            signCell.setPadding(8);
+            signCell.setBorderWidth(1);
+            signatureTable.addCell(signCell);
 
-            // ---- SUBTOTAL ----
-                PdfPCell subtotal = new PdfPCell(new Phrase("NET IMPOSABLE", new Font(Font.HELVETICA, 12, Font.BOLD)));
-                subtotal.setColspan(4);
-                subtotal.setHorizontalAlignment(Element.ALIGN_RIGHT);
-                subtotal.setBackgroundColor(TOTAL_GREY);
-                subtotal.setPadding(10);
-                subtotal.setBorderWidth(1);
-                payTable.addCell(subtotal);
+            document.add(signatureTable);
 
-                document.add(payTable);
+            document.close();
+            return baos.toByteArray();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
-                // ---------------------------------------
-                // 4. FINAL NET PAY
-                // ---------------------------------------
-                double total = (fiche.getSalaire_base()+fiche.getPrime())
-                        - fiche.getCotisation_salariale()
-                        - fiche.getCotisation_patronale()
-                        - (fiche.getNombre_absences() * (fiche.getSalaire_base() * COUNTABSENCE))-(fiche.getSalaire_base()*0.0405);
+// Classe interne pour la pagination
+// ---------------------------------------
+static class FooterPageEvent extends PdfPageEventHelper {
+            PdfTemplate total;
+            Font font = new Font(Font.HELVETICA, 10);
 
-                Paragraph net = new Paragraph("NET À PAYER : " + format(total) + " €",
-                        new Font(Font.HELVETICA, 16, Font.BOLD));
-                net.setAlignment(Element.ALIGN_RIGHT);
-                net.setSpacingBefore(20);
-                document.add(net);
+            @Override
+            public void onOpenDocument(PdfWriter writer, Document document) {
+                total = writer.getDirectContent().createTemplate(25, 16);
+            }
 
-                // ---------------------------------------
-                // 5. SIGNATURE AREA (IMAGE)
-                // ---------------------------------------
-                PdfPTable signatureTable = new PdfPTable(1);
-                signatureTable.setWidthPercentage(40);
-                signatureTable.setHorizontalAlignment(Element.ALIGN_RIGHT);
-                signatureTable.setSpacingBefore(3);
+            @Override
+            public void onEndPage(PdfWriter writer, Document document) {
+                PdfContentByte cb = writer.getDirectContent();
+                Phrase footer = new Phrase("Page " + writer.getPageNumber() + " / ", font);
+                ColumnText.showTextAligned(cb, Element.ALIGN_LEFT, footer,
+                        document.right() - 100, document.bottom() - 20, 0);
+                cb.addTemplate(total, document.right() - 50, document.bottom() - 20);
+            }
 
-                PdfPCell label = new PdfPCell(new Phrase("Signature de l'employeur"));
-                label.setPadding(10);
-                label.setHorizontalAlignment(Element.ALIGN_CENTER);
-                label.setBackgroundColor(BLUE_HEADER);
-                label.setBorderWidth(1);
-                signatureTable.addCell(label);
-
-                Image signature = Image.getInstance(signaturePath);
-                signature.scaleToFit(150, 70);
-
-                PdfPCell signCell = new PdfPCell(signature, false);
-                signCell.setPadding(10);
-                signCell.setBorderWidth(1);
-                signatureTable.addCell(signCell);
-
-                document.add(signatureTable);
-
-                document.close();
-                return baos.toByteArray();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
+            @Override
+            public void onCloseDocument(PdfWriter writer, Document document) {
+                Phrase totalPages = new Phrase(String.valueOf(writer.getPageNumber() - 1), font);
+                ColumnText.showTextAligned(total, Element.ALIGN_LEFT, totalPages, 0, 0, 0);
             }
         }
 

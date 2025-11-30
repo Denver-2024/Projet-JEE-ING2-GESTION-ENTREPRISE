@@ -124,6 +124,6 @@
 
 <a href="Employe/ajouterEmploye.jsp">Ajouter un employé</a><br>
 <a href="Employe/rechercheMatricule.jsp">Rechercher un employé par son matricule</a>
-<a href="Employe/rechercherEmploye.jsp">Recherche employé</a>
+<a href="Employe/rechercheEmploye.jsp">Recherche employé</a>
 </body>
 </html>
