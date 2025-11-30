@@ -108,7 +108,7 @@
             </select><br><br>
 
             <label for="grade">Grade : </label>
-            <select name="grade">
+            <select name="grade" id="grade">
                 <option value="" disabled selected hidden>-- Sélectionner un grade --</option>
                 <c:set var="grades" value="${fn:split('JUNIOR,INTERMEDIAIRE,SENIOR', ',')}" />
                 <c:forEach var="g" items="${grades}">
@@ -127,7 +127,7 @@
             <input type="submit" value="Rechercher">
         </form>
 
-    <div class="empoloyes">
+    <div class="employes">
         <c:if test="${not empty employes}">
             <table class="tablemployes">
                 <thead>

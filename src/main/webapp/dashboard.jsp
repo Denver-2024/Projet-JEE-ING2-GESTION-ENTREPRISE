@@ -211,7 +211,7 @@
             <h3>Gestion des Employés</h3>
             <p>Fonctionnalités disponibles selon vos autorisations :</p>
             <ul>
-                <!-- CORRECTION : On parcourt chaque autorisation pour vérifier si elle existe -->
+                <!-- On parcourt chaque autorisation pour vérifier si elle existe -->
                 <c:set var="hasAjouterEmploye" value="false" />
                 <c:set var="hasModifierEmploye" value="false" />
                 <c:set var="hasSupprimerEmploye" value="false" />
@@ -229,7 +229,7 @@
                 </c:forEach>
 
                 <c:if test="${hasAjouterEmploye}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/ajouterEmploye.jsp'">Ajouter un nouvel employé</button></c:if>
-                <c:if test="${hasListerEmployes}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/listerEmploye.jsp'">Lister tous les employés</button></c:if>
+                <c:if test="${hasListerEmployes}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/ListerEmployesController'">Lister tous les employés</button></c:if>
                 <c:if test="${hasRechercherEmploye || hasModifierEmploye || hasSupprimerEmploye}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/rechercheMatricule.jsp'">Rechercher un employé par matricule</button></c:if>
                 <c:if test="${hasAffecterProjet}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/rechercheEmploye.jsp'">Rechercher un employé</button></c:if>
 
