@@ -1,8 +1,6 @@
-package fr.cytech.projetjeejakarta.servlet.EmployeController;
+package fr.cytech.projetjeejakarta.servlet;
 
-import fr.cytech.projetjeejakarta.dao.DepartementDAO;
 import fr.cytech.projetjeejakarta.dao.EmployeDAO;
-import fr.cytech.projetjeejakarta.dao.ProjetDAO;
 import fr.cytech.projetjeejakarta.model.Employe;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

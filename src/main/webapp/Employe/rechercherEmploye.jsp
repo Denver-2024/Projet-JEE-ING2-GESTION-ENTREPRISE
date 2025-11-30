@@ -61,7 +61,7 @@
 <body>
 <div class="rechercheE">
     <!-- Formulaire avec chemin dynamique -->
-    <form action="${pageContext.request.contextPath}/../EmployeController/RechercheEmployeController" method="get">
+    <form action="${pageContext.request.contextPath}/RechercheEmployeController" method="get">
         <div class="title">
             <h1> Rechercher un employé </h1>
         </div>
@@ -78,7 +78,7 @@
         <input type="text" name="prenom" id="prenom"><br>
 
         <label for="departement">Département : </label>
-        <select id="departement" name="id_departement">
+        <select id="departement" name="departement.id_departement">
             <option value="" disabled selected hidden>-- Sélectionner un département --</option>
             <c:forEach var="d" items="${applicationScope.departementsFound}">
                 <option value="${d.id_departement}">${d.nom}</option>
@@ -95,7 +95,7 @@
         </select><br>
 
         <label>Rôle : </label>
-        <select name="role">
+        <select name="role.id_role">
             <option value="" disabled selected hidden>-- Sélectionner un rôle --</option>
             <c:forEach var="r" items="${applicationScope.rolesFound}">
                 <option value="${r.id_role}">${r.nom}</option>
@@ -123,14 +123,10 @@
                         <td>${employe.nom}</td>
                         <td>${employe.prenom}</td>
                         <td>${employe.role.nom}</td>
-                        <c:forEach var="d" items="${applicationScope.departementsFound}">
-                            <c:if test="${d.id_departement == employe.id_departement}">
-                                <td>${d.nom}</td>
-                            </c:if>
-                        </c:forEach>
+                        <td>${employe.departement.nom}</td>
                         <td class="actionTD">
                             <!-- Chemin dynamique pour sélectionner un employé -->
-                            <form action="${pageContext.request.contextPath}/../EmployeController/AfficheEmployeController" method="get">
+                            <form action="${pageContext.request.contextPath}/AfficheEmployeController" method="get">
                                 <input type="hidden" name="id_employe" value="${employe.id_employe}">
                                 <input type="submit" value="Sélectionner"/>
                             </form>

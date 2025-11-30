@@ -1,4 +1,4 @@
-package fr.cytech.projetjeejakarta.servlet.EmployeController;
+package fr.cytech.projetjeejakarta.servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

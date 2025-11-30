@@ -17,40 +17,21 @@
             padding-top: 50px;
         }
 
-        form {
-            margin-bottom: 30px;
-        }
-        label {
-            display: block;
-            text-align: left;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+        form { margin-bottom: 30px; }
+        label { display: block; text-align: left; margin-bottom: 5px; font-weight: bold; }
         input[type="text"], select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            width: 100%; padding: 8px; margin-bottom: 15px;
+            border: 1px solid #ccc; border-radius: 5px;
         }
         input[type="submit"] {
-            background-color: black;
-            border: none;
-            color: white;
-            padding: 10px;
-            font-size: 16px;
-            width: 100%;
-            cursor: pointer;
-            border-radius: 5px;
+            background-color: black; border: none; color: white;
+            padding: 10px; font-size: 16px; width: 100%;
+            cursor: pointer; border-radius: 5px;
         }
-        input[type="submit"]:hover {
-            background-color: #333;
-        }
-        .affiche{
-            background-color: white;
-            padding: 25px 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        input[type="submit"]:hover { background-color: #333; }
+        .affiche {
+            background-color: white; padding: 25px 40px;
+            border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -69,11 +50,10 @@
         <label>Prénom : ${sessionScope.employeFoundMatricule.prenom}</label><br>
         <label>Salaire (en €) : ${sessionScope.employeFoundMatricule.salaire} €</label><br>
         <label>Adresse : ${sessionScope.employeFoundMatricule.adresse}</label><br>
-        <c:forEach var="d" items="${applicationScope.departementsFound}">
-            <c:if test="${d.id_departement == sessionScope.employeFoundMatricule.id_departement}">
-                <label>Département : ${d.nom}</label><br>
-            </c:if>
-        </c:forEach>
+
+        <!-- Affichage direct du département via l'objet Departement -->
+        <label>Département : ${sessionScope.employeFoundMatricule.departement.nom}</label><br>
+
         <label>Numéro de téléphone : ${sessionScope.employeFoundMatricule.numero}</label><br>
         <label>Email : ${sessionScope.employeFoundMatricule.email}</label><br>
         <label>Sexe : ${sessionScope.employeFoundMatricule.sexe}</label><br>

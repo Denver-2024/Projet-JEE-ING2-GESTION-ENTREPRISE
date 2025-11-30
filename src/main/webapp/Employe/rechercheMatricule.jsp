@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Cytech
-  Date: 21/11/2025
-  Time: 23:01
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -45,8 +38,8 @@
 </head>
 <body>
 <div class="rechercheM">
-    <!-- Formulaire avec chemin dynamique -->
-    <form action="${pageContext.request.contextPath}/../EmployeController/RechercheMatriculeController" method="get">
+    <!-- Formulaire avec chemin dynamique vers le servlet -->
+    <form action="${pageContext.request.contextPath}/RechercheMatriculeController" method="get">
         <div class="title">
             <h1> Rechercher un employé par son matricule</h1>
         </div>
@@ -55,7 +48,7 @@
     </form>
 
     <c:if test="${showGenerateButton}">
-        <form action="${pageContext.request.contextPath}/../EmployeController/GenererLesFichesDePaieController" method="post">
+        <form action="${pageContext.request.contextPath}/GenererLesFichesDePaieController" method="post">
             <input type="submit" value="Générer les fiches de paie">
         </form>
     </c:if>
