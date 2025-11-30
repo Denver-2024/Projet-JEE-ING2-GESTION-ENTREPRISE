@@ -4,8 +4,8 @@
 
 
 ## Table des matières
-1. [Qu'est-ce que Gestion Entreprise ?](#qu-est-ce-que-Gestion-Entreprise-?)
-2. [Prérequis techniques pour l'installation](#Prérequis-techniques-pour-l-installation)
+1. [Qu'est-ce que Gestion Entreprise ?](#quest-ce-que-gestion-entreprise)
+2. [Prérequis techniques pour l'installation](#prerequis-techniques-pour-linstallation)
 3. [Installation](#Installation)
 
 
