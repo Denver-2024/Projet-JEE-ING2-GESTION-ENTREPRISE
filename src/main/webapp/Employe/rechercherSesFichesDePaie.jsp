@@ -97,14 +97,13 @@
         <div class="dateperiode">
             <!-- Formulaire avec chemin dynamique -->
             <form action="${pageContext.request.contextPath}/RechercherLesFichesDePaieController" method="get">
-                <input value="${sessionScope.employeFoundMatricule.id_employe}" type="hidden" name="employe">
-                <input type="hidden" name="redirection" value="MatriculeFichesDePaie">
+                <input value="${sessionScope.employe.id_employe}" type="hidden" name="employe">
                 <label for="startDate">Date du début de la période souhaitée : </label><br>
                 <input type="date" id="startDate" name="startDate"><br><br>
 
                 <label for="endDate">Date de la fin de la période souhaitée : </label><br>
                 <input type="date" id="endDate" name="endDate" required><br><br>
-
+                <input type="hidden" name="redirection" value="SesFichesDePaie">
                 <input type="submit" value="Rechercher">
             </form>
         </div>
@@ -130,7 +129,8 @@
                         <td class="actionTD">
                             <!-- Formulaire avec chemin dynamique -->
                             <form action="${pageContext.request.contextPath}/GenererUneFichePDFController" method="get" target="_blank">
-                                <input type="hidden" name="id_employe" value="${sessionScope.employeFoundMatricule.id_employe}">
+                                <input type="hidden" name="id_employe" value="${sessionScope.employe.id_employe}">
+
                                 <input type="hidden" name="id_fiche_de_paie" value="${fiche.id_fiche_de_paie}">
                                 <input type="submit" value="Générer PDF"/>
                             </form>

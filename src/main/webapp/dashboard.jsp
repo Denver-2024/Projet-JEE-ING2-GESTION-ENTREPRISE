@@ -231,7 +231,7 @@
                 <c:if test="${hasAjouterEmploye}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/ajouterEmploye.jsp'">Ajouter un nouvel employé</button></c:if>
                 <c:if test="${hasListerEmployes}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/listerEmploye.jsp'">Lister tous les employés</button></c:if>
                 <c:if test="${hasRechercherEmploye || hasModifierEmploye || hasSupprimerEmploye}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/rechercheMatricule.jsp'">Rechercher un employé par matricule</button></c:if>
-                <c:if test="${hasAffecterProjet}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/rechercherEmploye.jsp'">Rechercher un employé</button></c:if>
+                <c:if test="${hasAffecterProjet}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/rechercheEmploye.jsp'">Rechercher un employé</button></c:if>
 
                 <c:if test="${!hasEmployes}">
                     <li class="feature-disabled">Aucune autorisation pour la gestion des employés</li>
@@ -306,7 +306,7 @@
                 </c:forEach>
 
 
-                <c:if test="${hasRechercherFiches}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/rechercherFichesDePaie.jsp'">Rechercher mes fiches de paie par période</button></c:if>
+                <c:if test="${hasRechercherFiches}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/rechercherSesFichesDePaie.jsp'">Rechercher mes fiches de paie par période</button></c:if>
 
                 <c:if test="${!hasFichesPaie}">
                     <li class="feature-disabled">Aucune autorisation pour la gestion des fiches de paie</li>

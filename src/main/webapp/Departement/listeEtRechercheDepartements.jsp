@@ -88,7 +88,7 @@
         <% } %>
 
         <hr>
-        <a href="Departement/formulaireCreerDepartement.jsp">Créer un département</a>
+        <a href="formulaireCreerDepartement.jsp">Créer un département</a>
     </div>
 </div>
 </body>
