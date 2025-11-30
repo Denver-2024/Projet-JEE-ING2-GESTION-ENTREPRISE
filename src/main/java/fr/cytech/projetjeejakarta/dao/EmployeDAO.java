@@ -1,6 +1,7 @@
 package fr.cytech.projetjeejakarta.dao;
 
 import fr.cytech.projetjeejakarta.enumeration.Grade;
+import fr.cytech.projetjeejakarta.model.Autorisation;
 import fr.cytech.projetjeejakarta.model.Employe;
 import fr.cytech.projetjeejakarta.model.Projet;
 import fr.cytech.projetjeejakarta.model.Role;
@@ -11,10 +12,7 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class EmployeDAO {
 
@@ -362,6 +360,32 @@ public class EmployeDAO {
         } finally {
             em.close();
         }
+    }
+
+    public List<Autorisation> getAutorisationsByEmployeId(int employeId) {
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        List<Autorisation> autorisations = new ArrayList<>();
+
+        try {
+            String hql = """
+            SELECT a
+            FROM Employe e
+            JOIN e.role r
+            JOIN r.autorisations a
+            WHERE e.id = :employeId
+        """;
+
+            autorisations = em.createQuery(hql, Autorisation.class)
+                    .setParameter("employeId", employeId)
+                    .getResultList();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            em.close();
+        }
+
+        return autorisations;
     }
 
 }

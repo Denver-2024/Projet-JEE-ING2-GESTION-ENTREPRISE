@@ -59,7 +59,8 @@ public class AuthServlet extends HttpServlet {
                 }
 
                 session.setMaxInactiveInterval(30 * 60);
-
+                AutorisationsController autorisations = new AutorisationsController();
+                autorisations.doGet(request, response);
                 response.sendRedirect(request.getContextPath() + "/dashboard");
             } else {
                 request.setAttribute("error", "Identifiants incorrects");

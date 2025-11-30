@@ -154,9 +154,16 @@
             </form>
         </div>
 
-        <form action="${pageContext.request.contextPath}/Employe/changerLeRole.jsp">
-            <input type="submit" value="Changer le rôle de l'employé">
-        </form>
+
+        <c:forEach var="autorisation" items="${sessionScope.autorisations}">
+            <c:if test="${fn:contains(autorisation.nom, 'affecter_un_employe_a_un_ou_plusieurs_projets')}">
+                <form action="${pageContext.request.contextPath}/Employe/changerLeRole.jsp">
+                <input type="submit" value="Changer le rôle de l'employé">
+                </form>
+            </c:if>
+        </c:forEach>
+
+
 
         <div class="nextAction">
             <form action="${pageContext.request.contextPath}/Employe/verificationDeLaSuppression.jsp">

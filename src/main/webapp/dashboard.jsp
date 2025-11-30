@@ -132,14 +132,11 @@
         <c:set var="hasEmployes" value="false" />
         <c:set var="hasDepartements" value="false" />
         <c:set var="hasProjets" value="false" />
-        <c:set var="hasFichesPaie" value="false" />
-        <c:set var="hasRoles" value="false" />
 
         <c:forEach var="autorisation" items="${sessionScope.autorisations}">
             <c:if test="${fn:contains(autorisation.nom, 'employe')}"><c:set var="hasEmployes" value="true" /></c:if>
             <c:if test="${fn:contains(autorisation.nom, 'departement')}"><c:set var="hasDepartements" value="true" /></c:if>
             <c:if test="${fn:contains(autorisation.nom, 'projet')}"><c:set var="hasProjets" value="true" /></c:if>
-            <c:if test="${fn:contains(autorisation.nom, 'fiche') or fn:contains(autorisation.nom, 'paie')}"><c:set var="hasFichesPaie" value="true" /></c:if>
         </c:forEach>
 
         <!-- Afficher les boutons (sans doublons) -->
@@ -152,9 +149,8 @@
         <c:if test="${hasProjets}">
             <button class="btn-projets" onclick="showSection('projets')">Gestion Projets</button>
         </c:if>
-        <c:if test="${hasFichesPaie}">
-            <button class="btn-fiches-paie" onclick="showSection('fiches-paie')">Fiches de Paie</button>
-        </c:if>
+        <button class="btn-fiches-paie" onclick="showSection('fiches-paie')">Fiches de Paie</button>
+
     </section>
 
     <div class="content">
@@ -293,24 +289,9 @@
             <h3>Fiches de Paie</h3>
             <p>Fonctionnalités disponibles selon vos autorisations :</p>
             <ul>
-                <c:set var="hasCreerFichePaie" value="false" />
-                <c:set var="hasConsulterFiches" value="false" />
-                <c:set var="hasGenererFiche" value="false" />
-                <c:set var="hasRechercherFiches" value="false" />
 
-                <c:forEach var="autorisation" items="${sessionScope.autorisations}">
-                    <c:if test="${autorisation.nom == 'creer_une_fiche_de_paie_pour_un_employe_pour_un_mois_donne'}"><c:set var="hasCreerFichePaie" value="true" /></c:if>
-                    <c:if test="${autorisation.nom == 'consulter_les_fiches_de_paie_d_un_employe'}"><c:set var="hasConsulterFiches" value="true" /></c:if>
-                    <c:if test="${autorisation.nom == 'generer_une_fiche_de_paie_imprimable'}"><c:set var="hasGenererFiche" value="true" /></c:if>
-                    <c:if test="${autorisation.nom == 'rechercher_les_fiches_par_periode_ou_par_employe'}"><c:set var="hasRechercherFiches" value="true" /></c:if>
-                </c:forEach>
+                <button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/rechercherSesFichesDePaie.jsp'">Rechercher mes fiches de paie par période</button>
 
-
-                <c:if test="${hasRechercherFiches}"><button class="btn-action" onclick="window.location.href='${pageContext.request.contextPath}/Employe/rechercherSesFichesDePaie.jsp'">Rechercher mes fiches de paie par période</button></c:if>
-
-                <c:if test="${!hasFichesPaie}">
-                    <li class="feature-disabled">Aucune autorisation pour la gestion des fiches de paie</li>
-                </c:if>
             </ul>
         </div>
     </div>
