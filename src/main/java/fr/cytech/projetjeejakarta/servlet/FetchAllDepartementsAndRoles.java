@@ -1,4 +1,4 @@
-package fr.cytech.projetjeejakarta.servlet.EmployeController;
+package fr.cytech.projetjeejakarta.servlet;
 
 import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
 import fr.cytech.projetjeejakarta.dao.DepartementDAO;

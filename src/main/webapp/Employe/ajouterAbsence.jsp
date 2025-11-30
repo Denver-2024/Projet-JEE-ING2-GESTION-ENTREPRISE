@@ -17,51 +17,24 @@
             padding-top: 50px;
         }
 
-        form {
-            margin-bottom: 30px;
-        }
-        label {
-            display: block;
-            text-align: left;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+        form { margin-bottom: 30px; }
+        label { display: block; text-align: left; margin-bottom: 5px; font-weight: bold; }
         input[type="text"], select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            width: 100%; padding: 8px; margin-bottom: 15px;
+            border: 1px solid #ccc; border-radius: 5px;
         }
         input[type="submit"] {
-            background-color: black;
-            border: none;
-            color: white;
-            padding: 10px;
-            font-size: 16px;
-            width: 100%;
-            cursor: pointer;
-            border-radius: 5px;
+            background-color: black; border: none; color: white;
+            padding: 10px; font-size: 16px; width: 100%;
+            cursor: pointer; border-radius: 5px;
         }
-        input[type="submit"]:hover {
-            background-color: #333;
+        input[type="submit"]:hover { background-color: #333; }
+        .ajoutabsence {
+            background-color: white; padding: 25px 40px;
+            border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        .ajoutabsence{
-            background-color: white;
-            padding: 25px 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .title{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .dateabsence{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        .title { display: flex; justify-content: center; align-items: center; }
+        .dateabsence { display: flex; justify-content: center; align-items: center; }
     </style>
 </head>
 <body>
@@ -81,8 +54,8 @@
     </c:if>
 
     <div class="dateabsence">
-        <!-- Formulaire avec chemin dynamique -->
-        <form action="${pageContext.request.contextPath}/../EmployeController/AjouterAbsenceController" method="post">
+        <!-- Formulaire avec chemin dynamique vers le servlet -->
+        <form action="${pageContext.request.contextPath}/AjouterAbsenceController" method="post">
             <label for="startDate">Date du début de l'absence : </label><br>
             <input type="date" id="startDate" name="startDate"
                    min="${sessionScope.firstDayOfMonth}"

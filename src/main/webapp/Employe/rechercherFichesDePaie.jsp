@@ -74,7 +74,7 @@
 
     <div class="dateperiode">
         <!-- Formulaire avec chemin dynamique -->
-        <form action="${pageContext.request.contextPath}/../EmployeController/RechercherLesFichesDePaieController" method="get">
+        <form action="${pageContext.request.contextPath}/RechercherLesFichesDePaieController" method="get">
             <input value="${sessionScope.employeFoundMatricule.id_employe}" type="hidden" name="employe">
             <label for="startDate">Date du début de la période souhaitée : </label><br>
             <input type="date" id="startDate" name="startDate"><br><br>
@@ -106,7 +106,7 @@
                     <td><fmt:formatDate value="${fiche.dateFiche}" pattern="MMMM yyyy"/></td>
                     <td class="actionTD">
                         <!-- Formulaire avec chemin dynamique -->
-                        <form action="${pageContext.request.contextPath}/../EmployeController/GenererUneFichePDFController" method="get" target="_blank">
+                        <form action="${pageContext.request.contextPath}/GenererUneFichePDFController" method="get" target="_blank">
                             <input type="hidden" name="id_employe" value="${sessionScope.employeFoundMatricule.id_employe}">
                             <input type="hidden" name="id_fiche_de_paie" value="${fiche.id_fiche_de_paie}">
                             <input type="submit" value="Générer PDF"/>

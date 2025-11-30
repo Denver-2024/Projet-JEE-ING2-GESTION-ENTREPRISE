@@ -24,46 +24,23 @@
             padding-top: 50px;
         }
 
-        form {
-            margin-bottom: 30px;
-        }
-        label {
-            display: block;
-            text-align: left;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+        form { margin-bottom: 30px; }
+        label { display: block; text-align: left; margin-bottom: 5px; font-weight: bold; }
         input[type="text"], select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            width: 100%; padding: 8px; margin-bottom: 15px;
+            border: 1px solid #ccc; border-radius: 5px;
         }
         input[type="submit"] {
-            background-color: black;
-            border: none;
-            color: white;
-            padding: 10px;
-            font-size: 16px;
-            width: 100%;
-            cursor: pointer;
-            border-radius: 5px;
+            background-color: black; border: none; color: white;
+            padding: 10px; font-size: 16px; width: 100%;
+            cursor: pointer; border-radius: 5px;
         }
-        input[type="submit"]:hover {
-            background-color: #333;
+        input[type="submit"]:hover { background-color: #333; }
+        .ajoutprime {
+            background-color: white; padding: 25px 40px;
+            border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        .ajoutprime{
-            background-color: white;
-            padding: 25px 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .title{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        .title { display: flex; justify-content: center; align-items: center; }
     </style>
 </head>
 <body>
@@ -73,24 +50,18 @@
     </div>
 
     <c:if test="${not empty errorPrime}">
-        <p style="color:red; font-weight:bold;">
-                ${errorPrime}
-        </p>
+        <p style="color:red; font-weight:bold;">${errorPrime}</p>
     </c:if>
     <c:if test="${not empty errorPrimeTrop}">
-        <p style="color:red; font-weight:bold;">
-                ${errorPrimeTrop}
-        </p>
+        <p style="color:red; font-weight:bold;">${errorPrimeTrop}</p>
     </c:if>
     <c:if test="${not empty successPrime}">
-        <p style="color:green; font-weight:bold;">
-                ${successPrime}
-        </p>
+        <p style="color:green; font-weight:bold;">${successPrime}</p>
     </c:if>
 
-    <!-- Formulaire avec chemin dynamique -->
-    <form action="${pageContext.request.contextPath}/../EmployeController/AjouterPrimeController" method="post">
-        <label for="mois"> Mois : </label><br>
+    <!-- Formulaire avec chemin dynamique vers le servlet -->
+    <form action="${pageContext.request.contextPath}/AjouterPrimeController" method="post">
+        <label for="mois">Mois : </label><br>
         <select name="mois">
             <option value="${sessionScope.months.get(0)}">${sessionScope.months.get(0)}</option>
             <c:forEach var="m" items="${sessionScope.months}" varStatus="status">

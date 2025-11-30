@@ -56,7 +56,7 @@
 
     <div class="nextAction">
         <!-- Formulaire suppression avec chemin dynamique -->
-        <form action="${pageContext.request.contextPath}/../EmployeController/DeleteEmployeController" method="post">
+        <form action="${pageContext.request.contextPath}/DeleteEmployeController" method="post">
             <input type="submit" value="Supprimer">
         </form>
 

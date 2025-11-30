@@ -20,70 +20,33 @@
             padding-top: 50px;
         }
 
-        form {
-            margin-bottom: 30px;
-        }
-        label {
-            display: block;
-            text-align: left;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+        form { margin-bottom: 30px; }
+        label { display: block; text-align: left; margin-bottom: 5px; font-weight: bold; }
         input[type="text"], select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            width: 100%; padding: 8px; margin-bottom: 15px;
+            border: 1px solid #ccc; border-radius: 5px;
         }
         input[type="submit"] {
-            background-color: black;
-            border: none;
-            color: white;
-            padding: 10px;
-            font-size: 16px;
-            width: 100%;
-            cursor: pointer;
-            border-radius: 5px;
+            background-color: black; border: none; color: white;
+            padding: 10px; font-size: 16px; width: 100%;
+            cursor: pointer; border-radius: 5px;
         }
-        input[type="submit"]:hover {
-            background-color: #333;
+        input[type="submit"]:hover { background-color: #333; }
+        #addform {
+            background-color: white; padding: 25px 40px;
+            border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
-        #addform{
-            background-color: white;
-            padding: 25px 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .title{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .radchoice {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 5px;
-        }
-        .radchoice span {
-            display: flex;
-            align-items: center;
-        }
-        .radchoice span label {
-            margin-left: 4px;
-        }
-        label{
-            margin: 5px;
-        }
+        .title { display: flex; justify-content: center; align-items: center; }
+        .radchoice { display: flex; gap: 20px; margin-bottom: 5px; }
+        .radchoice span { display: flex; align-items: center; }
+        .radchoice span label { margin-left: 4px; }
+        label { margin: 5px; }
     </style>
 </head>
 <body>
 <div id="addform">
     <c:if test="${not empty errorMessageInputNotFilled}">
-        <p style="color:red; font-weight:bold;">
-                ${errorMessageInputNotFilled}
-        </p>
+        <p style="color:red; font-weight:bold;">${errorMessageInputNotFilled}</p>
     </c:if>
     <c:if test="${not empty messageAjoutSucces}">
         <p style="color: green;">${messageAjoutSucces}</p>
@@ -96,7 +59,7 @@
     </c:if>
 
     <!-- Formulaire avec chemin dynamique -->
-    <form action="${pageContext.request.contextPath}/../EmployeController/AddEmployeController" method="post">
+    <form action="${pageContext.request.contextPath}/AddEmployeController" method="post">
         <div class="title">
             <h1>Ajouter un nouvel employé</h1>
         </div>
@@ -116,13 +79,13 @@
         <label for="salaire">Salaire : </label>
         <input type="text" name="salaire" required>
 
-        <label> Adresse : </label><br>
+        <label>Adresse : </label><br>
         <input type="text" name="adresse" required><br>
 
-        <label> Numéro de téléphone : </label><br>
+        <label>Numéro de téléphone : </label><br>
         <input type="text" name="numero" required><br>
 
-        <label> Email : </label><br>
+        <label>Email : </label><br>
         <input type="text" name="email" required><br>
 
         <div class="radchoice">
@@ -133,7 +96,8 @@
         </div>
 
         <label>Département : </label>
-        <select name="id_departement" required>
+        <!-- On utilise departement.id_departement pour refléter la relation objet -->
+        <select name="departement.id_departement" required>
             <option value="" disabled selected hidden>-- Sélectionner un département --</option>
             <c:forEach var="d" items="${applicationScope.departementsFound}">
                 <option value="${d.id_departement}">${d.nom}</option>
@@ -141,7 +105,7 @@
         </select>
 
         <label>Rôle : </label>
-        <select name="role" required>
+        <select name="role.id_role" required>
             <option value="" disabled selected hidden>-- Sélectionner un rôle --</option>
             <c:forEach var="r" items="${applicationScope.rolesFound}">
                 <option value="${r.id_role}">${r.nom}</option>

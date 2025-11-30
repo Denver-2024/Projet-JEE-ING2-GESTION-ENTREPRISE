@@ -59,8 +59,8 @@
         </c:forEach>
     </ul>
     <div class="nextAction">
-        <!-- Formulaire avec chemin dynamique -->
-        <form action="${pageContext.request.contextPath}/../EmployeController/ModifierEmployeController" method="post">
+        <!-- Formulaire avec chemin dynamique vers le servlet -->
+        <form action="${pageContext.request.contextPath}/ModifierEmployeController" method="post">
             <input type="submit" value="Valider les changements">
         </form>
 

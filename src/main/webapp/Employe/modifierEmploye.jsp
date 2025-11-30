@@ -64,16 +64,16 @@
     </c:if>
 
     <div class="nextAction">
-        <form action="${pageContext.request.contextPath}/../EmployeController/RecupDateAbsenceController" method="get">
+        <form action="${pageContext.request.contextPath}/RecupDateAbsenceController" method="get">
             <input type="submit" value="Ajouter une absence">
         </form>
-        <form action="${pageContext.request.contextPath}/../EmployeController/RecupMoisController" method="post">
+        <form action="${pageContext.request.contextPath}/RecupMoisController" method="post">
             <input type="submit" value="Ajouter une prime">
         </form>
     </div>
 
     <div>
-        <form id="myForm" action="${pageContext.request.contextPath}/../EmployeController/VerifierModificationController" method="post">
+        <form id="myForm" action="${pageContext.request.contextPath}/VerifierModificationController" method="post">
             <label for="nom">Nom :  </label>
             <input type="text" id="nom" name="nom" value="${sessionScope.employeFoundMatricule.nom}" ><br>
 
@@ -87,14 +87,14 @@
             <input type="text" id="adresse" name="adresse" value="${sessionScope.employeFoundMatricule.adresse}"><br>
 
             <label for="departement">Département : </label>
-            <select id="departement" name="id_departement" data-original="${sessionScope.employeFoundMatricule.id_departement}" required>
+            <select id="departement" name="departement.id_departement" required>
                 <c:forEach var="d" items="${applicationScope.departementsFound}">
-                    <c:if test="${d.id_departement == sessionScope.employeFoundMatricule.id_departement}">
+                    <c:if test="${d.id_departement == sessionScope.employeFoundMatricule.departement.id_departement}">
                         <option value="${d.id_departement}" selected>${d.nom}</option>
                     </c:if>
                 </c:forEach>
                 <c:forEach var="d" items="${applicationScope.departementsFound}">
-                    <c:if test="${d.id_departement != sessionScope.employeFoundMatricule.id_departement}">
+                    <c:if test="${d.id_departement != sessionScope.employeFoundMatricule.departement.id_departement}">
                         <option value="${d.id_departement}">${d.nom}</option>
                     </c:if>
                 </c:forEach>

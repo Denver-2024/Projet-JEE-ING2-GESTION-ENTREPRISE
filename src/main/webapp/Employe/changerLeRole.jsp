@@ -24,40 +24,21 @@
             padding-top: 50px;
         }
 
-        form {
-            margin-bottom: 30px;
-        }
-        label {
-            display: block;
-            text-align: left;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
+        form { margin-bottom: 30px; }
+        label { display: block; text-align: left; margin-bottom: 5px; font-weight: bold; }
         input[type="text"], select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            width: 100%; padding: 8px; margin-bottom: 15px;
+            border: 1px solid #ccc; border-radius: 5px;
         }
         input[type="submit"] {
-            background-color: black;
-            border: none;
-            color: white;
-            padding: 10px;
-            font-size: 16px;
-            width: 100%;
-            cursor: pointer;
-            border-radius: 5px;
+            background-color: black; border: none; color: white;
+            padding: 10px; font-size: 16px; width: 100%;
+            cursor: pointer; border-radius: 5px;
         }
-        input[type="submit"]:hover {
-            background-color: #333;
-        }
-        .changeRole{
-            background-color: white;
-            padding: 25px 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        input[type="submit"]:hover { background-color: #333; }
+        .changeRole {
+            background-color: white; padding: 25px 40px;
+            border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -66,9 +47,9 @@
     <h1>Changement du rôle de l'employé ${sessionScope.employeFoundMatricule.id_employe}</h1>
 
     <label>Rôle : </label>
-    <!-- Formulaire avec chemin dynamique -->
-    <form action="${pageContext.request.contextPath}/../EmployeController/ChangeRoleController" method="post">
-        <select name="role">
+    <!-- Formulaire avec chemin dynamique vers le servlet -->
+    <form action="${pageContext.request.contextPath}/ChangeRoleController" method="post">
+        <select name="role.id_role">
             <c:forEach var="r" items="${applicationScope.rolesFound}">
                 <c:if test="${r.id_role == sessionScope.employeFoundMatricule.role.id_role}">
                     <option value="${r.id_role}" selected>${r.nom}</option>
