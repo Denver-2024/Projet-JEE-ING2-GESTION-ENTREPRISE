@@ -180,6 +180,31 @@
             <p><strong>Grade:</strong> ${sessionScope.employe.grade}</p>
             <p><strong>Rôle:</strong> ${sessionScope.role}</p>
             <p><strong>Département:</strong> ${sessionScope.employe.departement.nom}</p>
+
+            <!-- Bouton pour changer le mot de passe -->
+            <button class="btn-action" onclick="showChangePasswordForm()">Changer mon mot de passe</button>
+
+            <!-- Formulaire de changement de mot de passe (caché par défaut) -->
+            <div id="changePasswordForm" style="display:none; margin-top: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">
+                <h4>Changer le mot de passe</h4>
+                <form id="passwordForm" action="${pageContext.request.contextPath}/ChangePasswordServlet" method="post">
+                    <div style="margin-bottom: 10px;">
+                        <label for="currentPassword">Mot de passe actuel:</label>
+                        <input type="password" id="currentPassword" name="currentPassword" required style="padding: 5px; width: 200px; margin-left: 10px;">
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label for="newPassword">Nouveau mot de passe:</label>
+                        <input type="password" id="newPassword" name="newPassword" required style="padding: 5px; width: 200px; margin-left: 10px;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="confirmPassword">Confirmer le nouveau mot de passe:</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required style="padding: 5px; width: 200px; margin-left: 10px;">
+                    </div>
+                    <button type="submit" class="btn-action">Valider</button>
+                    <button type="button" class="btn-action" onclick="hideChangePasswordForm()" style="background-color: #6c757d;">Annuler</button>
+                </form>
+                <div id="passwordMessage" style="margin-top: 10px;"></div>
+            </div>
         </div>
 
         <div id="employes" style="display:none;">
@@ -307,6 +332,99 @@
         document.addEventListener('DOMContentLoaded', function() {
             showSection('profil');
         });
+
+        function showChangePasswordForm() {
+            document.getElementById('changePasswordForm').style.display = 'block';
+        }
+
+        function hideChangePasswordForm() {
+            document.getElementById('changePasswordForm').style.display = 'none';
+            document.getElementById('passwordMessage').innerHTML = '';
+            document.getElementById('passwordForm').reset();
+        }
+
+        // Gestion de la soumission du formulaire
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordForm = document.getElementById('passwordForm');
+            if (passwordForm) {
+                passwordForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    // Récupérer les valeurs
+                    const currentPassword = document.getElementById('currentPassword').value;
+                    const newPassword = document.getElementById('newPassword').value;
+                    const confirmPassword = document.getElementById('confirmPassword').value;
+
+                    console.log('Données à envoyer:', {
+                        currentPassword: currentPassword,
+                        newPassword: newPassword,
+                        confirmPassword: confirmPassword
+                    });
+
+                    // Validation côté client
+                    const messageDiv = document.getElementById('passwordMessage');
+
+                    if (!currentPassword || !newPassword || !confirmPassword) {
+                        messageDiv.style.color = 'red';
+                        messageDiv.innerHTML = 'Tous les champs sont obligatoires.';
+                        return;
+                    }
+
+                    if (newPassword !== confirmPassword) {
+                        messageDiv.style.color = 'red';
+                        messageDiv.innerHTML = 'Les mots de passe ne correspondent pas';
+                        return;
+                    }
+
+                    if (newPassword.length < 6) {
+                        messageDiv.style.color = 'red';
+                        messageDiv.innerHTML = 'Le mot de passe doit contenir au moins 6 caractères';
+                        return;
+                    }
+
+                    // Créer les données à envoyer
+                    const data = {
+                        currentPassword: currentPassword,
+                        newPassword: newPassword,
+                        confirmPassword: confirmPassword
+                    };
+
+                    // Envoyer la requête avec JSON
+                    fetch(this.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Erreur réseau: ' + response.status);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Réponse du serveur:', data);
+                            if (data.success) {
+                                messageDiv.style.color = 'green';
+                                messageDiv.innerHTML = data.message;
+                                setTimeout(() => {
+                                    hideChangePasswordForm();
+                                }, 2000);
+                            } else {
+                                messageDiv.style.color = 'red';
+                                messageDiv.innerHTML = data.message;
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            messageDiv.style.color = 'red';
+                            messageDiv.innerHTML = 'Erreur de communication avec le serveur: ' + error.message;
+                        });
+                });
+            }
+        });
     </script>
+</div>
 </body>
 </html>

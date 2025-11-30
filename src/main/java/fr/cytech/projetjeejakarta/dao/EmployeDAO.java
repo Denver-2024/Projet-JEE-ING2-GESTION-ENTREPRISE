@@ -332,4 +332,36 @@ public class EmployeDAO {
         }
     }
 
+    public boolean updatePassword(int employeId, String newHashedPassword) {
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+
+        try {
+            trans.begin();
+
+            // Trouver l'employé par son ID
+            Employe employe = em.find(Employe.class, employeId);
+            if (employe == null) {
+                trans.rollback();
+                return false;
+            }
+
+            // Mettre à jour le mot de passe
+            employe.setPassword(newHashedPassword);
+            em.merge(employe);
+
+            trans.commit();
+            return true;
+
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            em.close();
+        }
+    }
+
 }
