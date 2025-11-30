@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="fr.cytech.projetjeejakarta.model.Departement" %>
@@ -88,7 +90,14 @@
         <% } %>
 
         <hr>
-        <a href="formulaireCreerDepartement.jsp">Créer un département</a>
+        <c:forEach var="autorisation" items="${sessionScope.autorisations}">
+            <c:if test="${fn:contains(autorisation.nom, 'ajouter_un_departement')}">
+                <form action="${pageContext.request.contextPath}/Employe/changerLeRole.jsp">
+                    <a href="formulaireCreerDepartement.jsp">Créer un département</a>
+                </form>
+            </c:if>
+        </c:forEach>
+
     </div>
 </div>
 </body>
