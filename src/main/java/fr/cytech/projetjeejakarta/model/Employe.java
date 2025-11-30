@@ -46,8 +46,7 @@ public class Employe {
 
     private int salaire;
 
-
-    public Employe() {
+    public Employe(){
 
     }
 
@@ -65,6 +64,8 @@ public class Employe {
         this.role = role;
 
     }
+
+
 
     public int getId_employe() {
         return id_employe;

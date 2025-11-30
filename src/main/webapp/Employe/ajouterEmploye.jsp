@@ -119,7 +119,7 @@
 
             <label>Département : </label>
             <!-- On utilise departement.id_departement pour refléter la relation objet -->
-            <select name="departement.id_departement" required>
+            <select name="id_departement" required>
                 <option value="" disabled selected hidden>-- Sélectionner un département --</option>
                 <c:forEach var="d" items="${applicationScope.departementsFound}">
                     <option value="${d.id_departement}">${d.nom}</option>
@@ -127,7 +127,7 @@
             </select>
 
             <label>Rôle : </label>
-            <select name="role.id_role" required>
+            <select name="id_role" required>
                 <option value="" disabled selected hidden>-- Sélectionner un rôle --</option>
                 <c:forEach var="r" items="${applicationScope.rolesFound}">
                     <option value="${r.id_role}">${r.nom}</option>

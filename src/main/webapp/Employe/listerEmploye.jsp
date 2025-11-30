@@ -1,14 +1,11 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Cytech
-  Date: 28/11/2025
-  Time: 05:36
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="fr.cytech.projetjeejakarta.model.Employe" %>
+
 <html>
+
 <head>
-    <title>Lister tous les employés</title>
+    <title>Liste complète des employés et Recherche par critères</title>
     <style>
         header {
             background-color: #343a40;
@@ -20,6 +17,7 @@
             border-radius: 10px 10px 0 0;
         }
     </style>
+    <link rel="stylesheet" type="text/css" href="../CSS/style.css">
 </head>
 <body>
 <header>
@@ -38,8 +36,54 @@
     </div>
 </header>
 <div class="page">
+    <div class="container">
+        <h2>Rechercher un employé</h2>
+        <a href="${pageContext.request.contextPath}/Employe/rechercheEmploye.jsp">Recherche par critères</a>
 
+        <hr>
+        <h2>Liste complète des employés</h2>
+        <%
+            String messageErreur = (String) request.getAttribute("messageErreur");
+            String messageSucces = (String) request.getAttribute("messageSucces");
+            if (messageErreur != null) {
+        %>
+        <p class="messageErreur"><%= messageErreur %></p>
+        <% } else if (messageSucces != null) { %>
+        <p class="messageSucces"><%= messageSucces %></p>
+        <% } %>
 
+        <%
+            List<Employe> employes = (List<Employe>) request.getAttribute("employes");
+            if (employes != null && !employes.isEmpty()) {
+        %>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+                <th>Département</th>
+                <th>Grade</th>
+                <th>Role</th>
+            </tr>
+            <% for (Employe e : employes) { %>
+            <tr>
+                <td><%= e.getId_employe() %></td>
+                <td><%= e.getNom() %></td>
+                <td><%= e.getPrenom() %></td>
+                <td><%= e.getEmail() %></td>
+                <td><%= e.getDepartement().getNom() %></td>
+                <td><%= e.getGrade().toString() %></td>
+                <td><%= e.getRole().getNom() %></td>
+
+            </tr>
+            <% } %>
+        </table>
+        <% } else { %>
+        <p>Aucun employé trouvé.</p>
+        <% } %>
+
+    </div>
 </div>
 </body>
 </html>
